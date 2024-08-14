@@ -1,69 +1,27 @@
 {
-	"id": "template",
-	"name": "Template",
+	"id": "SmartMeterUSB",
+	"name": "SmartMeter USB",
 	"pluginVersion": "0.1",
-	"specialAttributes": {
-		"object": {
-			"toto": {
-				"name": {
-					"fr_FR": "Plop je suis un attribut spécial"
-				},
-				"type": "input"
-			},
-			"toto2": {
-				"name": {
-					"fr_FR": "Plop je suis un attribut spécial number"
-				},
-				"type": "number"
-			}
-		},
-		"user": {
-			"toto": {
-				"name": {
-					"fr_FR": "Plop je suis un attribut spécial"
-				},
-				"type": "select",
-				"values": [
-					{
-						"value": "1",
-						"name": "valeur 1"
-					},
-					{
-						"value": "plop",
-						"name": "valeur plop"
-					}
-				]
-			}
-		}
-	},
 	"description": {
-		"fr_FR": "Template servant de base à la création de plugins pour Jeedom"
+		"fr_FR": "Plugin de se connecter à un SmartMeter équipé d'un port P1 via un apatateur USB"
 	},
 	"licence": "AGPL",
-	"author": "Jeedom SAS",
-	"require": "4.2",
-	"category": "programming",
-	"hasDependency": false,
-	"hasOwnDeamon": false,
+	"author": "ktn",
+	"require": "4.4.9",
+	"category": "energy",
+	"hasDependency": true,
+	"hasOwnDeamon": true,
 	"maxDependancyInstallTime": 0,
-	"changelog_beta": "https:\/\/doc.jeedom.com\/#language#\/plugins\/programming\/template\/beta\/changelog",
-	"changelog": "https:\/\/doc.jeedom.com\/#language#\/plugins\/programming\/template\/changelog",
-	"documentation_beta": "https:\/\/doc.jeedom.com\/#language#\/plugins\/programming\/template\/beta",
-	"documentation": "https:\/\/doc.jeedom.com\/#language#\/plugins\/programming\/template",
+	"changelog" : "https://ktn001.github.io/fr_FR/SmartMeterUSB/changelog.html",
+    "documentation" : "https://ktn001.github.io/fr_FR/SmartMeterUSB/index.html",
+    "changelog_beta" : "https://ktn001.github.io/fr_FR/SmartMeterUSB/changelog.html",
+    "documentation_beta" : "https://ktn001.github.io/fr_FR/SmartMeterUSB/index.html",
+
 	"link": {
-		"forum": "Lien vers le forum",
-		"video": "Lien vers une video"
+		"forum": "https://community.jeedom.com/tag/plugin-SmartMeterUSB"
 	},
 	"language": [
-		"fr_FR",
-		"en_US",
-		"es_ES",
-		"de_DE",
-		"ru_RU",
-		"id_ID",
-		"it_IT",
-		"ja_JP",
-		"pt_PT"
+		"fr_FR"
 	],
 	"compatibility": [
 		"smart",
