@@ -1,2 +1,0 @@
-<meta http-equiv="Refresh" content="0; url='https://ktn001.github.io/SmartMeterUSB/fr_FR'" />
-

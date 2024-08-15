@@ -1,0 +1,1 @@
+smartmeter-datacollector>=1.2.1

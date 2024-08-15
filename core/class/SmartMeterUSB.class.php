@@ -1,4 +1,6 @@
 <?php
+// vim: tabstop=4 autoindent expandtab
+
 /* This file is part of Jeedom.
 *
 * Jeedom is free software: you can redistribute it and/or modify
@@ -19,21 +21,61 @@
 require_once __DIR__  . '/../../../../core/php/core.inc.php';
 
 class SmartMeterUSB extends eqLogic {
+
   /*     * *************************Attributs****************************** */
+    
+    const PYTHON_PATH = __DIR__ . '/../../resources/venv/bin/python3';
 
-  /*
-  * Permet de définir les possibilités de personnalisation du widget (en cas d'utilisation de la fonction 'toHtml' par exemple)
-  * Tableau multidimensionnel - exemple: array('custom' => true, 'custom::layout' => false)
-  public static $_widgetPossibility = array();
-  */
-
-  /*
-  * Permet de crypter/décrypter automatiquement des champs de configuration du plugin
-  * Exemple : "param1" & "param2" seront cryptés mais pas "param3"
-  public static $_encryptConfigKey = array('param1', 'param2');
-  */
 
   /*     * ***********************Methode static*************************** */
+
+    public static function backupExclude() {
+        return [
+            'resources/venv'
+        ];
+    }
+
+    private static function pythonRequirementsInstalled(string $pythonPath, string $requirementsPath) {
+        if (!file_exists($pythonPath) || !file_exists($requirementsPath)) {
+            return false;
+        }
+        exec("{$pythonPath} -m pip freeze", $packages_installed);
+        $packages = join("||", $packages_installed);
+        exec("cat {$requirementsPath}", $packages_needed);
+        foreach ($packages_needed as $line) {
+            if (preg_match('/([^\s]+)[\s]*([>=~]=)[\s]*([\d+\.?]+)$/', $line, $need) === 1) {
+                if (preg_match('/' . $need[1] . '==([\d+\.?]+)/', $packages, $install) === 1) {
+                    if ($need[2] == '==' && $need[3] != $install[1]) {
+                        return false;
+                    } elseif (version_compare($need[3], $install[1], '>')) {
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public static function dependancy_info() {
+        $return = array();
+        $return['log'] = log::getPathToLog(__CLASS__ . '_update');
+        $return['progress_file'] = jeedom::getTmpFolder(__CLASS__) . '/dependance';
+        $return['state'] = 'ok';
+        if (file_exists(jeedom::getTmpFolder(__CLASS__) . '/dependance')) {
+            $return['state'] = 'in_progress';
+        } elseif (!self::pythonRequirementsInstalled(self::PYTHON_PATH, __DIR__ . '/../../resources/requirements.txt')) {
+            $return['state'] = 'nok';
+        }
+        return $return;
+    }
+
+    public static function dependancy_install() {
+        log::remove(__CLASS__ . '_update');
+        return array('script' => __DIR__ . '/../../resources/install_#stype#.sh', 'log' => log::getPathToLog(__CLASS__ . '_update'));
+    }
+
 
   /*
   * Fonction exécutée automatiquement toutes les minutes par Jeedom
