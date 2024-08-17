@@ -1,4 +1,5 @@
 <?php
+// vim: tabstop=4 autoindent
 /* This file is part of Jeedom.
 *
 * Jeedom is free software: you can redistribute it and/or modify
@@ -22,5 +23,15 @@ if (!isConnect()) {
   die();
 }
 ?>
-<form class="form-horizontal">
-</form>
+<div id="div_SmartMeterUSBConfig">
+	<form class="form-horizontal">
+		<fieldset>
+			<div class="col-sm-6">
+			<legend><i class="fab fa-usb"></i> {{Adaptateurs}}
+			<a class="btn btn-success btn-xs pull-right" id="bt_addAdapter" style="position:relative;top:-5px">add</a></legend>
+			<div id='adaptersContainer'></div>
+			</div>
+		</fieldset>
+	</form>
+</div>
+<?php include_file('desktop', 'configuration', 'js', 'SmartMeterUSB'); ?>
