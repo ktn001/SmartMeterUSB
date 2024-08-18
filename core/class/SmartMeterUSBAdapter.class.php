@@ -17,8 +17,6 @@
  * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once __DIR__ . '/smateMeterUSBAdapter.class.php';
-
 class SmartMeterUSBAdapter {
 	private $id = -1;
 	private $type = '';
@@ -26,6 +24,7 @@ class SmartMeterUSBAdapter {
 	private $baurate = '2400';
 	private $key = '';
 	private $enable = 0;
+	private $_changed = false;
 
     /* *********************************** */
 	/* ********* Méthodes static ********* */
@@ -46,20 +45,21 @@ class SmartMeterUSBAdapter {
 					continue;
 				}
 			}
-			if (isset($value['key'])) {
+			if (isset($config['value']['key'])) {
 				$config['value']['key'] = utils::decrypt($config['value']['key']);
 			} else {
 				$config['value']['key'] = '';
 			}
 			$adapter = new self();
 			utils::a2o($adapter,$config['value']);
+			$adapter->_changed = false;
 			$adapters[] = $adapter;
 		}
-		return $adapeters;
+		return $adapters;
 	}
 
 	public static function byId($id) {
-		$key = 'adapter::' . $this->getId();
+		$key = 'adapter::' . $id;
 		$value = config::byKey($key, 'SmartMeterUSB');
 		if ($value == '') {
 			return null;
@@ -72,7 +72,8 @@ class SmartMeterUSBAdapter {
 		}
 		$adapter = new self();
 		utils::a2o($adapter,$value);
-		return $adapters;
+		$adapter->_changed = false;
+		return $adapter;
 	}
 
 	/* *************************************** */
@@ -80,7 +81,7 @@ class SmartMeterUSBAdapter {
 	/* *************************************** */
 
 	public function save() {
-		if ($this->getId() == -1) {
+		if (!is_numeric($this->getId()) || $this->getId() < 1 ) {
 			$this->setId(self::nextId());
 		}
 		$value = utils::o2a($this);
@@ -88,6 +89,20 @@ class SmartMeterUSBAdapter {
 		$value = json_encode($value);
 		$key = 'adapter::' . $this->getId();
 		config::save($key, $value, 'SmartMeterUSB');
+		$this->_changed = false;
+	}
+
+	public function remove() {
+		if ($this->getId() == -1) {
+			return;
+		}
+		$key = 'adapter::' . $this->getId();
+		config::remove($key, 'SmartMeterUSB');
+		return;
+	}
+
+	public function isChanged() {
+		return $this->_changed;
 	}
 
 	/* *********************************** */
@@ -96,6 +111,9 @@ class SmartMeterUSBAdapter {
 
 	/* id */
 	public function setId($_id) {
+		if ($this->id !== $_id) {
+			$this->_changed = true;
+		}
 		$this->id = $_id;
 		return $this;
 	}
@@ -105,6 +123,9 @@ class SmartMeterUSBAdapter {
 
 	/* type */
 	public function setType($_type) {
+		if ($this->type !== $_type) {
+			$this->_changed = true;
+		}
 		$this->type = $_type;
 		return $this;
 	}
@@ -114,6 +135,9 @@ class SmartMeterUSBAdapter {
 
 	/* port */
 	public function setPort($_port) {
+		if ($this->port !== $_port) {
+			$this->_changed = true;
+		}
 		$this->port = $_port;
 		return $this;
 	}
@@ -123,6 +147,9 @@ class SmartMeterUSBAdapter {
 
 	/* key */
 	public function setKey($_key) {
+		if ($this->key !== $_key) {
+			$this->_changed = true;
+		}
 		$this->key = $_key;
 		return $this;
 	}
@@ -132,6 +159,9 @@ class SmartMeterUSBAdapter {
 
 	/* baurate */
 	public function setBaurate($_baurate) {
+		if ($this->baurate !== $_baurate) {
+			$this->_changed = true;
+		}
 		$this->baurate = $_baurate;
 		return $this;
 	}
@@ -141,6 +171,9 @@ class SmartMeterUSBAdapter {
 
 	/* enable */
 	public function setEnable($_enable) {
+		if ($this->enable !== $_enable) {
+			$this->_changed = true;
+		}
 		$this->enable = $_enable;
 		return $this;
 	}

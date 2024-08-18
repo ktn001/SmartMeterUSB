@@ -19,6 +19,7 @@
 
 /* * ***************************Includes********************************* */
 require_once __DIR__  . '/../../../../core/php/core.inc.php';
+require_once __DIR__ . '/SmartMeterUSBAdapter.class.php';
 
 class SmartMeterUSB extends eqLogic {
 
@@ -100,6 +101,9 @@ class SmartMeterUSB extends eqLogic {
 		} elseif (self::$_MQTT2::deamon_info()['state'] != 'ok') {
 			$return['launchable'] = 'nok';
 			$return['launchable_message'] = sprintf(__("Le démon %s n'est pas démarré",__FILE__),self::$_MQTT2);
+		} elseif (count(SmartMeterUSBAdapter::all(true)) == 0) {
+			$return['launchable'] = 'nok';
+			$return['launchable_message'] = __("Veuillez configurer et activer au moins un adaptateur USB",__FILE__);
 		}
 		return $return;
 	}
@@ -108,15 +112,30 @@ class SmartMeterUSB extends eqLogic {
 		return self::daemon_start();
 	}
 	public static function daemon_start() {
+		self::deamon_stop();
 		self::$_MQTT2::addPluginTopic(__CLASS__, self::$_TOPIC_PREFIX);
 		log::add("SmartMeterUSB","debug", "Listening to topic: '" . self::$_TOPIC_PREFIX . "'");
-		self::deamon_stop();
 		$daemon_info = self::daemon_info();
+		$adapters = SmartMeterUSBAdapter::all(true);
+		if (count($adapters) == 0) {
+			throw new Exception (__("Veuillez configurer et activer au moins un adaptateur USB",__FILE__));
+		}
 		if ($daemon_info['launchable'] != "ok") {
 			throw new Exception(__('Veuillez vérifier la configuration',__FILE__));
 		}
 		$daemonConfigFileName = jeedom::getTmpFolder(__CLASS__) . '/config.ini';
 		if ($fd = fopen($daemonConfigFileName, 'w')) {
+			foreach ($adapters as $adapter) {
+				fwrite($fd, "[reader" . $adapter->getId() . "]\n");
+				fwrite($fd, "type = " . $adapter->getType() . "\n");
+				fwrite($fd, "port = " . $adapter->getport() . "\n");
+				fwrite($fd, "baurate = " . $adapter->getBaurate() . "\n");
+				fwrite($fd, "key = " . $adapter->getKey() . "\n");
+				fwrite($fd, "\n");
+
+			}
+			fclose($file);
+			chmod($daemonConfigFileName,0660);
 		} else {
 			throw new Exception(sprintf(__("Erreur lors de la création du fichier: %s",__FILE__), $daemonConfigFileName));
 		}
@@ -127,6 +146,7 @@ class SmartMeterUSB extends eqLogic {
 		return self::daemon_stop();
 	}
 	public static function daemon_stop() {
+		self::$_MQTT2::removePluginTopic(self::$_TOPIC_PREFIX);
 	}
 
   /*

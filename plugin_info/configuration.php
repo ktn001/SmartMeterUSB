@@ -26,10 +26,13 @@ if (!isConnect()) {
 <div id="div_SmartMeterUSBConfig">
 	<form class="form-horizontal">
 		<fieldset>
-			<div class="col-sm-6">
-			<legend><i class="fab fa-usb"></i> {{Adaptateurs}}
-			<a class="btn btn-success btn-xs pull-right" id="bt_addAdapter" style="position:relative;top:-5px">add</a></legend>
-			<div id='adaptersContainer'></div>
+			<div>
+				<legend><i class="fab fa-usb"></i> {{Adaptateurs}}
+					<a class="btn btn-success btn-xs pull-right" id="bt_addAdapter" style="position:relative;top:-5px">
+						<i class="fas fa-plus-circle"></i> {{Ajouter un adaptateur}}
+					</a>
+				</legend>
+				<div id='adaptersContainer'></div>
 			</div>
 		</fieldset>
 	</form>

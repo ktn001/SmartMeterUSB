@@ -18,6 +18,7 @@
 
 try {
 	require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
+	require_once __DIR__ . '/../class/SmartMeterUSB.class.php';
 	include_file('core', 'authentification', 'php');
 
 	if (!isConnect('admin')) {
@@ -25,9 +26,41 @@ try {
 	}
 
 	if (init('action') == 'getAdapters') {
-		ajax::success();
+		$adapters = SmartMeterUSBAdapter::all();
+		foreach ($adapters as $key => $adapter) {
+			$adapters[$key] = utils::o2a($adapter);
+		}
+		ajax::success($adapters);
 	}
 
+	if (init('action') == 'saveAdapters') {
+		$adapters = json_decode(init('adapters'),true);
+		$dbList = SmartMeterUSBAdapter::all();
+		foreach ($adapters as $a_adapter) {
+			if ($a_adapter['id'] == '') {
+				$o_adapter = new SmartMeterUSBAdapter();
+			} else {
+				$o_adapter = SmartMeterUSBAdapter::byId($a_adapter['id']);
+			}
+			if (!is_object($o_adapter)) {
+				$o_adapter = new SmartMeterUSBAdapter();
+			}
+			utils::a2o($o_adapter,$a_adapter);
+			if ($o_adapter->isChanged()) {
+				$o_adapter->save();
+			}
+			$enableList[$o_adapter->getId()] = true;
+		}
+		foreach ($dbList as $dbAdapter) {
+			log::add("SmartMeterUSB","info","1 " . $dbAdapter->getId());
+			log::add("SmartMeterUSB","info","2 " . print_r($enableList,true));
+			if (!isset($enableList[$dbAdapter->getId()])) {
+				log::add("SmartMeterUSB","info","3 ");
+				$dbAdapter->remove();
+			}
+		}
+		ajax::success();
+	}
 
 	throw new Exception(__('Aucune méthode correspondante à', __FILE__) . ' : ' . init('action'));
 	/*     * *********Catch exeption*************** */
