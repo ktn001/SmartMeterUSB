@@ -132,21 +132,83 @@ class SmartMeterUSB extends eqLogic {
 				fwrite($fd, "baurate = " . $adapter->getBaurate() . "\n");
 				fwrite($fd, "key = " . $adapter->getKey() . "\n");
 				fwrite($fd, "\n");
-
 			}
-			fclose($file);
+			fwrite($fd, "[sink0]\n");
+			fwrite($fd, "type = logger\n");
+			fwrite($fd, "name = DataLogger\n");
+			fwrite($fd, "\n");
+			$mqttInfos = self::$_MQTT2::getFormatedInfos();
+			fwrite($fd, "[sink1]\n");
+			fwrite($fd, "type = mqtt\n");
+			fwrite($fd, "host = " . $mqttInfos['ip'] . "\n");
+			fwrite($fd, "port = " . $mqttInfos['port'] . "\n");
+			fwrite($fd, "tls = False\n");
+			fwrite($fd, "ca_file_path =\n");
+			fwrite($fd, "check_hostname = False\n");
+			fwrite($fd, "username = " . $mqttInfos['user'] . "\n");
+			fwrite($fd, "password = " . $mqttInfos['password'] . "\n");
+			fwrite($fd, "client_cert_path =\n");
+			fwrite($fd, "client_key_path =\n");
+			fwrite($fd, "\n");
+
+			fwrite($fd, "[logging]\n");
+			fwrite($fd, "default = DEBUG\n");
+			fwrite($fd, "collector = DEBUG\n");
+			fwrite($fd, "smartmeter = DEBUG\n");
+			fwrite($fd, "sink = DEBUG\n");
+
+			fclose($fd);
+
 			chmod($daemonConfigFileName,0660);
+			$path = realpath(__DIR__ . '/../../resources/bin');
+			$cmd = self::PYTHON_PATH . " {$path}/SmartMeterUSBd.py";
+			$cmd .= " -c {$daemonConfigFileName}";
+			$cmd .= " -p " . jeedom::getTmpFolder(__CLASS__) . '/daemon.pid';
+			exec ($cmd . ' >> ' . log::getPathToLog(__CLASS__ . '_daemon') . ' 2>&1 &');
+			$ok = false;
+			for ($i=0; $i < 10; $i++) {
+				$daemon_info = self::daemon_info();
+				if ($daemon_info['state'] == 'ok') {
+					$ok = true;
+					break;
+				}
+				sleep (1);
+			}
+			if (!$ok) {
+				log::add(__CLASS__,'error',__('Impossible de lander le démon',__FILE__), 'unableStartDaemon');
+				return false;
+			}
+			message::removeAll('SmartMeterUSB', 'unableStartDaemon');
+			return true;
 		} else {
 			throw new Exception(sprintf(__("Erreur lors de la création du fichier: %s",__FILE__), $daemonConfigFileName));
 		}
-			
 	}
 
 	public static function deamon_stop() {
 		return self::daemon_stop();
 	}
 	public static function daemon_stop() {
-		self::$_MQTT2::removePluginTopic(self::$_TOPIC_PREFIX);
+		$pidFile = jeedom::getTmpFolder(__CLASS__) . '/daemon.pid';
+		if (file_exists($pidFile)) {
+			$pid = intval(trim(file_get_contents($pidFile)));
+			system::kill($pid);
+		}
+		sleep(1);
+	}
+
+	public static function handleMqttMessage($_message) {
+		log::add(__CLASS__, 'debug', 'handle Mqtt Message:' . json_encode($_message));
+		foreach (array_keys($_message) as $topicPrefix) {
+			if ($topicPrefix !== self::$_TOPIC_PREFIX) {
+				log::add(__CLASS__, 'warning', __("Le message n'est pas pour le plugin SmatrMeterUSB",__FILE__));
+				continue;
+			}
+			foreach (array_keys($_message[$topicPrefix]) as $compteur) {
+				log::add(__CLASS__, 'debug', $compteur);
+				$eqLogic = SmartMeterUSB::byLogicalId($compteur);
+			}	
+		}
 	}
 
   /*
