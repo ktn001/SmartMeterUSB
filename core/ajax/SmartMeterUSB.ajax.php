@@ -52,10 +52,7 @@ try {
 			$enableList[$o_adapter->getId()] = true;
 		}
 		foreach ($dbList as $dbAdapter) {
-			log::add("SmartMeterUSB","info","1 " . $dbAdapter->getId());
-			log::add("SmartMeterUSB","info","2 " . print_r($enableList,true));
 			if (!isset($enableList[$dbAdapter->getId()])) {
-				log::add("SmartMeterUSB","info","3 ");
 				$dbAdapter->remove();
 			}
 		}
