@@ -199,14 +199,69 @@ class SmartMeterUSB extends eqLogic {
 
 	public static function handleMqttMessage($_message) {
 		log::add(__CLASS__, 'debug', 'handle Mqtt Message:' . json_encode($_message));
+
+		$mappingFileName = __DIR__ . '/../config/OBISCode_mapping.json';
+		$OBISCodes = file_get_contents($mappingFileName);
+		if ($OBISCodes === false) {
+			throw new Exception (sprintf(__("Erreur lors de la lecture du fichier %s",__FILE__),$mappingFileName));
+		}
+		$OBISCodes = json_decode($OBISCodes,true);
+
 		foreach (array_keys($_message) as $topicPrefix) {
 			if ($topicPrefix !== self::$_TOPIC_PREFIX) {
 				log::add(__CLASS__, 'warning', __("Le message n'est pas pour le plugin SmatrMeterUSB",__FILE__));
 				continue;
 			}
-			foreach (array_keys($_message[$topicPrefix]) as $compteur) {
-				log::add(__CLASS__, 'debug', $compteur);
-				$eqLogic = SmartMeterUSB::byLogicalId($compteur);
+			foreach ($_message[$topicPrefix] as $counterNr => $mesures) {
+				$counter = SmartMeterUSB::byLogicalId($counterNr, __CLASS__);
+				if (!is_object($counter)) {
+					if (config::byKey('autoCreateCounter',__CLASS__)) {
+						log::add(__CLASS__,"warning","TODO: Création auto du compteur");
+						continue;
+					} else {
+						log::add(__CLASS__,"warning",sprintf(__("Le compteur %s est introuvable",__FILE__),$counterNr));
+						continue;
+					}
+				}
+				if (!$counter->getIsEnable()) {
+					continue;
+				}
+				foreach ($mesures as $mesure => $value) {
+					if (!isset ($OBISCodes[$mesure])) {
+						log::add(__CLASS__,"warning",sprintf(__("OBISCode pour la mesure %s introuvable",__FILE__),$mesure));
+						continue;
+					}
+					$logicalId = $OBISCodes[$mesure];
+					$cmd = $counter->getCmd('info',$logicalId);
+					if (!is_object($cmd)) {
+						if (config::byKey('autoCreateCmd',__CLASS__)) {
+							$cmdFileName =__DIR__ . '/../config/cmds.json';
+							$cmds = file_get_contents($cmdFileName);
+							if ($cmds === false) {
+								throw new Exception (sprintf(__("Erreur lors de la lecture du fichier %s",__FILE__),$cmdFileName));
+							}
+							$cmds = json_decode($cmds, true);
+							foreach ($cmds as $cmd_a) {
+								if ($cmd_a['logicalId'] == $logicalId) {
+									$cmd = new SmartMeterUSBCmd();
+									utils::a2o($cmd,$cmd_a);
+									$cmd->seteqLogic_id($counter->getId());
+									$cmd->save();
+									utils::a2o($cmd,$cmd_a);
+									$cmd->save();
+									$cmd = $counter->getCmd('info',$logicalId);
+									break;
+								}
+							}
+							continue;
+						} else {
+							log::add(__CLASS__,"warning",sprintf(__("La commande %s (%s) du compteur %s (%s) est introuvable",__FILE__),
+								$logicalId, $mesure, $counterNr, $counter->getName())); 
+							continue;
+						}
+					}
+					$counter->checkAndUpdateCmd($cmd,$value['value']);
+				}
 			}
 		}
 	}
@@ -241,7 +296,6 @@ class SmartMeterUSB extends eqLogic {
 			$cmds = json_decode($cmds, true);
 			foreach ($cmds as $cmd_a) {
 				$cmd = new SmartMeterUSBCmd();
-				log::add(__CLASS__,"info", "XXX " . print_r($cmd_a,true));
 				utils::a2o($cmd,$cmd_a);
 				$cmd->seteqLogic_id($this->getId());
 				$cmd->save();
