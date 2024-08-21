@@ -13,13 +13,16 @@ from configparser import ConfigParser
 pidFile = None
 configFile = None
 
+
 def options():
     global pidFile
     global configFile
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('-p', '--pidfile', help="fichier pid", required=True)
-    parser.add_argument('-c', '--configfile', help="fichier de configuration", required=True)
+    parser.add_argument("-p", "--pidfile", help="fichier pid", required=True)
+    parser.add_argument(
+        "-c", "--configfile", help="fichier de configuration", required=True
+    )
     args = parser.parse_args()
 
     if args.pidfile:
@@ -28,8 +31,10 @@ def options():
     if args.configfile:
         configFile = args.configfile
 
+
 def signal_handler(sig, frame):
     sys.exit(0)
+
 
 async def build_and_start(app_config: ConfigParser):
     readers = factory.build_meters(app_config)
@@ -40,20 +45,21 @@ async def build_and_start(app_config: ConfigParser):
 
     try:
         await asyncio.gather(
-            *[reader.start() for reader in readers],
-            data_collector.process_queue())
+            *[reader.start() for reader in readers], data_collector.process_queue()
+        )
     except CancelledError:
         pass
     finally:
         logging.info("App shutting down now.")
         await asyncio.gather(*[sink.stop() for sink in sinks])
-        os.unlink (pidFile)
+        os.unlink(pidFile)
+
 
 options()
 signal.signal(signal.SIGTERM, signal_handler)
 pid = str(os.getpid())
-f = open(pidFile,'w')
-f.write(f'{pid}\n')
+f = open(pidFile, "w")
+f.write(f"{pid}\n")
 f.close()
 
 
