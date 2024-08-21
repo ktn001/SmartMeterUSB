@@ -32,6 +32,12 @@ class SmartMeterUSB extends eqLogic {
 
 	/*     * ***********************Methode static*************************** */
 
+	public static function nextName() {
+		$nextNameId = config::keyKey('nextCounterNameId',__CLASS__,1);
+		config::save('nextCounterNameId', $nextNameId+1, __CLASS__);
+		return __('compteur',__FILE__) . _ . $nextNameId;
+	}
+	
 	public static function backupExclude() {
 		return [
 			'resources/venv'
