@@ -1,35 +1,25 @@
 {
-	"id": "SmartMeterUSB",
-	"name": "SmartMeter USB",
-	"pluginVersion": "0.1",
-	"description": {
-		"fr_FR": "Plugin de se connecter à un SmartMeter équipé d'un port P1 via un apatateur USB"
-	},
-	"licence": "AGPL",
-	"author": "ktn",
-	"require": "4.4.9",
-	"category": "energy",
-	"hasDependency": true,
-	"hasOwnDeamon": true,
-	"maxDependancyInstallTime": 0,
-	"changelog" : "https://ktn001.github.io/fr_FR/SmartMeterUSB/changelog.html",
-    "documentation" : "https://ktn001.github.io/fr_FR/SmartMeterUSB/index.html",
-    "changelog_beta" : "https://ktn001.github.io/fr_FR/SmartMeterUSB/changelog.html",
-    "documentation_beta" : "https://ktn001.github.io/fr_FR/SmartMeterUSB/index.html",
+  "id": "SmartMeterUSB",
+  "name": "SmartMeter USB",
+  "pluginVersion": "0.1",
+  "description": {
+    "fr_FR": "Plugin de se connecter à un SmartMeter équipé d'un port P1 via un apatateur USB"
+  },
+  "licence": "AGPL",
+  "author": "ktn",
+  "require": "4.4.9",
+  "category": "energy",
+  "hasDependency": true,
+  "hasOwnDeamon": true,
+  "maxDependancyInstallTime": 0,
+  "changelog": "https://ktn001.github.io/fr_FR/SmartMeterUSB/changelog.html",
+  "documentation": "https://ktn001.github.io/fr_FR/SmartMeterUSB/index.html",
+  "changelog_beta": "https://ktn001.github.io/fr_FR/SmartMeterUSB/changelog.html",
+  "documentation_beta": "https://ktn001.github.io/fr_FR/SmartMeterUSB/index.html",
 
-	"link": {
-		"forum": "https://community.jeedom.com/tag/plugin-SmartMeterUSB"
-	},
-	"language": [
-		"fr_FR"
-	],
-	"compatibility": [
-		"smart",
-		"luna",
-		"atlas",
-		"rpi",
-		"docker",
-		"diy",
-		"mobile"
-	]
+  "link": {
+    "forum": "https://community.jeedom.com/tag/plugin-SmartMeterUSB"
+  },
+  "language": ["fr_FR"],
+  "compatibility": ["smart", "luna", "atlas", "rpi", "docker", "diy", "mobile"]
 }
