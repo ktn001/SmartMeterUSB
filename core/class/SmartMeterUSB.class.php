@@ -222,8 +222,16 @@ class SmartMeterUSB extends eqLogic {
 				$counter = SmartMeterUSB::byLogicalId($counterNr, __CLASS__);
 				if (!is_object($counter)) {
 					if (config::byKey('autoCreateCounter',__CLASS__)) {
-						log::add(__CLASS__,"warning","TODO: Création auto du compteur");
-						continue;
+						$counter = new SmarterMeterUSB();
+						$name = self::nextName()
+						$counter->setName($name);
+						$counter->setLogicalId($counterNr);
+						$counter->save();
+						$counter = SmartMeterUSB::byLogicalId($counterNr, __CLASS__);
+						if (!is_object($counter)) {
+							log::add(__CLASS__,"error",sprintf(__("Erreur lors de la création du compteur N° %s (%s)",__FILE__),$counterNr(),$name));
+							continue;
+						}
 					} else {
 						log::add(__CLASS__,"warning",sprintf(__("Le compteur %s est introuvable",__FILE__),$counterNr));
 						continue;
