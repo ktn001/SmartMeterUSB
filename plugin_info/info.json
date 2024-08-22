@@ -1,25 +1,44 @@
 {
-  "id": "SmartMeterUSB",
-  "name": "SmartMeter USB",
-  "pluginVersion": "0.1",
-  "description": {
-    "fr_FR": "Plugin de se connecter à un SmartMeter équipé d'un port P1 via un apatateur USB"
-  },
-  "licence": "AGPL",
-  "author": "ktn",
-  "require": "4.4.9",
-  "category": "energy",
-  "hasDependency": true,
-  "hasOwnDeamon": true,
-  "maxDependancyInstallTime": 0,
-  "changelog": "https://ktn001.github.io/fr_FR/SmartMeterUSB/changelog.html",
-  "documentation": "https://ktn001.github.io/fr_FR/SmartMeterUSB/index.html",
-  "changelog_beta": "https://ktn001.github.io/fr_FR/SmartMeterUSB/changelog.html",
-  "documentation_beta": "https://ktn001.github.io/fr_FR/SmartMeterUSB/index.html",
-
-  "link": {
-    "forum": "https://community.jeedom.com/tag/plugin-SmartMeterUSB"
-  },
-  "language": ["fr_FR"],
-  "compatibility": ["smart", "luna", "atlas", "rpi", "docker", "diy", "mobile"]
+	"id": "SmartMeterUSB",
+	"name": "SmartMeter USB",
+	"pluginVersion": "0.1",
+	"description": {
+		"fr_FR": "Plugin de se connecter à un SmartMeter équipé d'un port P1 via un apatateur USB",
+		"en_US": "Plugin to connect to a SmartMeter equipped with a P1 port via a USB adapter",
+		"es_ES": "Plugin para conectarse a un SmartMeter equipado con un puerto P1 mediante un adaptador USB",
+		"de_DE": "Plugin zur Verbindung mit einem SmartMeter mit P1-Anschluss über einen USB-Apatator",
+		"it_IT": "Plugin per la connessione a uno SmartMeter dotato di porta P1 tramite adattatore USB",
+		"pt_PT": "Plugin para ligação a um SmartMeter equipado com uma porta P1 através de um adaptador USB"
+	},
+	"licence": "AGPL",
+	"author": "ktn",
+	"require": "4.4.9",
+	"category": "energy",
+	"hasDependency": true,
+	"hasOwnDeamon": true,
+	"maxDependancyInstallTime": 0,
+	"changelog": "https://ktn001.github.io/fr_FR/SmartMeterUSB/changelog.html",
+	"documentation": "https://ktn001.github.io/fr_FR/SmartMeterUSB/index.html",
+	"changelog_beta": "https://ktn001.github.io/fr_FR/SmartMeterUSB/changelog.html",
+	"documentation_beta": "https://ktn001.github.io/fr_FR/SmartMeterUSB/index.html",
+	"link": {
+		"forum": "https://community.jeedom.com/tag/plugin-SmartMeterUSB"
+	},
+	"language": [
+		"de_DE",
+		"en_US",
+		"es_ES",
+		"fr_FR",
+		"it_IT",
+		"pt_PT"
+	],
+	"compatibility": [
+		"smart",
+		"luna",
+		"atlas",
+		"rpi",
+		"docker",
+		"diy",
+		"mobile"
+	]
 }
