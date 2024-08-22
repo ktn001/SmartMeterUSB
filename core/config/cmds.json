@@ -194,7 +194,7 @@
     "type": "info",
     "subType": "numeric",
     "unite": "kWh",
-    "display": {
+    "template": {
       "mobile": "core::badge",
       "dashboard": "core::badge"
     }
@@ -205,7 +205,7 @@
     "type": "info",
     "subType": "numeric",
     "unite": "kWh",
-    "display": {
+    "template": {
       "mobile": "core::badge",
       "dashboard": "core::badge"
     }
@@ -216,7 +216,7 @@
     "type": "info",
     "subType": "numeric",
     "unite": "kWh",
-    "display": {
+    "template": {
       "mobile": "core::badge",
       "dashboard": "core::badge"
     }
@@ -227,7 +227,7 @@
     "type": "info",
     "subType": "numeric",
     "unite": "kWh",
-    "display": {
+    "template": {
       "mobile": "core::badge",
       "dashboard": "core::badge"
     }
@@ -238,7 +238,7 @@
     "type": "info",
     "subType": "numeric",
     "unite": "kWh",
-    "display": {
+    "template": {
       "mobile": "core::badge",
       "dashboard": "core::badge"
     }
@@ -249,7 +249,7 @@
     "type": "info",
     "subType": "numeric",
     "unite": "kWh",
-    "display": {
+    "template": {
       "mobile": "core::badge",
       "dashboard": "core::badge"
     }
@@ -260,7 +260,7 @@
     "type": "info",
     "subType": "numeric",
     "unite": "kWh",
-    "display": {
+    "template": {
       "mobile": "core::badge",
       "dashboard": "core::badge"
     }
@@ -271,7 +271,7 @@
     "type": "info",
     "subType": "numeric",
     "unite": "kWh",
-    "display": {
+    "template": {
       "mobile": "core::badge",
       "dashboard": "core::badge"
     }
@@ -282,7 +282,7 @@
     "type": "info",
     "subType": "numeric",
     "unite": "kWh",
-    "display": {
+    "template": {
       "mobile": "core::badge",
       "dashboard": "core::badge"
     }
@@ -293,7 +293,7 @@
     "type": "info",
     "subType": "numeric",
     "unite": "kWh",
-    "display": {
+    "template": {
       "mobile": "core::badge",
       "dashboard": "core::badge"
     }
@@ -304,7 +304,7 @@
     "type": "info",
     "subType": "numeric",
     "unite": "kWh",
-    "display": {
+    "template": {
       "mobile": "core::badge",
       "dashboard": "core::badge"
     }
@@ -315,7 +315,7 @@
     "type": "info",
     "subType": "numeric",
     "unite": "kWh",
-    "display": {
+    "template": {
       "mobile": "core::badge",
       "dashboard": "core::badge"
     }
@@ -326,7 +326,7 @@
     "type": "info",
     "subType": "numeric",
     "unite": "kWh",
-    "display": {
+    "template": {
       "mobile": "core::badge",
       "dashboard": "core::badge"
     }
@@ -337,7 +337,7 @@
     "type": "info",
     "subType": "numeric",
     "unite": "kWh",
-    "display": {
+    "template": {
       "mobile": "core::badge",
       "dashboard": "core::badge"
     }
@@ -348,7 +348,7 @@
     "type": "info",
     "subType": "numeric",
     "unite": "kWh",
-    "display": {
+    "template": {
       "mobile": "core::badge",
       "dashboard": "core::badge"
     }
@@ -359,7 +359,7 @@
     "type": "info",
     "subType": "numeric",
     "unite": "kWh",
-    "display": {
+    "template": {
       "mobile": "core::badge",
       "dashboard": "core::badge"
     }
@@ -370,7 +370,7 @@
     "type": "info",
     "subType": "numeric",
     "unite": "kWh",
-    "display": {
+    "template": {
       "mobile": "core::badge",
       "dashboard": "core::badge"
     }
@@ -381,7 +381,7 @@
     "type": "info",
     "subType": "numeric",
     "unite": "kWh",
-    "display": {
+    "template": {
       "mobile": "core::badge",
       "dashboard": "core::badge"
     }
@@ -392,7 +392,7 @@
     "type": "info",
     "subType": "numeric",
     "unite": "kWh",
-    "display": {
+    "template": {
       "mobile": "core::badge",
       "dashboard": "core::badge"
     }
@@ -403,7 +403,7 @@
     "type": "info",
     "subType": "numeric",
     "unite": "kWh",
-    "display": {
+    "template": {
       "mobile": "core::badge",
       "dashboard": "core::badge"
     }
@@ -414,7 +414,7 @@
     "type": "info",
     "subType": "numeric",
     "unite": "kWh",
-    "display": {
+    "template": {
       "mobile": "core::badge",
       "dashboard": "core::badge"
     }
@@ -425,7 +425,7 @@
     "type": "info",
     "subType": "numeric",
     "unite": "kWh",
-    "display": {
+    "template": {
       "mobile": "core::badge",
       "dashboard": "core::badge"
     }
@@ -436,7 +436,7 @@
     "type": "info",
     "subType": "numeric",
     "unite": "kWh",
-    "display": {
+    "template": {
       "mobile": "core::badge",
       "dashboard": "core::badge"
     }
@@ -447,7 +447,17 @@
     "type": "info",
     "subType": "numeric",
     "unite": "kWh",
-    "display": {
+    "template": {
+      "mobile": "core::badge",
+      "dashboard": "core::badge"
+    }
+  },
+  {
+    "name": "TARIF",
+    "logicalId": "tarif",
+    "type": "info",
+    "subType": "numeric",
+    "template": {
       "mobile": "core::badge",
       "dashboard": "core::badge"
     }

@@ -251,6 +251,7 @@ class SmartMeterUSB extends eqLogic {
 					$cmd = $counter->getCmd('info',$logicalId);
 					if (!is_object($cmd)) {
 						if (config::byKey('autoCreateCmd',__CLASS__)) {
+							log::add(__CLASS__,"info",sprintf(__("Création de la commande %s", __FILE__ ),$logicalId));
 							$cmdFileName =__DIR__ . '/../config/cmds.json';
 							$cmds = file_get_contents($cmdFileName);
 							if ($cmds === false) {
@@ -263,8 +264,6 @@ class SmartMeterUSB extends eqLogic {
 									utils::a2o($cmd,$cmd_a);
 									$cmd->seteqLogic_id($counter->getId());
 									$cmd->save();
-									utils::a2o($cmd,$cmd_a);
-									$cmd->save();
 									$cmd = $counter->getCmd('info',$logicalId);
 									break;
 								}
@@ -274,6 +273,49 @@ class SmartMeterUSB extends eqLogic {
 							log::add(__CLASS__,"warning",sprintf(__("La commande %s (%s) du compteur %s (%s) est introuvable",__FILE__),
 								$logicalId, $mesure, $counterNr, $counter->getName())); 
 							continue;
+						}
+					}
+					log::add(__CLASS__,"debug",sprintf("OBIS code: %-12s CmdName: %-20s Value:%-20s",$logicalId, $cmd->getName(), $value['value']));
+					$tarif = 0;
+					switch ($logicalId) {
+						case '1.0:1.8.1':
+						case '1.0:1.8.2':
+						case '1.0:1.8.3':
+						case '1.0:1.8.4':
+						case '1.0:2.8.1':
+						case '1.0:2.8.2':
+						case '1.0:2.8.3':
+						case '1.0:2.8.4':
+							$oldValue = $cmd->execCmd();
+							if ($oldValue != $value['value']) {
+								$tarif = substr($logicalId,strrpos($logicalId,'.')+1);
+							}
+
+					}
+					if ($tarif != 0) {
+						$Tcmd = $counter->getCmd('info',"tarif");
+						if (!is_object($Tcmd)) {
+							if (config::byKey('autoCreateCmd',__CLASS__)) {
+								$cmdFileName =__DIR__ . '/../config/cmds.json';
+								$cmds = file_get_contents($cmdFileName);
+								if ($cmds === false) {
+									throw new Exception (sprintf(__("Erreur lors de la lecture du fichier %s",__FILE__),$cmdFileName));
+								}
+								$cmds = json_decode($cmds, true);
+								foreach ($cmds as $cmd_a) {
+									if ($cmd_a['logicalId'] == "tarif") {
+										$Tcmd = new SmartMeterUSBCmd();
+										utils::a2o($Tcmd,$cmd_a);
+										$Tcmd->seteqLogic_id($counter->getId());
+										$Tcmd->save();
+										$Tcmd = $counter->getCmd('info','tarif');
+										break;
+									}
+								}
+							}
+						}
+						if (is_object($Tcmd)) {
+							$counter->checkAndUpdateCmd($Tcmd,$tarif);
 						}
 					}
 					$counter->checkAndUpdateCmd($cmd,$value['value']);
