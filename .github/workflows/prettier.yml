@@ -2,7 +2,7 @@ on:
   # Create branch > prettier / this workflows create commit on branch prettier.
   push:
     branches:
-      - master
+      - x_master
       
 name : 'Prettier Plugin Jeedom'
 
