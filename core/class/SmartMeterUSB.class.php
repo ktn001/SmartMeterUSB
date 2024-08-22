@@ -33,9 +33,9 @@ class SmartMeterUSB extends eqLogic {
 	/*     * ***********************Methode static*************************** */
 
 	public static function nextName() {
-		$nextNameId = config::keyKey('nextCounterNameId',__CLASS__,1);
+		$nextNameId = config::byKey('nextCounterNameId',__CLASS__,1);
 		config::save('nextCounterNameId', $nextNameId+1, __CLASS__);
-		return __('compteur',__FILE__) . _ . $nextNameId;
+		return __('compteur',__FILE__) . "_" . $nextNameId;
 	}
 	
 	public static function backupExclude() {
@@ -222,8 +222,10 @@ class SmartMeterUSB extends eqLogic {
 				$counter = SmartMeterUSB::byLogicalId($counterNr, __CLASS__);
 				if (!is_object($counter)) {
 					if (config::byKey('autoCreateCounter',__CLASS__)) {
-						$counter = new SmarterMeterUSB();
-						$name = self::nextName()
+						$name = self::nextName();
+						log::add(__CLASS__,"info",sprintf(__("Création du compteur %s (%s)",__FILE__),$counterNr, $name));
+						$counter = new SmartMeterUSB();
+						$counter->setEqType_name(__CLASS__);
 						$counter->setName($name);
 						$counter->setLogicalId($counterNr);
 						$counter->save();
