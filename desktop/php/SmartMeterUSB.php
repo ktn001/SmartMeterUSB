@@ -133,6 +133,18 @@ sendVarToJS('counters', SmartMeterUSB::getCounters());
 
 							<legend><i class="fas fa-cogs"></i> {{Paramètres spécifiques}}</legend>
 							<div class="form-group">
+								<label class="col-sm-4 control-label">{{Type de compteur}}</label>
+								<div class="col-sm-6">
+									<select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="counterType">
+									<?php
+										foreach (SmartMeterUSB::getCounters() as $type => $txt) {
+											echo '<option value="' . $type . '">' . $txt . '</option>';
+										}
+									?>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
 								<label class="col-sm-4 control-label">{{Numéro du compteur}}
 									<sup><i class="fas fa-question-circle tooltips" title="{{Numéro du compteur remonté dans le topic MQTT}}"></i></sup>
 								</label>
@@ -152,6 +164,9 @@ sendVarToJS('counters', SmartMeterUSB::getCounters());
 									<textarea class="form-control eqLogicAttr autogrow" data-l1key="comment"></textarea>
 								</div>
 							</div>
+							<div class="col-sm-12">
+							  <img id="img_counter" class="img-responsive">
+							<div>
 						</div>
 					</fieldset>
 				</form>

@@ -65,6 +65,15 @@ class SmartMeterUSB extends eqLogic {
 		];
 	}
 
+	public static function getImageForCounterType($_counterType) {
+		$path = realpath(__DIR__ . '/../../desktop/img/' . $_counterType . '.png');
+		if (file_exists($path)) {
+			$path = preg_replace('/^.*?(\/plugins\/.*)/','\1', $path);
+			return $path;
+		}
+		return plugin::byId(__CLASS__)->getPathImgIcon();
+	}
+
 	private static function pythonRequirementsInstalled(string $pythonPath, string $requirementsPath) {
 		if (!file_exists($pythonPath) || !file_exists($requirementsPath)) {
 			return false;
@@ -331,9 +340,7 @@ class SmartMeterUSB extends eqLogic {
 	}
 
 	public function getImage() {
-		$dir = realpath (__DIR__ . '/../../desktop/img');
-		$dir = preg_replace('/^.*?(\/plugins\/.*)/','\1', $dir);
-		return $dir . '/lge450.png';
+		return $this->getImageForCounterType($this->getConfiguration('counterType',''));
 	}
 
 	public function createAndGetCmd ($_logicalId) {
