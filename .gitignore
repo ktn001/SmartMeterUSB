@@ -2,3 +2,4 @@
 /resources/pyenv.lib
 /resources/dependance.lib
 /resources/config.ini
+*.swp
