@@ -1,465 +1,657 @@
 [
   {
-    "name": "ACTIVE_POWER_P",
-    "logicalId": "1.0:1.7.0",
-    "type": "info",
-    "subType": "numeric",
-    "unite": "Kw"
-  },
-  {
-    "name": "ACTIVE_POWER_N",
-    "logicalId": "1.0:2.7.0",
-    "type": "info",
-    "subType": "numeric",
-    "unite": "Kw"
-  },
-  {
-    "name": "REACTIVE_POWER_P",
-    "logicalId": "1.0:3.7.0",
-    "type": "info",
-    "subType": "numeric",
-    "unite": "Kw"
-  },
-  {
-    "name": "ACTIVE_POWER_P_L1",
-    "logicalId": "1.0:21.7.0",
-    "type": "info",
-    "subType": "numeric",
-    "unite": "Kw"
-  },
-  {
-    "name": "ACTIVE_POWER_N_L1",
-    "logicalId": "1.0:22.7.0",
-    "type": "info",
-    "subType": "numeric",
-    "unite": "Kw"
-  },
-  {
-    "name": "REACTIVE_POWER_P_L1",
-    "logicalId": "1.0:23.7.0",
-    "type": "info",
-    "subType": "numeric",
-    "unite": "Kw"
-  },
-  {
-    "name": "REACTIVE_POWER_N_L1",
-    "logicalId": "1.0:24.7.0",
-    "type": "info",
-    "subType": "numeric",
-    "unite": "Kw"
-  },
-  {
-    "name": "CURRENT_L1",
-    "logicalId": "1.0:31.7.0",
-    "type": "info",
-    "subType": "numeric",
-    "unite": "A",
-    "configuration": {
-      "minValue": 0,
-      "maxValue": 25
-    }
-  },
-  {
-    "name": "VOLTAGE_L1",
-    "logicalId": "1.0:32.7.0",
-    "type": "info",
-    "subType": "numeric",
-    "unite": "V",
-    "configuration": {
-      "minValue": 0,
-      "maxValue": 250
-    }
-  },
-  {
-    "name": "ACTIVE_POWER_P_L2",
-    "logicalId": "1.0:41.7.0",
-    "type": "info",
-    "subType": "numeric",
-    "unite": "Kw"
-  },
-  {
-    "name": "ACTIVE_POWER_N_L2",
-    "logicalId": "1.0:42.7.0",
-    "type": "info",
-    "subType": "numeric",
-    "unite": "Kw"
-  },
-  {
-    "name": "REACTIVE_POWER_P_L2",
-    "logicalId": "1.0:43.7.0",
-    "type": "info",
-    "subType": "numeric",
-    "unite": "Kw"
-  },
-  {
-    "name": "REACTIVE_POWER_N_L2",
-    "logicalId": "1.0:44.7.0",
-    "type": "info",
-    "subType": "numeric",
-    "unite": "Kw"
-  },
-  {
-    "name": "CURRENT_L2",
-    "logicalId": "1.0:51.7.0",
-    "type": "info",
-    "subType": "numeric",
-    "unite": "A",
-    "configuration": {
-      "minValue": 0,
-      "maxValue": 25
-    }
-  },
-  {
-    "name": "VOLTAGE_L2",
-    "logicalId": "1.0:52.7.0",
-    "type": "info",
-    "subType": "numeric",
-    "unite": "V",
-    "configuration": {
-      "minValue": 0,
-      "maxValue": 250
-    }
-  },
-  {
-    "name": "ACTIVE_POWER_P_L3",
-    "logicalId": "1.0:61.7.0",
-    "type": "info",
-    "subType": "numeric",
-    "unite": "Kw"
-  },
-  {
-    "name": "ACTIVE_POWER_N_L3",
-    "logicalId": "1.0:62.7.0",
-    "type": "info",
-    "subType": "numeric",
-    "unite": "Kw"
-  },
-  {
-    "name": "REACTIVE_POWER_P_L3",
-    "logicalId": "1.0:63.7.0",
-    "type": "info",
-    "subType": "numeric",
-    "unite": "Kw"
-  },
-  {
-    "name": "REACTIVE_POWER_N_L3",
-    "logicalId": "1.0:64.7.0",
-    "type": "info",
-    "subType": "numeric",
-    "unite": "Kw"
-  },
-  {
-    "name": "CURRENT_L3",
-    "logicalId": "1.0:71.7.0",
-    "type": "info",
-    "subType": "numeric",
-    "unite": "A",
-    "configuration": {
-      "minValue": 0,
-      "maxValue": 25
-    }
-  },
-  {
-    "name": "VOLTAGE_L3",
-    "logicalId": "1.0:72.7.0",
-    "type": "info",
-    "subType": "numeric",
-    "unite": "V",
-    "configuration": {
-      "minValue": 0,
-      "maxValue": 250
-    }
-  },
-  {
-    "name": "ANGLE_UI_L1",
-    "logicalId": "1.0:81.7.40",
-    "type": "info",
-    "subType": "numeric"
-  },
-  {
-    "name": "ANGLE_UI_L2",
-    "logicalId": "1.0:81.7.51",
-    "type": "info",
-    "subType": "numeric"
-  },
-  {
-    "name": "ANGLE_UI_L3",
-    "logicalId": "1.0:81.7.62",
-    "type": "info",
-    "subType": "numeric"
-  },
-  {
-    "name": "ACTIVE_ENERGY_P",
+    "name": "{{Prélèvement total}}",
     "logicalId": "1.0:1.8.0",
     "type": "info",
     "subType": "numeric",
-    "unite": "kWh",
+    "unite": "Wh",
     "template": {
       "mobile": "core::badge",
       "dashboard": "core::badge"
+    },
+    "configuration" : {
+      "MQTTname" : "ACTIVE_ENERGY_P",
+      "historizeRound" : "3"
     }
   },
   {
-    "name": "ACTIVE_ENERGY_P_T1",
+    "name": "{{Prélèvement heures pleines}}",
     "logicalId": "1.0:1.8.1",
     "type": "info",
     "subType": "numeric",
-    "unite": "kWh",
+    "unite": "Wh",
     "template": {
       "mobile": "core::badge",
       "dashboard": "core::badge"
+    },
+    "configuration" : {
+      "MQTTname": "ACTIVE_ENERGY_P_T1",
+      "historizeRound" : "3"
     }
   },
   {
-    "name": "ACTIVE_ENERGY_P_T2",
+    "name": "{{Prélèvement heures creuses}}",
     "logicalId": "1.0:1.8.2",
     "type": "info",
     "subType": "numeric",
-    "unite": "kWh",
+    "unite": "Wh",
     "template": {
       "mobile": "core::badge",
       "dashboard": "core::badge"
+    },
+    "configuration" : {
+      "MQTTname": "ACTIVE_ENERGY_P_T2",
+      "historizeRound" : "3"
     }
   },
   {
-    "name": "ACTIVE_ENERGY_N",
+    "name": "{{Injection total}}",
     "logicalId": "1.0:2.8.0",
     "type": "info",
     "subType": "numeric",
-    "unite": "kWh",
+    "unite": "Wh",
     "template": {
       "mobile": "core::badge",
       "dashboard": "core::badge"
+    },
+    "display" : {
+       "forceReturnLineBefore" : "1"
+    },
+    "configuration" : {
+      "MQTTname": "ACTIVE_ENERGY_N",
+      "historizeRound" : "3"
     }
   },
   {
-    "name": "ACTIVE_ENERGY_N_T1",
+    "name": "{{Injection heures pleines}}",
     "logicalId": "1.0:2.8.1",
     "type": "info",
     "subType": "numeric",
-    "unite": "kWh",
+    "unite": "Wh",
     "template": {
       "mobile": "core::badge",
       "dashboard": "core::badge"
+    },
+    "configuration" : {
+      "MQTTname": "ACTIVE_ENERGY_N_T1",
+      "historizeRound" : "3"
     }
   },
   {
-    "name": "ACTIVE_ENERGY_N_T2",
+    "name": "{{Injection heures creuses}}",
     "logicalId": "1.0:2.8.2",
     "type": "info",
     "subType": "numeric",
-    "unite": "kWh",
+    "unite": "Wh",
     "template": {
       "mobile": "core::badge",
       "dashboard": "core::badge"
+    },
+    "configuration" : {
+      "MQTTname": "ACTIVE_ENERGY_N_T2",
+      "historizeRound" : "3"
     }
   },
   {
-    "name": "REACTIVE_ENERGY_P",
-    "logicalId": "1.0:3.8.0",
-    "type": "info",
-    "subType": "numeric",
-    "unite": "kWh",
-    "template": {
-      "mobile": "core::badge",
-      "dashboard": "core::badge"
-    }
-  },
-  {
-    "name": "REACTIVE_ENERGY_P_T1",
-    "logicalId": "1.0:3.8.1",
-    "type": "info",
-    "subType": "numeric",
-    "unite": "kWh",
-    "template": {
-      "mobile": "core::badge",
-      "dashboard": "core::badge"
-    }
-  },
-  {
-    "name": "REACTIVE_ENERGY_P_T2",
-    "logicalId": "1.0:3.8.2",
-    "type": "info",
-    "subType": "numeric",
-    "unite": "kWh",
-    "template": {
-      "mobile": "core::badge",
-      "dashboard": "core::badge"
-    }
-  },
-  {
-    "name": "REACTIVE_ENERGY_N",
-    "logicalId": "1.0:4.8.0",
-    "type": "info",
-    "subType": "numeric",
-    "unite": "kWh",
-    "template": {
-      "mobile": "core::badge",
-      "dashboard": "core::badge"
-    }
-  },
-  {
-    "name": "REACTIVE_ENERGY_N_T1",
-    "logicalId": "1.0:4.8.1",
-    "type": "info",
-    "subType": "numeric",
-    "unite": "kWh",
-    "template": {
-      "mobile": "core::badge",
-      "dashboard": "core::badge"
-    }
-  },
-  {
-    "name": "REACTIVE_ENERGY_N_T2",
-    "logicalId": "1.0:4.8.2",
-    "type": "info",
-    "subType": "numeric",
-    "unite": "kWh",
-    "template": {
-      "mobile": "core::badge",
-      "dashboard": "core::badge"
-    }
-  },
-  {
-    "name": "REACTIVE_ENERGY_Q1",
-    "logicalId": "1.0:5.8.0",
-    "type": "info",
-    "subType": "numeric",
-    "unite": "kWh",
-    "template": {
-      "mobile": "core::badge",
-      "dashboard": "core::badge"
-    }
-  },
-  {
-    "name": "REACTIVE_ENERGY_Q1_T1",
-    "logicalId": "1.0:5.8.1",
-    "type": "info",
-    "subType": "numeric",
-    "unite": "kWh",
-    "template": {
-      "mobile": "core::badge",
-      "dashboard": "core::badge"
-    }
-  },
-  {
-    "name": "REACTIVE_ENERGY_Q1_T2",
-    "logicalId": "1.0:5.8.2",
-    "type": "info",
-    "subType": "numeric",
-    "unite": "kWh",
-    "template": {
-      "mobile": "core::badge",
-      "dashboard": "core::badge"
-    }
-  },
-  {
-    "name": "REACTIVE_ENERGY_Q2",
-    "logicalId": "1.0:6.8.0",
-    "type": "info",
-    "subType": "numeric",
-    "unite": "kWh",
-    "template": {
-      "mobile": "core::badge",
-      "dashboard": "core::badge"
-    }
-  },
-  {
-    "name": "REACTIVE_ENERGY_Q2_T1",
-    "logicalId": "1.0:6.8.1",
-    "type": "info",
-    "subType": "numeric",
-    "unite": "kWh",
-    "template": {
-      "mobile": "core::badge",
-      "dashboard": "core::badge"
-    }
-  },
-  {
-    "name": "REACTIVE_ENERGY_Q2_T2",
-    "logicalId": "1.0:6.8.2",
-    "type": "info",
-    "subType": "numeric",
-    "unite": "kWh",
-    "template": {
-      "mobile": "core::badge",
-      "dashboard": "core::badge"
-    }
-  },
-  {
-    "name": "REACTIVE_ENERGY_Q3",
-    "logicalId": "1.0:7.8.0",
-    "type": "info",
-    "subType": "numeric",
-    "unite": "kWh",
-    "template": {
-      "mobile": "core::badge",
-      "dashboard": "core::badge"
-    }
-  },
-  {
-    "name": "REACTIVE_ENERGY_Q3_T1",
-    "logicalId": "1.0:7.8.1",
-    "type": "info",
-    "subType": "numeric",
-    "unite": "kWh",
-    "template": {
-      "mobile": "core::badge",
-      "dashboard": "core::badge"
-    }
-  },
-  {
-    "name": "REACTIVE_ENERGY_Q3_T2",
-    "logicalId": "1.0:7.8.2",
-    "type": "info",
-    "subType": "numeric",
-    "unite": "kWh",
-    "template": {
-      "mobile": "core::badge",
-      "dashboard": "core::badge"
-    }
-  },
-  {
-    "name": "REACTIVE_ENERGY_Q4",
-    "logicalId": "1.0:8.8.0",
-    "type": "info",
-    "subType": "numeric",
-    "unite": "kWh",
-    "template": {
-      "mobile": "core::badge",
-      "dashboard": "core::badge"
-    }
-  },
-  {
-    "name": "REACTIVE_ENERGY_Q4_T1",
-    "logicalId": "1.0:8.8.1",
-    "type": "info",
-    "subType": "numeric",
-    "unite": "kWh",
-    "template": {
-      "mobile": "core::badge",
-      "dashboard": "core::badge"
-    }
-  },
-  {
-    "name": "REACTIVE_ENERGY_Q4_T2",
-    "logicalId": "1.0:8.8.2",
-    "type": "info",
-    "subType": "numeric",
-    "unite": "kWh",
-    "template": {
-      "mobile": "core::badge",
-      "dashboard": "core::badge"
-    }
-  },
-  {
-    "name": "TARIF",
+    "name": "{{Tarif}}",
     "logicalId": "tarif",
     "type": "info",
     "subType": "numeric",
     "template": {
       "mobile": "core::badge",
       "dashboard": "core::badge"
+    },
+    "display" : {
+      "forceReturnLineBefore" : "1"
+    }
+  },
+  {
+    "name": "{{Puissance prélevée}}",
+    "logicalId": "1.0:1.7.0",
+    "type": "info",
+    "subType": "numeric",
+    "unite": "W",
+    "configuration" : {
+      "MQTTname": "ACTIVE_POWER_P"
+    }
+  },
+  {
+    "name": "{{Puissance injectée}}",
+    "logicalId": "1.0:2.7.0",
+    "type": "info",
+    "subType": "numeric",
+    "unite": "W",
+    "configuration" : {
+      "MQTTname": "ACTIVE_POWER_N"
+    }
+  },
+  {
+    "name": "{{Intensité phase 1}}",
+    "logicalId": "1.0:31.7.0",
+    "type": "info",
+    "subType": "numeric",
+    "unite": "A",
+    "configuration": {
+      "MQTTname": "CURRENT_L1",
+      "minValue": 0,
+      "maxValue": 25
+    },
+    "display" : {
+      "forceReturnLineBefore" : "1"
+    }
+  },
+  {
+    "name": "{{Intensité phase 2}}",
+    "logicalId": "1.0:51.7.0",
+    "type": "info",
+    "subType": "numeric",
+    "unite": "A",
+    "configuration": {
+      "MQTTname": "CURRENT_L2",
+      "minValue": 0,
+      "maxValue": 25
+    }
+  },
+  {
+    "name": "{{Intensité phase 3}}",
+    "logicalId": "1.0:71.7.0",
+    "type": "info",
+    "subType": "numeric",
+    "unite": "A",
+    "configuration": {
+      "MQTTname": "CURRENT_L3",
+      "minValue": 0,
+      "maxValue": 25
+    }
+  },
+  {
+    "name": "{{Tension phase 1}}",
+    "logicalId": "1.0:32.7.0",
+    "type": "info",
+    "subType": "numeric",
+    "unite": "V",
+    "configuration": {
+      "MQTTname": "VOLTAGE_L1",
+      "minValue": 0,
+      "maxValue": 250
+    },
+    "display" : {
+      "forceReturnLineBefore" : "1"
+    }
+  },
+  {
+    "name": "{{Tension phase 2}}",
+    "logicalId": "1.0:52.7.0",
+    "type": "info",
+    "subType": "numeric",
+    "unite": "V",
+    "configuration": {
+      "MQTTname": "VOLTAGE_L2",
+      "minValue": 0,
+      "maxValue": 250
+    }
+  },
+  {
+    "name": "{{Tension phase 3}}",
+    "logicalId": "1.0:72.7.0",
+    "type": "info",
+    "subType": "numeric",
+    "unite": "V",
+    "configuration": {
+      "MQTTname": "VOLTAGE_L3",
+      "minValue": 0,
+      "maxValue": 250
+    }
+  },
+  {
+    "name": "{{Puissance prélevée phase 1}}",
+    "logicalId": "1.0:21.7.0",
+    "type": "info",
+    "subType": "numeric",
+    "unite": "W",
+    "configuration": {
+      "MQTTname": "ACTIVE_POWER_P_L1"
+    },
+    "display" : {
+      "forceReturnLineBefore" : "1"
+    }
+  },
+  {
+    "name": "{{Puissance prélevée phase 2}}",
+    "logicalId": "1.0:41.7.0",
+    "type": "info",
+    "subType": "numeric",
+    "unite": "W",
+    "configuration": {
+      "MQTTname": "ACTIVE_POWER_P_L2"
+    }
+  },
+  {
+    "name": "{{Puissance prélevée phase 3}}",
+    "logicalId": "1.0:61.7.0",
+    "type": "info",
+    "subType": "numeric",
+    "unite": "W",
+    "configuration": {
+      "MQTTname": "ACTIVE_POWER_P_L3"
+    }
+  },
+  {
+    "name": "{{Puissance injectée phase 1}}",
+    "logicalId": "1.0:22.7.0",
+    "type": "info",
+    "subType": "numeric",
+    "unite": "W",
+    "configuration": {
+      "MQTTname": "ACTIVE_POWER_N_L1"
+    },
+    "display" : {
+      "forceReturnLineBefore" : "1"
+    }
+  },
+  {
+    "name": "{{Puissance injectée phase 2}}",
+    "logicalId": "1.0:42.7.0",
+    "type": "info",
+    "subType": "numeric",
+    "unite": "W",
+    "configuration": {
+      "MQTTname": "ACTIVE_POWER_N_L2"
+    }
+  },
+  {
+    "name": "{{Puissance injectée phase 3}}",
+    "logicalId": "1.0:62.7.0",
+    "type": "info",
+    "subType": "numeric",
+    "unite": "W",
+    "configuration": {
+      "MQTTname": "ACTIVE_POWER_N_L3"
+    }
+  },
+  {
+    "name": "{{Puissance réactive prélevée}}",
+    "logicalId": "1.0:3.7.0",
+    "type": "info",
+    "subType": "numeric",
+    "unite": "var",
+    "configuration": {
+      "MQTTname": "REACTIVE_POWER_P"
+    },
+    "display" : {
+      "forceReturnLineBefore" : "1"
+    }
+  },
+  {
+    "name": "{{Puissance réactive prélevée phase 1}}",
+    "logicalId": "1.0:23.7.0",
+    "type": "info",
+    "subType": "numeric",
+    "unite": "var",
+    "configuration": {
+      "MQTTname": "REACTIVE_POWER_P_L1"
+    }
+  },
+  {
+    "name": "{{Puissance réactive prélevée phase 2}}",
+    "logicalId": "1.0:43.7.0",
+    "type": "info",
+    "subType": "numeric",
+    "unite": "var",
+    "configuration": {
+      "MQTTname": "REACTIVE_POWER_P_L2"
+    }
+  },
+  {
+    "name": "{{Puissance réactive prélevée phase 3}}",
+    "logicalId": "1.0:63.7.0",
+    "type": "info",
+    "subType": "numeric",
+    "unite": "var",
+    "configuration": {
+      "MQTTname": "REACTIVE_POWER_P_L3"
+    }
+  },
+  {
+    "name": "{{Puissance réactive injectée phase 1}}",
+    "logicalId": "1.0:24.7.0",
+    "type": "info",
+    "subType": "numeric",
+    "unite": "var",
+    "configuration" : {
+      "MQTTname": "REACTIVE_POWER_N_L1"
+    },
+    "display" : {
+      "forceReturnLineBefore" : "1"
+    }
+  },
+  {
+    "name": "{{Puissance réactive injectée phase 2}}",
+    "logicalId": "1.0:44.7.0",
+    "type": "info",
+    "subType": "numeric",
+    "unite": "var",
+    "configuration" : {
+      "MQTTname": "REACTIVE_POWER_N_L2"
+    }
+  },
+  {
+    "name": "{{Puissance réactive injectée phase 3}}",
+    "logicalId": "1.0:64.7.0",
+    "type": "info",
+    "subType": "numeric",
+    "unite": "var",
+    "configuration" : {
+      "MQTTname": "REACTIVE_POWER_N_L3"
+    }
+  },
+  {
+    "name": "{{Angle UI phase 1}}",
+    "logicalId": "1.0:81.7.40",
+    "type": "info",
+    "subType": "numeric",
+    "configuration" : {
+      "MQTTname": "ANGLE_UI_L1"
+    },
+    "display" : {
+      "forceReturnLineBefore" : "1"
+    }
+  },
+  {
+    "name": "{{Angle UI phase 2}}",
+    "logicalId": "1.0:81.7.51",
+    "type": "info",
+    "subType": "numeric",
+    "configuration" : {
+      "MQTTname": "ANGLE_UI_L2"
+    }
+  },
+  {
+    "name": "{{Angle UI phase 3}}",
+    "logicalId": "1.0:81.7.62",
+    "type": "info",
+    "subType": "numeric",
+    "configuration" : {
+       "MQTTname": "ANGLE_UI_L3"
+    }
+  },
+  {
+    "name": "{{Prélèvement réactif}}",
+    "logicalId": "1.0:3.8.0",
+    "type": "info",
+    "subType": "numeric",
+    "unite": "varh",
+    "template": {
+      "mobile": "core::badge",
+      "dashboard": "core::badge"
+    },
+    "configuration" : {
+      "historizeRound" : "3",
+      "MQTTname": "REACTIVE_ENERGY_P"
+    },
+    "display" : {
+      "forceReturnLineBefore" : "1"
+    }
+  },
+  {
+    "name": "{{Prélèvement réactif heures pleines}}",
+    "logicalId": "1.0:3.8.1",
+    "type": "info",
+    "subType": "numeric",
+    "unite": "varh",
+    "template": {
+      "mobile": "core::badge",
+      "dashboard": "core::badge"
+    },
+    "configuration" : {
+      "historizeRound" : "3",
+      "MQTTname": "REACTIVE_ENERGY_P_T1"
+    }
+  },
+  {
+    "name": "{{Prélèvement réactif heures creuses}}",
+    "logicalId": "1.0:3.8.2",
+    "type": "info",
+    "subType": "numeric",
+    "unite": "varh",
+    "template": {
+      "mobile": "core::badge",
+      "dashboard": "core::badge"
+    },
+    "configuration" : {
+      "historizeRound" : "3",
+      "MQTTname": "REACTIVE_ENERGY_P_T2"
+    }
+  },
+  {
+    "name": "{{Injection réactif}}",
+    "logicalId": "1.0:4.8.0",
+    "type": "info",
+    "subType": "numeric",
+    "unite": "varh",
+    "template": {
+      "mobile": "core::badge",
+      "dashboard": "core::badge"
+    },
+    "configuration" : {
+      "historizeRound" : "3",
+      "MQTTname": "REACTIVE_ENERGY_N"
+    },
+    "display" : {
+      "forceReturnLineBefore" : "1"
+    }
+  },
+  {
+    "name": "{{Injection réactif heures pleines}}",
+    "logicalId": "1.0:4.8.1",
+    "type": "info",
+    "subType": "numeric",
+    "unite": "varh",
+    "template": {
+      "mobile": "core::badge",
+      "dashboard": "core::badge"
+    },
+    "configuration" : {
+      "historizeRound" : "3",
+      "MQTTname": "REACTIVE_ENERGY_N_T1"
+    }
+  },
+  {
+    "name": "{{Injection réactif heures creuses}}",
+    "logicalId": "1.0:4.8.2",
+    "type": "info",
+    "subType": "numeric",
+    "unite": "varh",
+    "template": {
+      "mobile": "core::badge",
+      "dashboard": "core::badge"
+    },
+    "configuration" : {
+      "historizeRound" : "3",
+      "MQTTname": "REACTIVE_ENERGY_N_T2"
+    }
+  },
+  {
+    "name": "{{Prélèvement réactif cadran 1}}",
+    "logicalId": "1.0:5.8.0",
+    "type": "info",
+    "subType": "numeric",
+    "unite": "Wh",
+    "template": {
+      "mobile": "core::badge",
+      "dashboard": "core::badge"
+    },
+    "configuration" : {
+      "historizeRound" : "3",
+      "MQTTname": "REACTIVE_ENERGY_Q1"
+    },
+    "display" : {
+      "forceReturnLineBefore" : "1"
+    }
+  },
+  {
+    "name": "{{Prélèvement réactif cadran 1 heures pleines}}",
+    "logicalId": "1.0:5.8.1",
+    "type": "info",
+    "subType": "numeric",
+    "unite": "Wh",
+    "template": {
+      "mobile": "core::badge",
+      "dashboard": "core::badge"
+    },
+    "configuration" : {
+      "historizeRound" : "3",
+      "MQTTname": "REACTIVE_ENERGY_Q1_T1"
+    }
+  },
+  {
+    "name": "{{Prélèvement réactif cadran 1 heures creuses}}",
+    "logicalId": "1.0:5.8.2",
+    "type": "info",
+    "subType": "numeric",
+    "unite": "Wh",
+    "template": {
+      "mobile": "core::badge",
+      "dashboard": "core::badge"
+    },
+    "configuration" : {
+      "historizeRound" : "3",
+      "MQTTname": "REACTIVE_ENERGY_Q1_T2"
+    }
+  },
+  {
+    "name": "{{Prélèvement réactif cadran 2}}",
+    "logicalId": "1.0:6.8.0",
+    "type": "info",
+    "subType": "numeric",
+    "unite": "Wh",
+    "template": {
+      "mobile": "core::badge",
+      "dashboard": "core::badge"
+    },
+    "configuration" : {
+      "historizeRound" : "3",
+      "MQTTname": "REACTIVE_ENERGY_Q2"
+    }
+  },
+  {
+    "name": "{{Prélèvement réactif cadran 2 heures pleines}}",
+    "logicalId": "1.0:6.8.1",
+    "type": "info",
+    "subType": "numeric",
+    "unite": "Wh",
+    "template": {
+      "mobile": "core::badge",
+      "dashboard": "core::badge"
+    },
+    "configuration" : {
+      "historizeRound" : "3",
+      "MQTTname": "REACTIVE_ENERGY_Q2_T1"
+    }
+  },
+  {
+    "name": "{{Prélèvement réactif cadran 2 heures creuses}}",
+    "logicalId": "1.0:6.8.2",
+    "type": "info",
+    "subType": "numeric",
+    "unite": "Wh",
+    "template": {
+      "mobile": "core::badge",
+      "dashboard": "core::badge"
+    },
+    "configuration" : {
+      "historizeRound" : "3",
+      "MQTTname": "REACTIVE_ENERGY_Q2_T2"
+    }
+  },
+  {
+    "name": "{{Prélèvement réactif cadran 3}}",
+    "logicalId": "1.0:7.8.0",
+    "type": "info",
+    "subType": "numeric",
+    "unite": "Wh",
+    "template": {
+      "mobile": "core::badge",
+      "dashboard": "core::badge"
+    },
+    "configuration" : {
+      "historizeRound" : "3",
+      "MQTTname": "REACTIVE_ENERGY_Q3"
+    }
+  },
+  {
+    "name": "{{Prélèvement réactif cadran 3 heures pleines}}",
+    "logicalId": "1.0:7.8.1",
+    "type": "info",
+    "subType": "numeric",
+    "unite": "Wh",
+    "template": {
+      "mobile": "core::badge",
+      "dashboard": "core::badge"
+    },
+    "configuration" : {
+      "historizeRound" : "3",
+      "MQTTname": "REACTIVE_ENERGY_Q3_T1"
+    }
+  },
+  {
+    "name": "{{Prélèvement réactif cadran 3 heures creuses}}",
+    "logicalId": "1.0:7.8.2",
+    "type": "info",
+    "subType": "numeric",
+    "unite": "Wh",
+    "template": {
+      "mobile": "core::badge",
+      "dashboard": "core::badge"
+    },
+    "configuration" : {
+      "historizeRound" : "3",
+      "MQTTname": "REACTIVE_ENERGY_Q3_T2"
+    }
+  },
+  {
+    "name": "{{Prélèvement réactif cadran 4}}",
+    "logicalId": "1.0:8.8.0",
+    "type": "info",
+    "subType": "numeric",
+    "unite": "Wh",
+    "template": {
+      "mobile": "core::badge",
+      "dashboard": "core::badge"
+    },
+    "configuration" : {
+      "historizeRound" : "3",
+      "MQTTname": "REACTIVE_ENERGY_Q4"
+    }
+  },
+  {
+    "name": "{{Prélèvement réactif cadran 4 heures pleines}}",
+    "logicalId": "1.0:8.8.1",
+    "type": "info",
+    "subType": "numeric",
+    "unite": "Wh",
+    "template": {
+      "mobile": "core::badge",
+      "dashboard": "core::badge"
+    },
+    "configuration" : {
+      "historizeRound" : "3",
+      "MQTTname": "REACTIVE_ENERGY_Q4"
+    }
+  },
+  {
+    "name": "{{Prélèvement réactif Q4 heures creuses}}",
+    "logicalId": "1.0:8.8.2",
+    "type": "info",
+    "subType": "numeric",
+    "unite": "Wh",
+    "template": {
+      "mobile": "core::badge",
+      "dashboard": "core::badge"
+    },
+    "configuration" : {
+      "historizeRound" : "3",
+      "MQTTname": "REACTIVE_ENERGY_Q4_T2"
     }
   }
 ]

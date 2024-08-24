@@ -38,6 +38,17 @@ class SmartMeterUSB extends eqLogic {
 		return __('compteur',__FILE__) . "_" . $nextNameId;
 	}
 	
+	public static function getCmdsConfig() {
+		$cmdFileName =__DIR__ . '/../config/cmds.json';
+		$cmds = file_get_contents($cmdFileName);
+		if ($cmds === false) {
+			throw new Exception (sprintf(__("Erreur lors de la lecture du fichier %s",__FILE__),$cmdFileName));
+		}
+		$cmds = translate::exec($cmds, $cmdFileName);
+		$cmds = json_decode($cmds, true);
+		return $cmds;
+	}
+
 	public static function backupExclude() {
 		return [
 			'resources/venv'
@@ -248,32 +259,9 @@ class SmartMeterUSB extends eqLogic {
 						continue;
 					}
 					$logicalId = $OBISCodes[$mesure];
-					$cmd = $counter->getCmd('info',$logicalId);
+					$cmd = $counter->createAndGetCmd($logicalId);
 					if (!is_object($cmd)) {
-						if (config::byKey('autoCreateCmd',__CLASS__)) {
-							log::add(__CLASS__,"info",sprintf(__("Création de la commande %s", __FILE__ ),$logicalId));
-							$cmdFileName =__DIR__ . '/../config/cmds.json';
-							$cmds = file_get_contents($cmdFileName);
-							if ($cmds === false) {
-								throw new Exception (sprintf(__("Erreur lors de la lecture du fichier %s",__FILE__),$cmdFileName));
-							}
-							$cmds = json_decode($cmds, true);
-							foreach ($cmds as $cmd_a) {
-								if ($cmd_a['logicalId'] == $logicalId) {
-									$cmd = new SmartMeterUSBCmd();
-									utils::a2o($cmd,$cmd_a);
-									$cmd->seteqLogic_id($counter->getId());
-									$cmd->save();
-									$cmd = $counter->getCmd('info',$logicalId);
-									break;
-								}
-							}
-							continue;
-						} else {
-							log::add(__CLASS__,"warning",sprintf(__("La commande %s (%s) du compteur %s (%s) est introuvable",__FILE__),
-								$logicalId, $mesure, $counterNr, $counter->getName())); 
-							continue;
-						}
+						continue;
 					}
 					log::add(__CLASS__,"debug",sprintf("OBIS code: %-12s CmdName: %-20s Value:%-20s",$logicalId, $cmd->getName(), $value['value']));
 					$tarif = 0;
@@ -293,27 +281,7 @@ class SmartMeterUSB extends eqLogic {
 
 					}
 					if ($tarif != 0) {
-						$Tcmd = $counter->getCmd('info',"tarif");
-						if (!is_object($Tcmd)) {
-							if (config::byKey('autoCreateCmd',__CLASS__)) {
-								$cmdFileName =__DIR__ . '/../config/cmds.json';
-								$cmds = file_get_contents($cmdFileName);
-								if ($cmds === false) {
-									throw new Exception (sprintf(__("Erreur lors de la lecture du fichier %s",__FILE__),$cmdFileName));
-								}
-								$cmds = json_decode($cmds, true);
-								foreach ($cmds as $cmd_a) {
-									if ($cmd_a['logicalId'] == "tarif") {
-										$Tcmd = new SmartMeterUSBCmd();
-										utils::a2o($Tcmd,$cmd_a);
-										$Tcmd->seteqLogic_id($counter->getId());
-										$Tcmd->save();
-										$Tcmd = $counter->getCmd('info','tarif');
-										break;
-									}
-								}
-							}
-						}
+						$Tcmd = $counter->createAndGetCmd('tarif');
 						if (is_object($Tcmd)) {
 							$counter->checkAndUpdateCmd($Tcmd,$tarif);
 						}
@@ -336,22 +304,13 @@ class SmartMeterUSB extends eqLogic {
 
 	/*     * *********************Méthodes d'instance************************* */
 
-	// Fonction exécutée automatiquement avant la création de l'équipement
-	public function preInsert() {
-	}
-
 	// Fonction exécutée automatiquement après la création de l'équipement
 	public function postInsert() {
 		if (config::byKey('autoCreateCounter',__CLASS__,1) == 1) {
 			log::add(__CLASS__,"info",__("Les commandes seront céées automatiquement",__FILE__));
 		} else {
 			log::add(__CLASS__,"info",__("Céation des commandes",__FILE__) . "...");
-			$cmdFileName =__DIR__ . '/../config/cmds.json';
-			$cmds = file_get_contents($cmdFileName);
-			if ($cmds === false) {
-				throw new Exception (sprintf(__("Erreur lors de la lecture du fichier %s",__FILE__),$cmdFileName));
-			}
-			$cmds = json_decode($cmds, true);
+			$cmds = self::getCmdsConfig();
 			foreach ($cmds as $cmd_a) {
 				$cmd = new SmartMeterUSBCmd();
 				utils::a2o($cmd,$cmd_a);
@@ -361,40 +320,54 @@ class SmartMeterUSB extends eqLogic {
 		}
 	}
 
-	// Fonction exécutée automatiquement avant la mise à jour de l'équipement
-	public function preUpdate() {
+	public function getImage() {
+		$dir = realpath (__DIR__ . '/../../desktop/img');
+		$dir = preg_replace('/^.*?(\/plugins\/.*)/','\1', $dir);
+		return $dir . '/lge450.png';
 	}
 
-	// Fonction exécutée automatiquement après la mise à jour de l'équipement
-	public function postUpdate() {
+	public function createAndGetCmd ($_logicalId) {
+		$cmd = $this->getCmd('info',$_logicalId);
+		if (is_object($cmd)) {
+			return $cmd;
+		}
+		if (! config::byKey('autoCreateCmd',__CLASS__)) {
+			return null;
+		}
+		log::add(__CLASS__,"info",sprintf(__("Création de la commande '%s' pour le compteur '%s' (%s)",__FILE__),$_logicalId, $this->getLogicalId(), $this->getHumanName()));
+		$cmds = self::getCmdsConfig();
+		foreach ($cmds as $cmd_a) {
+			if ($cmd_a['logicalId'] == $_logicalId) {
+				$cmd = new SmartMeterUSBCmd();
+				utils::a2o($cmd,$cmd_a);
+				$cmd->seteqLogic_id($this->getId());
+				$cmd->save();
+				break;
+			}
+		}
+		$cmd = $this->getCmd('info',$_logicalId);
+		if (!is_object($cmd)) {
+			throw new Exception (sprintf(__("Erreur lors de la création de la commande %s pour le compteur %s (%s)",__FILE__),$_logicalId, $this->getLogicalId(), $this->getHumanName()));
+		}
+		return $cmd;
 	}
 
-	// Fonction exécutée automatiquement avant la sauvegarde (création ou mise à jour) de l'équipement
-	public function preSave() {
+	public function sortCmds() {
+		log::add(__CLASS__,"info",sprintf(__("Tri des commandes du compteur '%s' (%s)",__FILE__),$this->getLogicalId(),$this->getHumanName()));
+		$cmds = self::getCmdsConfig();
+		$order=1;
+		foreach ($cmds as $cmd_a) {
+			$cmd = $this->getCmd(null,$cmd_a['logicalId']);
+			if (!is_object($cmd)) {
+				continue;
+			}
+			$cmd->setOrder($order);
+			$order++;
+			if ($cmd->getChanged()) {
+				$cmd->save();
+			}
+		}
 	}
-
-	// Fonction exécutée automatiquement après la sauvegarde (création ou mise à jour) de l'équipement
-	public function postSave() {
-	}
-
-	// Fonction exécutée automatiquement avant la suppression de l'équipement
-	public function preRemove() {
-	}
-
-	// Fonction exécutée automatiquement après la suppression de l'équipement
-	public function postRemove() {
-	}
-
-	/*
-	* Permet de crypter/décrypter automatiquement des champs de configuration des équipements
-	* Exemple avec le champ "Mot de passe" (password)
-	public function decrypt() {
-	$this->setConfiguration('password', utils::decrypt($this->getConfiguration('password')));
-	}
-	public function encrypt() {
-	$this->setConfiguration('password', utils::encrypt($this->getConfiguration('password')));
-	}
-	*/
 
 	/*
 	* Permet de modifier l'affichage du widget (également utilisable par les commandes)
@@ -413,6 +386,9 @@ class SmartMeterUSBCmd extends cmd {
 
 	/*     * ***********************Methode static*************************** */
 
+	public function postInsert() {
+		$this->getEqLogic()->sortCmds();
+	}
 
 	/*     * *********************Methode d'instance************************* */
 
