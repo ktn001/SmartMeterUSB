@@ -49,6 +49,16 @@ class SmartMeterUSB extends eqLogic {
 		return $cmds;
 	}
 
+	public static function getCounters() {
+		$counterFileName =__DIR__ . '/../config/counters.json';
+		$counters = file_get_contents($counterFileName);
+		if ($counters === false) {
+			throw new Exception (sprintf(__("Erreur lors de la lecture du fichier %s",__FILE__),$counterFileName));
+		}
+		$counters = json_decode($counters, true);
+		return $counters;
+	}
+
 	public static function backupExclude() {
 		return [
 			'resources/venv'

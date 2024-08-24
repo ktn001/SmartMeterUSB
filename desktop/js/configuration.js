@@ -25,6 +25,7 @@ if (typeof SmartMeterUSBConfig === "undefined") {
   };
 
   SmartMeterUSBConfig.addAdapter = function (adapter) {
+    console.log(counters)
     let adptr = '<div class="adapter col-lg-4 col-md-6 col-sm-12">';
     adptr +=
       '<div  style="background-color:var(--bg-modal-color);margin-top:5px; padding:10px">';
@@ -47,12 +48,9 @@ if (typeof SmartMeterUSBConfig === "undefined") {
     adptr += "</label>";
     adptr += '<div class="col-sm-9">';
     adptr += '<select class="adapterAttr" data-l1key="type">';
-    adptr += '<option value="lge360">Landis+Gyr E360</option>';
-    adptr += '<option value="lge450">Landis+Gyr E450</option>';
-    adptr += '<option value="lge570">Landis+Gyr E570</option>';
-    adptr += '<option value="iskraam550">Iskraemeco AM550</option>';
-    adptr +=
-      '<option value="kamstrup_han">Kamstrup OMNIPOWER with HAN-NVE module</option>';
+    Object.keys(counters).forEach(function(key) {
+      adptr += '<option value="' + key +'">' + counters[key] + '</option>';
+    })
     adptr += "</select>";
     adptr += "</div>";
     adptr += "</div>";

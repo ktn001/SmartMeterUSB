@@ -8,6 +8,9 @@ if (!isConnect('admin')) {
 $plugin = plugin::byId('SmartMeterUSB');
 sendVarToJS('eqType', $plugin->getId());
 $eqLogics = eqLogic::byType($plugin->getId());
+
+
+sendVarToJS('counters', SmartMeterUSB::getCounters());
 ?>
 
 <div class="row row-overflow">
