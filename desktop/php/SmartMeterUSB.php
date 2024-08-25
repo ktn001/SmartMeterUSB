@@ -165,7 +165,7 @@ sendVarToJS('counters', SmartMeterUSB::getCounters());
 								</div>
 							</div>
 							<div class="col-sm-12">
-							  <img id="img_counter" class="img-responsive">
+							  <img id="img_counter" class="img-responsive" style="max-height:250px;margin-left:auto;margin-right:auto;margin-top:50px">
 							<div>
 						</div>
 					</fieldset>

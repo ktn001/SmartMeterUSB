@@ -59,13 +59,8 @@ try {
 		ajax::success();
 	}
 
-	if (init('action') == 'getImageForConterType') {
-		$counterType = init('counterType');
-		if ($counterType == '') {
-			throw new Exception(__('Type de compteur indéfini',__FILE__));
-		}
-		$imagePath = SmartMeterUSB::getImageForCounterType($counterType);
-		ajax::success($imagePath);
+	if (init('action') == 'getImageForCounterType') {
+		ajax::success(SmartMeterUSB::getImageForCounterType(init('counterType')));
 	}
 
 	throw new Exception(__('Aucune méthode correspondante à', __FILE__) . ' : ' . init('action'));
