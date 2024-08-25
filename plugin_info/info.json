@@ -3,7 +3,7 @@
 	"name": "SmartMeter USB",
 	"pluginVersion": "0.1",
 	"description": {
-		"fr_FR": "Plugin de se connecter à un SmartMeter équipé d'un port P1 via un apatateur USB",
+		"fr_FR": "Plugin pour se connecter à un SmartMeter équipé d'un port P1 via un apatateur USB",
 		"en_US": "Plugin to connect to a SmartMeter equipped with a P1 port via a USB adapter",
 		"es_ES": "Plugin para conectarse a un SmartMeter equipado con un puerto P1 mediante un adaptador USB",
 		"de_DE": "Plugin zur Verbindung mit einem SmartMeter mit P1-Anschluss über einen USB-Apatator",

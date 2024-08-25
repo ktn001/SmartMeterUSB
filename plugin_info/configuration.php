@@ -16,6 +16,8 @@
 * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
 */
 
+sendVarToJs('counters', SmartMeterUSB::getCounters());
+
 require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
 include_file('core', 'authentification', 'php');
 if (!isConnect()) {
