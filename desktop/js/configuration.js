@@ -61,7 +61,7 @@ if (typeof SmartMeterUSBConfig === "undefined") {
     adptr += "</label>"
     adptr += '<div class="col-sm-9">'
     adptr +=
-      '<input class="adapterAttr" data-l1key="port" style="width:100%" placeholder="/dev/USB0"></input>'
+      '<input class="adapterAttr" data-l1key="port" style="width:100%" placeholder="/dev/ttyUSB0"></input>'
     adptr += "</div>"
     adptr += "</div>"
     adptr += '<div class="form-group">'
