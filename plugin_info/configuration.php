@@ -26,34 +26,35 @@ if (!isConnect()) {
 }
 ?>
 <div id="div_SmartMeterUSBConfig">
-	<form class="form-horizontal">
-		<fieldset>
-			<div>
-				<legend><i class="fas fa-tachometer-alt"></i> {{Compteurs}}
+	<div class="col-md-6 col-sm-12 form-horizontal">
+		<div>
+			<legend><i class="fas fa-tachometer-alt"></i> {{Compteurs}}</legend>
+		</div>
+		<div class="form-group row">
+			<label class="col-sm-4 control-label">{{Création auto des compteurs}}</label>
+			<div class="col-sm-4">
+				<input class="configKey form-control" type="checkbox" data-l1key="autoCreateCounter" checked></input>
 			</div>
-			<div class="form-group">
-				<label class="col-sm-2 col-xs-6 control-label">{{Création auto des compteurs}}</label>
-				<div class="col-sm-9 col-xs-6">
-					<input class="configKey" type="checkbox" data-l1key="autoCreateCounter" checked></input>
-				</div>
-			<div class="form-group">
+		</div>
+		<div class="form-group row">
+			<label class="col-sm-4 control-label">{{Création auto des commandes}}</label>
+			<div class="col-sm-4">
+				<input class="configKey form-control" type="checkbox" data-l1key="autoCreateCmd" checked></input>
 			</div>
-				<label class="col-sm-2 col-xs-6 control-label">{{Création auto des commandes}}</label>
-				<div class="col-sm-9 col-xs-6">
-					<input class="configKey" type="checkbox" data-l1key="autoCreateCmd" checked></input>
-				</div>
-			</div>
-		</fieldset>
-		<fieldset>
-			<div>
-				<legend><i class="fab fa-usb"></i> {{Adaptateurs}}
-					<a class="btn btn-success btn-xs pull-right" id="bt_addAdapter" style="position:relative;top:-5px">
-						<i class="fas fa-plus-circle"></i> {{Ajouter un adaptateur}}
-					</a>
-				</legend>
-				<div id='adaptersContainer'></div>
-			</div>
-		</fieldset>
-	</form>
+		</div>
+	</div>
+	<div class="col-md-6 col-sm-12 form-horizontal">
+		<div>
+			<legend><i class="fas fa-tachometer-alt"></i> {{Plages horaire}}</legend>
+		</div>
+	</div>
+	<div class="col-sm-12 form-horizontal">
+		<legend><i class="fab fa-usb"></i> {{Adaptateurs}}
+			<a class="btn btn-success btn-xs pull-right" id="bt_addAdapter" style="position:relative;top:-5px">
+				<i class="fas fa-plus-circle"></i> {{Ajouter un adaptateur}}
+			</a>
+		</legend>
+		<div id='adaptersContainer'></div>
+	</div>
 </div>
 <?php include_file('desktop', 'configuration', 'js', 'SmartMeterUSB'); ?>
