@@ -9,9 +9,9 @@
       "mobile": "core::badge",
       "dashboard": "core::badge"
     },
-    "configuration" : {
-      "MQTTname" : "ACTIVE_ENERGY_P",
-      "historizeRound" : "3"
+    "configuration": {
+      "MQTTname": "ACTIVE_ENERGY_P",
+      "historizeRound": "3"
     }
   },
   {
@@ -24,9 +24,9 @@
       "mobile": "core::badge",
       "dashboard": "core::badge"
     },
-    "configuration" : {
+    "configuration": {
       "MQTTname": "ACTIVE_ENERGY_P_T1",
-      "historizeRound" : "3"
+      "historizeRound": "3"
     }
   },
   {
@@ -39,9 +39,9 @@
       "mobile": "core::badge",
       "dashboard": "core::badge"
     },
-    "configuration" : {
+    "configuration": {
       "MQTTname": "ACTIVE_ENERGY_P_T2",
-      "historizeRound" : "3"
+      "historizeRound": "3"
     }
   },
   {
@@ -54,12 +54,12 @@
       "mobile": "core::badge",
       "dashboard": "core::badge"
     },
-    "display" : {
-       "forceReturnLineBefore" : "1"
+    "display": {
+      "forceReturnLineBefore": "1"
     },
-    "configuration" : {
+    "configuration": {
       "MQTTname": "ACTIVE_ENERGY_N",
-      "historizeRound" : "3"
+      "historizeRound": "3"
     }
   },
   {
@@ -72,9 +72,9 @@
       "mobile": "core::badge",
       "dashboard": "core::badge"
     },
-    "configuration" : {
+    "configuration": {
       "MQTTname": "ACTIVE_ENERGY_N_T1",
-      "historizeRound" : "3"
+      "historizeRound": "3"
     }
   },
   {
@@ -87,9 +87,9 @@
       "mobile": "core::badge",
       "dashboard": "core::badge"
     },
-    "configuration" : {
+    "configuration": {
       "MQTTname": "ACTIVE_ENERGY_N_T2",
-      "historizeRound" : "3"
+      "historizeRound": "3"
     }
   },
   {
@@ -101,8 +101,8 @@
       "mobile": "core::tile",
       "dashboard": "core::tile"
     },
-    "display" : {
-      "forceReturnLineBefore" : "1"
+    "display": {
+      "forceReturnLineBefore": "1"
     }
   },
   {
@@ -111,7 +111,7 @@
     "type": "info",
     "subType": "numeric",
     "unite": "W",
-    "configuration" : {
+    "configuration": {
       "MQTTname": "ACTIVE_POWER_P"
     }
   },
@@ -121,7 +121,7 @@
     "type": "info",
     "subType": "numeric",
     "unite": "W",
-    "configuration" : {
+    "configuration": {
       "MQTTname": "ACTIVE_POWER_N"
     }
   },
@@ -136,8 +136,8 @@
       "minValue": 0,
       "maxValue": 25
     },
-    "display" : {
-      "forceReturnLineBefore" : "1"
+    "display": {
+      "forceReturnLineBefore": "1"
     }
   },
   {
@@ -175,8 +175,8 @@
       "minValue": 0,
       "maxValue": 250
     },
-    "display" : {
-      "forceReturnLineBefore" : "1"
+    "display": {
+      "forceReturnLineBefore": "1"
     }
   },
   {
@@ -212,8 +212,8 @@
     "configuration": {
       "MQTTname": "ACTIVE_POWER_P_L1"
     },
-    "display" : {
-      "forceReturnLineBefore" : "1"
+    "display": {
+      "forceReturnLineBefore": "1"
     }
   },
   {
@@ -245,8 +245,8 @@
     "configuration": {
       "MQTTname": "ACTIVE_POWER_N_L1"
     },
-    "display" : {
-      "forceReturnLineBefore" : "1"
+    "display": {
+      "forceReturnLineBefore": "1"
     }
   },
   {
@@ -278,8 +278,8 @@
     "configuration": {
       "MQTTname": "REACTIVE_POWER_P"
     },
-    "display" : {
-      "forceReturnLineBefore" : "1"
+    "display": {
+      "forceReturnLineBefore": "1"
     }
   },
   {
@@ -318,11 +318,11 @@
     "type": "info",
     "subType": "numeric",
     "unite": "var",
-    "configuration" : {
+    "configuration": {
       "MQTTname": "REACTIVE_POWER_N_L1"
     },
-    "display" : {
-      "forceReturnLineBefore" : "1"
+    "display": {
+      "forceReturnLineBefore": "1"
     }
   },
   {
@@ -331,7 +331,7 @@
     "type": "info",
     "subType": "numeric",
     "unite": "var",
-    "configuration" : {
+    "configuration": {
       "MQTTname": "REACTIVE_POWER_N_L2"
     }
   },
@@ -341,7 +341,7 @@
     "type": "info",
     "subType": "numeric",
     "unite": "var",
-    "configuration" : {
+    "configuration": {
       "MQTTname": "REACTIVE_POWER_N_L3"
     }
   },
@@ -350,11 +350,11 @@
     "logicalId": "1.0:81.7.40",
     "type": "info",
     "subType": "numeric",
-    "configuration" : {
+    "configuration": {
       "MQTTname": "ANGLE_UI_L1"
     },
-    "display" : {
-      "forceReturnLineBefore" : "1"
+    "display": {
+      "forceReturnLineBefore": "1"
     }
   },
   {
@@ -362,7 +362,7 @@
     "logicalId": "1.0:81.7.51",
     "type": "info",
     "subType": "numeric",
-    "configuration" : {
+    "configuration": {
       "MQTTname": "ANGLE_UI_L2"
     }
   },
@@ -371,8 +371,8 @@
     "logicalId": "1.0:81.7.62",
     "type": "info",
     "subType": "numeric",
-    "configuration" : {
-       "MQTTname": "ANGLE_UI_L3"
+    "configuration": {
+      "MQTTname": "ANGLE_UI_L3"
     }
   },
   {
@@ -385,12 +385,12 @@
       "mobile": "core::badge",
       "dashboard": "core::badge"
     },
-    "configuration" : {
-      "historizeRound" : "3",
+    "configuration": {
+      "historizeRound": "3",
       "MQTTname": "REACTIVE_ENERGY_P"
     },
-    "display" : {
-      "forceReturnLineBefore" : "1"
+    "display": {
+      "forceReturnLineBefore": "1"
     }
   },
   {
@@ -403,8 +403,8 @@
       "mobile": "core::badge",
       "dashboard": "core::badge"
     },
-    "configuration" : {
-      "historizeRound" : "3",
+    "configuration": {
+      "historizeRound": "3",
       "MQTTname": "REACTIVE_ENERGY_P_T1"
     }
   },
@@ -418,8 +418,8 @@
       "mobile": "core::badge",
       "dashboard": "core::badge"
     },
-    "configuration" : {
-      "historizeRound" : "3",
+    "configuration": {
+      "historizeRound": "3",
       "MQTTname": "REACTIVE_ENERGY_P_T2"
     }
   },
@@ -433,12 +433,12 @@
       "mobile": "core::badge",
       "dashboard": "core::badge"
     },
-    "configuration" : {
-      "historizeRound" : "3",
+    "configuration": {
+      "historizeRound": "3",
       "MQTTname": "REACTIVE_ENERGY_N"
     },
-    "display" : {
-      "forceReturnLineBefore" : "1"
+    "display": {
+      "forceReturnLineBefore": "1"
     }
   },
   {
@@ -451,8 +451,8 @@
       "mobile": "core::badge",
       "dashboard": "core::badge"
     },
-    "configuration" : {
-      "historizeRound" : "3",
+    "configuration": {
+      "historizeRound": "3",
       "MQTTname": "REACTIVE_ENERGY_N_T1"
     }
   },
@@ -466,8 +466,8 @@
       "mobile": "core::badge",
       "dashboard": "core::badge"
     },
-    "configuration" : {
-      "historizeRound" : "3",
+    "configuration": {
+      "historizeRound": "3",
       "MQTTname": "REACTIVE_ENERGY_N_T2"
     }
   },
@@ -481,12 +481,12 @@
       "mobile": "core::badge",
       "dashboard": "core::badge"
     },
-    "configuration" : {
-      "historizeRound" : "3",
+    "configuration": {
+      "historizeRound": "3",
       "MQTTname": "REACTIVE_ENERGY_Q1"
     },
-    "display" : {
-      "forceReturnLineBefore" : "1"
+    "display": {
+      "forceReturnLineBefore": "1"
     }
   },
   {
@@ -499,8 +499,8 @@
       "mobile": "core::badge",
       "dashboard": "core::badge"
     },
-    "configuration" : {
-      "historizeRound" : "3",
+    "configuration": {
+      "historizeRound": "3",
       "MQTTname": "REACTIVE_ENERGY_Q1_T1"
     }
   },
@@ -514,8 +514,8 @@
       "mobile": "core::badge",
       "dashboard": "core::badge"
     },
-    "configuration" : {
-      "historizeRound" : "3",
+    "configuration": {
+      "historizeRound": "3",
       "MQTTname": "REACTIVE_ENERGY_Q1_T2"
     }
   },
@@ -529,8 +529,8 @@
       "mobile": "core::badge",
       "dashboard": "core::badge"
     },
-    "configuration" : {
-      "historizeRound" : "3",
+    "configuration": {
+      "historizeRound": "3",
       "MQTTname": "REACTIVE_ENERGY_Q2"
     }
   },
@@ -544,8 +544,8 @@
       "mobile": "core::badge",
       "dashboard": "core::badge"
     },
-    "configuration" : {
-      "historizeRound" : "3",
+    "configuration": {
+      "historizeRound": "3",
       "MQTTname": "REACTIVE_ENERGY_Q2_T1"
     }
   },
@@ -559,8 +559,8 @@
       "mobile": "core::badge",
       "dashboard": "core::badge"
     },
-    "configuration" : {
-      "historizeRound" : "3",
+    "configuration": {
+      "historizeRound": "3",
       "MQTTname": "REACTIVE_ENERGY_Q2_T2"
     }
   },
@@ -574,8 +574,8 @@
       "mobile": "core::badge",
       "dashboard": "core::badge"
     },
-    "configuration" : {
-      "historizeRound" : "3",
+    "configuration": {
+      "historizeRound": "3",
       "MQTTname": "REACTIVE_ENERGY_Q3"
     }
   },
@@ -589,8 +589,8 @@
       "mobile": "core::badge",
       "dashboard": "core::badge"
     },
-    "configuration" : {
-      "historizeRound" : "3",
+    "configuration": {
+      "historizeRound": "3",
       "MQTTname": "REACTIVE_ENERGY_Q3_T1"
     }
   },
@@ -604,8 +604,8 @@
       "mobile": "core::badge",
       "dashboard": "core::badge"
     },
-    "configuration" : {
-      "historizeRound" : "3",
+    "configuration": {
+      "historizeRound": "3",
       "MQTTname": "REACTIVE_ENERGY_Q3_T2"
     }
   },
@@ -619,8 +619,8 @@
       "mobile": "core::badge",
       "dashboard": "core::badge"
     },
-    "configuration" : {
-      "historizeRound" : "3",
+    "configuration": {
+      "historizeRound": "3",
       "MQTTname": "REACTIVE_ENERGY_Q4"
     }
   },
@@ -634,8 +634,8 @@
       "mobile": "core::badge",
       "dashboard": "core::badge"
     },
-    "configuration" : {
-      "historizeRound" : "3",
+    "configuration": {
+      "historizeRound": "3",
       "MQTTname": "REACTIVE_ENERGY_Q4"
     }
   },
@@ -649,8 +649,8 @@
       "mobile": "core::badge",
       "dashboard": "core::badge"
     },
-    "configuration" : {
-      "historizeRound" : "3",
+    "configuration": {
+      "historizeRound": "3",
       "MQTTname": "REACTIVE_ENERGY_Q4_T2"
     }
   }

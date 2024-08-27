@@ -1,7 +1,7 @@
 {
-  "lge360" : "Landis+Gyr E360",
-  "lge450" : "Landis+Gyr E450",
-  "lge570" : "Landis+Gyr E570",
-  "iskraam550" : "Iskraemeco AM550",
-  "kamstrup_han" : "Kamstrup OMNIPOWER with HAN-NVE module"
+  "lge360": "Landis+Gyr E360",
+  "lge450": "Landis+Gyr E450",
+  "lge570": "Landis+Gyr E570",
+  "iskraam550": "Iskraemeco AM550",
+  "kamstrup_han": "Kamstrup OMNIPOWER with HAN-NVE module"
 }
