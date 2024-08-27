@@ -145,6 +145,9 @@
         "Ajouter un adaptateur": "Adapter hinzufügen",
         "Compteurs": "Zähler",
         "Création auto des commandes": "Automatische Erstellung von Befehlen",
-        "Création auto des compteurs": "Automatische Erstellung von Zählern"
+        "Création auto des compteurs": "Automatische Erstellung von Zählern",
+        "HC": "HC",
+        "HP": "HP",
+        "Plages horaire": "Zeitfenster"
     }
 }
