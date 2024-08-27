@@ -52,11 +52,11 @@ if (!isConnect()) {
 				<div class="form-group">
 					<label class="col-sm-1 control-label">1</label>
 					<div class="col-sm-4">
-						<input class="configKey form-control" data-l1key="tarif:1:txt" placeholder="HP"></input>
+						<input class="configKey form-control" data-l1key="tarif:1:txt" placeholder="{{HP}}"></input>
 					</div>
 					<label class="col-sm-1 control-label">2</label>
 					<div class="col-sm-4">
-						<input class="configKey form-control" data-l1key="tarif:2:txt" placeholder="HC"></input>
+						<input class="configKey form-control" data-l1key="tarif:2:txt" placeholder="{{HC}}"></input>
 					</div>
 				</div>
 			</fieldset>
