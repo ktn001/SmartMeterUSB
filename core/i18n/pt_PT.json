@@ -145,6 +145,9 @@
         "Ajouter un adaptateur": "Adicionar um adaptador",
         "Compteurs": "Contadores",
         "Création auto des commandes": "Criação automática de comandos",
-        "Création auto des compteurs": "Criação automática de contadores"
+        "Création auto des compteurs": "Criação automática de contadores",
+        "HC": "HC",
+        "HP": "HP",
+        "Plages horaire": "Fusos horários"
     }
 }

@@ -145,6 +145,9 @@
         "Ajouter un adaptateur": "Add an adapter",
         "Compteurs": "Counters",
         "Création auto des commandes": "Automatic creation of commands",
-        "Création auto des compteurs": "Automatic meter creation"
+        "Création auto des compteurs": "Automatic meter creation",
+        "HC": "HC",
+        "HP": "HP",
+        "Plages horaire": "Time zones"
     }
 }
