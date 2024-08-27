@@ -300,9 +300,13 @@ class SmartMeterUSB extends eqLogic {
 
 					}
 					if ($tarif != 0) {
-						$Tcmd = $counter->createAndGetCmd('tarif');
-						if (is_object($Tcmd)) {
-							$counter->checkAndUpdateCmd($Tcmd,$tarif);
+						$tarifCmd = $counter->createAndGetCmd('tarif');
+						if (is_object($tarifCmd)) {
+							$txt = config::byKey('tarif:' . $tarif . ':txt',__CLASS__,'');
+							if ($txt !== '') {
+								$tarif = $txt;
+							}
+							$counter->checkAndUpdateCmd($tarifCmd,$tarif);
 						}
 					}
 					$counter->checkAndUpdateCmd($cmd,$value['value']);

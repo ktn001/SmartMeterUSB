@@ -96,10 +96,10 @@
     "name": "{{Tarif}}",
     "logicalId": "tarif",
     "type": "info",
-    "subType": "numeric",
+    "subType": "string",
     "template": {
-      "mobile": "core::badge",
-      "dashboard": "core::badge"
+      "mobile": "core::tile",
+      "dashboard": "core::tile"
     },
     "display" : {
       "forceReturnLineBefore" : "1"
