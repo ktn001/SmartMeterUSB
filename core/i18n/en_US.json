@@ -19,7 +19,6 @@
         "Les commandes seront céées automatiquement": "Commands are generated automatically",
         "OBISCode pour la mesure %s introuvable": "OBISCode for measurement %s not found",
         "Tri des commandes du compteur '%s' (%s)": "Sort '%s' counter commands (%s)",
-        "Veuillez configurer et activer au moins un adaptateur USB": "Please configure and activate at least one USB adapter",
         "Veuillez vérifier la configuration": "Please check configuration",
         "compteur": "meter"
     },
@@ -93,7 +92,6 @@
         "Baurate": "Baurate",
         "Clé": "Key",
         "Clé d\\'encryprion du compteur": "Meter encryption key",
-        "Compteur connecté à l\\'adaptateur": "Meter connected to adapter",
         "Port": "Harbor",
         "Type": "Kind",
         "Vitesse de transmission": "Transmission speed",
@@ -141,8 +139,6 @@
         "Visible": "Visible"
     },
     "plugins\/SmartMeterUSB\/plugin_info\/configuration.php": {
-        "Adaptateurs": "Adapters",
-        "Ajouter un adaptateur": "Add an adapter",
         "Compteurs": "Counters",
         "Création auto des commandes": "Automatic creation of commands",
         "Création auto des compteurs": "Automatic meter creation",

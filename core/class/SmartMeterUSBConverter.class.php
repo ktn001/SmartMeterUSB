@@ -17,7 +17,7 @@
  * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
  */
 
-class SmartMeterUSBAdapter {
+class SmartMeterUSBConverter {
 	private $id = -1;
 	private $type = '';
 	private $port = '';
@@ -31,14 +31,14 @@ class SmartMeterUSBAdapter {
     /* *********************************** */
 
 	public static function nextId() {
-		$nextId = config::byKey('nextAdapterId','SmartMeterUSB',1);
-		config::save('nextAdapterId',$nextId+1,'SmartMeterUSB');
+		$nextId = config::byKey('nextConverterId','SmartMeterUSB',1);
+		config::save('nextConverterId',$nextId+1,'SmartMeterUSB');
 		return $nextId;
 	}
 
 	public static function all($_onlyEnable = false) {
-		$configs = config::searchKey('adapter::%', 'SmartMeterUSB');
-		$adapters = [];
+		$configs = config::searchKey('converter::%', 'SmartMeterUSB');
+		$converters = [];
 		foreach ($configs as $config) {
 			if ($_onlyEnable) {
 				if (!isset($config['value']['enable']) || $config['value']['enable'] != 1) {
@@ -50,16 +50,16 @@ class SmartMeterUSBAdapter {
 			} else {
 				$config['value']['key'] = '';
 			}
-			$adapter = new self();
-			utils::a2o($adapter,$config['value']);
-			$adapter->_changed = false;
-			$adapters[] = $adapter;
+			$converter = new self();
+			utils::a2o($converter,$config['value']);
+			$converter->_changed = false;
+			$converters[] = $converter;
 		}
-		return $adapters;
+		return $converters;
 	}
 
 	public static function byId($id) {
-		$key = 'adapter::' . $id;
+		$key = 'converter::' . $id;
 		$value = config::byKey($key, 'SmartMeterUSB');
 		if ($value == '') {
 			return null;
@@ -70,10 +70,10 @@ class SmartMeterUSBAdapter {
 		} else {
 			$value['key'] = '';
 		}
-		$adapter = new self();
-		utils::a2o($adapter,$value);
-		$adapter->_changed = false;
-		return $adapter;
+		$converter = new self();
+		utils::a2o($converter,$value);
+		$converter->_changed = false;
+		return $converter;
 	}
 
 	/* *************************************** */
@@ -87,7 +87,7 @@ class SmartMeterUSBAdapter {
 		$value = utils::o2a($this);
 		$value['key'] = utils::encrypt($value['key']);
 		$value = json_encode($value);
-		$key = 'adapter::' . $this->getId();
+		$key = 'converter::' . $this->getId();
 		config::save($key, $value, 'SmartMeterUSB');
 		$this->_changed = false;
 	}
@@ -96,7 +96,7 @@ class SmartMeterUSBAdapter {
 		if ($this->getId() == -1) {
 			return;
 		}
-		$key = 'adapter::' . $this->getId();
+		$key = 'converter::' . $this->getId();
 		config::remove($key, 'SmartMeterUSB');
 		return;
 	}

@@ -32,14 +32,14 @@ if (!isConnect()) {
 				<legend><i class="fas fa-tachometer-alt"></i> {{Compteurs}}</legend>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-4 control-label">{{Création auto des compteurs}}</label>
-				<div class="col-sm-4">
+				<label class="col-sm-6 control-label">{{Création auto des compteurs}}</label>
+				<div class="col-sm-1">
 					<input class="configKey form-control" type="checkbox" data-l1key="autoCreateCounter" checked></input>
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-4 control-label">{{Création auto des commandes}}</label>
-				<div class="col-sm-4">
+				<label class="col-sm-6 control-label">{{Création auto des commandes}}</label>
+				<div class="col-sm-1">
 					<input class="configKey form-control" type="checkbox" data-l1key="autoCreateCmd" checked></input>
 				</div>
 			</div>
@@ -60,6 +60,7 @@ if (!isConnect()) {
 					</div>
 				</div>
 			</fieldset>
+			<!--
 			<fieldset>
 				<div class="form-group">
 					<label class="col-sm-1 control-label">3</label>
@@ -72,15 +73,16 @@ if (!isConnect()) {
 					</div>
 				</div>
 			</fieldset>
+			-->
 		<form class="form-horizontal">
 	</div>
 	<div class="col-sm-12 form-horizontal">
-		<legend><i class="fab fa-usb"></i> {{Adaptateurs}}
-			<a class="btn btn-success btn-xs pull-right" id="bt_addAdapter" style="position:relative;top:-5px">
-				<i class="fas fa-plus-circle"></i> {{Ajouter un adaptateur}}
+		<legend><i class="fab fa-usb"></i> {{Convertisseurs USB}}
+			<a class="btn btn-success btn-xs pull-right" id="bt_addConverter" style="position:relative;top:-5px">
+				<i class="fas fa-plus-circle"></i> {{Ajouter un convertisseur}}
 			</a>
 		</legend>
-		<div id='adaptersContainer'></div>
+		<div id='convertersContainer'></div>
 	</div>
 </div>
 <?php include_file('desktop', 'configuration', 'js', 'SmartMeterUSB'); ?>

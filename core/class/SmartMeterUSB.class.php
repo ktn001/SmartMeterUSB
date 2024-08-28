@@ -19,7 +19,7 @@
 
 /* * ***************************Includes********************************* */
 require_once __DIR__  . '/../../../../core/php/core.inc.php';
-require_once __DIR__ . '/SmartMeterUSBAdapter.class.php';
+require_once __DIR__ . '/SmartMeterUSBConverter.class.php';
 
 class SmartMeterUSB extends eqLogic {
 
@@ -137,9 +137,9 @@ class SmartMeterUSB extends eqLogic {
 		} elseif (self::$_MQTT2::deamon_info()['state'] != 'ok') {
 			$return['launchable'] = 'nok';
 			$return['launchable_message'] = sprintf(__("Le démon %s n'est pas démarré",__FILE__),self::$_MQTT2);
-		} elseif (count(SmartMeterUSBAdapter::all(true)) == 0) {
+		} elseif (count(SmartMeterUSBConverter::all(true)) == 0) {
 			$return['launchable'] = 'nok';
-			$return['launchable_message'] = __("Veuillez configurer et activer au moins un adaptateur USB",__FILE__);
+			$return['launchable_message'] = __("Veuillez configurer et activer au moins un convertisseur USB",__FILE__);
 		}
 		return $return;
 	}
@@ -152,21 +152,21 @@ class SmartMeterUSB extends eqLogic {
 		self::$_MQTT2::addPluginTopic(__CLASS__, self::$_TOPIC_PREFIX);
 		log::add("SmartMeterUSB","debug", "Listening to topic: '" . self::$_TOPIC_PREFIX . "'");
 		$daemon_info = self::daemon_info();
-		$adapters = SmartMeterUSBAdapter::all(true);
-		if (count($adapters) == 0) {
-			throw new Exception (__("Veuillez configurer et activer au moins un adaptateur USB",__FILE__));
+		$converters = SmartMeterUSBConverter::all(true);
+		if (count($converters) == 0) {
+			throw new Exception (__("Veuillez configurer et activer au moins un convertisseur USB",__FILE__));
 		}
 		if ($daemon_info['launchable'] != "ok") {
 			throw new Exception(__('Veuillez vérifier la configuration',__FILE__));
 		}
 		$daemonConfigFileName = jeedom::getTmpFolder(__CLASS__) . '/config.ini';
 		if ($fd = fopen($daemonConfigFileName, 'w')) {
-			foreach ($adapters as $adapter) {
-				fwrite($fd, "[reader" . $adapter->getId() . "]\n");
-				fwrite($fd, "type = " . $adapter->getType() . "\n");
-				fwrite($fd, "port = " . $adapter->getport() . "\n");
-				fwrite($fd, "baurate = " . $adapter->getBaurate() . "\n");
-				fwrite($fd, "key = " . $adapter->getKey() . "\n");
+			foreach ($converters as $converter) {
+				fwrite($fd, "[reader" . $converter->getId() . "]\n");
+				fwrite($fd, "type = " . $converter->getType() . "\n");
+				fwrite($fd, "port = " . $converter->getport() . "\n");
+				fwrite($fd, "baurate = " . $converter->getBaurate() . "\n");
+				fwrite($fd, "key = " . $converter->getKey() . "\n");
 				fwrite($fd, "\n");
 			}
 			fwrite($fd, "[sink0]\n");

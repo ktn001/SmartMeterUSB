@@ -45,6 +45,36 @@
     }
   },
   {
+    "name": "{{Prélèvement plage horraire 3}}",
+    "logicalId": "1.0:1.8.3",
+    "type": "info",
+    "subType": "numeric",
+    "unite": "Wh",
+    "template": {
+      "mobile": "core::badge",
+      "dashboard": "core::badge"
+    },
+    "configuration": {
+      "MQTTname": "ACTIVE_ENERGY_P_T3",
+      "historizeRound": "3"
+    }
+  },
+  {
+    "name": "{{Prélèvement plage horraire 4}}",
+    "logicalId": "1.0:1.8.4",
+    "type": "info",
+    "subType": "numeric",
+    "unite": "Wh",
+    "template": {
+      "mobile": "core::badge",
+      "dashboard": "core::badge"
+    },
+    "configuration": {
+      "MQTTname": "ACTIVE_ENERGY_P_T4",
+      "historizeRound": "3"
+    }
+  },
+  {
     "name": "{{Injection total}}",
     "logicalId": "1.0:2.8.0",
     "type": "info",
@@ -89,6 +119,36 @@
     },
     "configuration": {
       "MQTTname": "ACTIVE_ENERGY_N_T2",
+      "historizeRound": "3"
+    }
+  },
+  {
+    "name": "{{Injection plage horraire 3}}",
+    "logicalId": "1.0:2.8.3",
+    "type": "info",
+    "subType": "numeric",
+    "unite": "Wh",
+    "template": {
+      "mobile": "core::badge",
+      "dashboard": "core::badge"
+    },
+    "configuration": {
+      "MQTTname": "ACTIVE_ENERGY_N_T3",
+      "historizeRound": "3"
+    }
+  },
+  {
+    "name": "{{Injection plage horraire 4}}",
+    "logicalId": "1.0:2.8.4",
+    "type": "info",
+    "subType": "numeric",
+    "unite": "Wh",
+    "template": {
+      "mobile": "core::badge",
+      "dashboard": "core::badge"
+    },
+    "configuration": {
+      "MQTTname": "ACTIVE_ENERGY_N_T4",
       "historizeRound": "3"
     }
   },

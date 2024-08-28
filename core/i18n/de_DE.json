@@ -19,7 +19,6 @@
         "Les commandes seront céées automatiquement": "Die Befehle werden automatisch vergeben",
         "OBISCode pour la mesure %s introuvable": "OBISCode für die Messung %s nicht gefunden",
         "Tri des commandes du compteur '%s' (%s)": "Sortieren der Befehle des Zählers '%s' (%s)",
-        "Veuillez configurer et activer au moins un adaptateur USB": "Bitte konfigurieren und aktivieren Sie mindestens einen USB-Adapter",
         "Veuillez vérifier la configuration": "Bitte überprüfen Sie die Konfiguration",
         "compteur": "zähler"
     },
@@ -93,7 +92,6 @@
         "Baurate": "Baurate",
         "Clé": "Schlüssel",
         "Clé d\\'encryprion du compteur": "Schlüssel zur Verschlüsselung des Zählers",
-        "Compteur connecté à l\\'adaptateur": "Zähler an den Adapter angeschlossen",
         "Port": "Hafen",
         "Type": "Typ",
         "Vitesse de transmission": "Übertragungsgeschwindigkeit",
@@ -141,8 +139,6 @@
         "Visible": "Sichtbar"
     },
     "plugins\/SmartMeterUSB\/plugin_info\/configuration.php": {
-        "Adaptateurs": "Adapter",
-        "Ajouter un adaptateur": "Adapter hinzufügen",
         "Compteurs": "Zähler",
         "Création auto des commandes": "Automatische Erstellung von Befehlen",
         "Création auto des compteurs": "Automatische Erstellung von Zählern",

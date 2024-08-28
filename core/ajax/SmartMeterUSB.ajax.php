@@ -25,35 +25,35 @@ try {
 		throw new Exception(__('401 - Accès non autorisé', __FILE__));
 	}
 
-	if (init('action') == 'getAdapters') {
-		$adapters = SmartMeterUSBAdapter::all();
-		foreach ($adapters as $key => $adapter) {
-			$adapters[$key] = utils::o2a($adapter);
+	if (init('action') == 'getConverters') {
+		$converters = SmartMeterUSBConverter::all();
+		foreach ($converters as $key => $converter) {
+			$converters[$key] = utils::o2a($converter);
 		}
-		ajax::success($adapters);
+		ajax::success($converters);
 	}
 
-	if (init('action') == 'saveAdapters') {
-		$adapters = json_decode(init('adapters'),true);
-		$dbList = SmartMeterUSBAdapter::all();
-		foreach ($adapters as $a_adapter) {
-			if ($a_adapter['id'] == '') {
-				$o_adapter = new SmartMeterUSBAdapter();
+	if (init('action') == 'saveConverters') {
+		$converters = json_decode(init('converters'),true);
+		$dbList = SmartMeterUSBConverter::all();
+		foreach ($converters as $a_converter) {
+			if ($a_converter['id'] == '') {
+				$o_converter = new SmartMeterUSBConverter();
 			} else {
-				$o_adapter = SmartMeterUSBAdapter::byId($a_adapter['id']);
+				$o_converter = SmartMeterUSBConverter::byId($a_converter['id']);
 			}
-			if (!is_object($o_adapter)) {
-				$o_adapter = new SmartMeterUSBAdapter();
+			if (!is_object($o_converter)) {
+				$o_converter = new SmartMeterUSBConverter();
 			}
-			utils::a2o($o_adapter,$a_adapter);
-			if ($o_adapter->isChanged()) {
-				$o_adapter->save();
+			utils::a2o($o_converter,$a_converter);
+			if ($o_converter->isChanged()) {
+				$o_converter->save();
 			}
-			$enableList[$o_adapter->getId()] = true;
+			$enableList[$o_converter->getId()] = true;
 		}
-		foreach ($dbList as $dbAdapter) {
-			if (!isset($enableList[$dbAdapter->getId()])) {
-				$dbAdapter->remove();
+		foreach ($dbList as $dbConverter) {
+			if (!isset($enableList[$dbConverter->getId()])) {
+				$dbConverter->remove();
 			}
 		}
 		ajax::success();
