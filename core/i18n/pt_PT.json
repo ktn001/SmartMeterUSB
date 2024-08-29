@@ -19,6 +19,7 @@
         "Les commandes seront céées automatiquement": "Os comandos serão criados automaticamente",
         "OBISCode pour la mesure %s introuvable": "OBISCode para a medição %s não encontrado",
         "Tri des commandes du compteur '%s' (%s)": "Ordenar os comandos do contador \"%s\" (%s)",
+        "Veuillez configurer et activer au moins un convertisseur USB": "Configure e active pelo menos um conversor USB",
         "Veuillez vérifier la configuration": "Verificar a configuração",
         "compteur": "contador"
     },
@@ -28,6 +29,8 @@
         "Angle UI phase 3": "Angle UI fase 3",
         "Injection heures creuses": "Injeção fora de horas de ponta",
         "Injection heures pleines": "Injeção em hora de ponta",
+        "Injection plage horaire 3": "Injeção de faixas horárias 3",
+        "Injection plage horaire 4": "Injeção de faixas horárias 4",
         "Injection réactif": "Injeção de reagentes",
         "Injection réactif heures creuses": "Injeção reactiva fora de horas de ponta",
         "Injection réactif heures pleines": "Injeção reactiva de pico",
@@ -37,6 +40,8 @@
         "Intensité phase 3": "Intensidade fase 3",
         "Prélèvement heures creuses": "Recolha fora de horas de ponta",
         "Prélèvement heures pleines": "Retirada em hora de ponta",
+        "Prélèvement plage horaire 3": "Amostragem de faixas horárias 3",
+        "Prélèvement plage horaire 4": "Amostragem de faixas horárias 4",
         "Prélèvement réactif": "Amostragem reactiva",
         "Prélèvement réactif Q4 heures creuses": "Amostragem reactiva Q4 fora das horas de ponta",
         "Prélèvement réactif cadran 1": "Marcador de amostragem de reagentes 1",
@@ -92,6 +97,7 @@
         "Baurate": "Baurate",
         "Clé": "Chave",
         "Clé d\\'encryprion du compteur": "Chave de encriptação do contador",
+        "Compteur connecté au convertisseur": "Contador ligado ao conversor",
         "Port": "Porta",
         "Type": "Tipo",
         "Vitesse de transmission": "Velocidade de transmissão",
@@ -139,7 +145,9 @@
         "Visible": "Visível"
     },
     "plugins\/SmartMeterUSB\/plugin_info\/configuration.php": {
+        "Ajouter un convertisseur": "Adicionar um conversor",
         "Compteurs": "Contadores",
+        "Convertisseurs USB": "Conversores USB",
         "Création auto des commandes": "Criação automática de comandos",
         "Création auto des compteurs": "Criação automática de contadores",
         "HC": "HC",
