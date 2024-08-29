@@ -45,7 +45,7 @@
     }
   },
   {
-    "name": "{{Prélèvement plage horraire 3}}",
+    "name": "{{Prélèvement plage horaire 3}}",
     "logicalId": "1.0:1.8.3",
     "type": "info",
     "subType": "numeric",
@@ -60,7 +60,7 @@
     }
   },
   {
-    "name": "{{Prélèvement plage horraire 4}}",
+    "name": "{{Prélèvement plage horaire 4}}",
     "logicalId": "1.0:1.8.4",
     "type": "info",
     "subType": "numeric",
@@ -123,7 +123,7 @@
     }
   },
   {
-    "name": "{{Injection plage horraire 3}}",
+    "name": "{{Injection plage horaire 3}}",
     "logicalId": "1.0:2.8.3",
     "type": "info",
     "subType": "numeric",
@@ -138,7 +138,7 @@
     }
   },
   {
-    "name": "{{Injection plage horraire 4}}",
+    "name": "{{Injection plage horaire 4}}",
     "logicalId": "1.0:2.8.4",
     "type": "info",
     "subType": "numeric",
