@@ -100,7 +100,7 @@
         "Compteur connecté au convertisseur": "Contatore collegato al convertitore",
         "Port": "Porta",
         "Type": "Tipo",
-        "Vitesse de transmission": "Velocità di trasmissione",
+        "Vitesse de transmission (optionel)": "Velocità di trasmissione (opzionale)",
         "port USB": "porta USB"
     },
     "plugins\/SmartMeterUSB\/desktop\/modal\/modal.SmartMeterUSB.php": {
