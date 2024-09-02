@@ -67,11 +67,11 @@ if (typeof SmartMeterUSBConfig === "undefined") {
     adptr += '  <div class="form-group">';
     adptr += '    <label class="col-sm-3 control-label">{{Baurate}}';
     adptr +=
-      '      <sup><i class="fas fa-question-circle" title="{{Vitesse de transmission}}"></i></sup>';
+      '      <sup><i class="fas fa-question-circle" title="{{Vitesse de transmission (optionel)}}"></i></sup>';
     adptr += "    </label>";
     adptr += '    <div class="col-sm-9">';
     adptr +=
-      '      <input class="converterAttr" data-l1key="baurate" style="width:100%" placeholder="2400"></input>';
+      '      <input class="converterAttr" data-l1key="baurate" style="width:100%"></input>';
     adptr += "    </div>";
     adptr += "  </div>";
     adptr += '  <div class="form-group">';
