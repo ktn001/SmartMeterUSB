@@ -100,7 +100,7 @@
         "Compteur connecté au convertisseur": "Meter connected to converter",
         "Port": "Harbor",
         "Type": "Kind",
-        "Vitesse de transmission": "Transmission speed",
+        "Vitesse de transmission (optionel)": "Transmission speed (optional)",
         "port USB": "uSB port"
     },
     "plugins\/SmartMeterUSB\/desktop\/modal\/modal.SmartMeterUSB.php": {
