@@ -128,7 +128,7 @@ class SmartMeterUSB extends eqLogic {
 			if (@posix_getsid(trim(file_get_contents($pid_file)))) {
 				$return['state'] = 'ok';
 			} else {
-				shell_exec($system::getCmdSudo() . 'rm -rf ' . $pid_file . ' 2>&1 > /dev/null');
+				shell_exec(system::getCmdSudo() . 'rm -rf ' . $pid_file . ' 2>&1 > /dev/null');
 			}
 		}
 		if (!class_exists(self::$_MQTT2)) {
