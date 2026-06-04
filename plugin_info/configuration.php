@@ -17,6 +17,9 @@
 */
 
 sendVarToJs('counters', SmartMeterUSB::getCounters());
+sendVarToJs('suppliers', SmartMeterUSB::getSuppliers());
+sendVarToJs('protocols', SmartMeterUSB::getProtocols());
+sendVarToJs('portsUSB', jeedom::getUsbMapping());
 
 require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
 include_file('core', 'authentification', 'php');
@@ -32,13 +35,36 @@ if (!isConnect()) {
 				<legend><i class="fas fa-tachometer-alt"></i> {{Compteurs}}</legend>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-6 control-label">{{Création auto des compteurs}}</label>
+				<label class="col-sm-5 control-label">{{Pays}}</label>
+				<select class="col-sm-6 configKey" data-l1key="country">
+					<option value="other">{{Autre}}</option>
+					<?php
+						foreach (SmartMeterUSB::getCountries() as $country){
+							log::add("SmartMeterUSB","debug","YY " . $country);
+							echo '<option value="' . $country . '">' . $country . '</option>';
+						}
+					?>
+				</select>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-5 control-label">{{Fournisseur}}</label>
+				<select class="col-sm-6 configKey" data-l1key="supplier">
+					<option value="other">{{Autre}}</option>
+					<?php
+						foreach (SmartMeterUSB::getSuppliers() as $key => $supplier) {
+							echo '<option value="' . $key . '">' . $supplier['name'] . '</option>';
+						}
+					?>
+				</select>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-5 control-label">{{Création auto des compteurs}}</label>
 				<div class="col-sm-1">
 					<input class="configKey form-control" type="checkbox" data-l1key="autoCreateCounter" checked></input>
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-6 control-label">{{Création auto des commandes}}</label>
+				<label class="col-sm-5 control-label">{{Création auto des commandes}}</label>
 				<div class="col-sm-1">
 					<input class="configKey form-control" type="checkbox" data-l1key="autoCreateCmd" checked></input>
 				</div>

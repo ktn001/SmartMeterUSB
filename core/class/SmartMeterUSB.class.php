@@ -1,5 +1,5 @@
 <?php
-// vim: tabstop=4 autoindent
+// vi: tabstop=4 autoindent
 
 /* This file is part of Jeedom.
 *
@@ -37,7 +37,7 @@ class SmartMeterUSB extends eqLogic {
 		config::save('nextCounterNameId', $nextNameId+1, __CLASS__);
 		return __('compteur',__FILE__) . "_" . $nextNameId;
 	}
-	
+
 	public static function getCmdsConfig() {
 		$cmdFileName =__DIR__ . '/../config/cmds.json';
 		$cmds = file_get_contents($cmdFileName);
@@ -49,6 +49,20 @@ class SmartMeterUSB extends eqLogic {
 		return $cmds;
 	}
 
+	public static function getSuppliers() {
+		$supplierFileName =__DIR__ . '/../config/suppliers.json';
+		$suppliers = file_get_contents($supplierFileName);
+		if ($suppliers === false) {
+			throw new Exception (sprintf(__("Erreur lors de la lecture du fichier %s",__FILE__),$supplierFileName));
+		}
+		$suppliers = json_decode($suppliers, true);
+		return $suppliers;
+	}
+
+	public static function getSupplier() {
+		return config::byKey("supplier",__CLASS__);
+	}
+
 	public static function getCounters() {
 		$counterFileName =__DIR__ . '/../config/counters.json';
 		$counters = file_get_contents($counterFileName);
@@ -57,6 +71,43 @@ class SmartMeterUSB extends eqLogic {
 		}
 		$counters = json_decode($counters, true);
 		return $counters;
+	}
+
+	public static function getCountry() {
+		return config::byKey("country",__CLASS__);
+	}
+
+	public static function getCountries() {
+		$countries = array();
+		foreach (self::getCounters() as $counter) {
+			if (isset($counter['protocol']['country'])){
+				$countries = array_merge($countries, array_keys($counter['protocol']['country']));
+			}
+		}
+		$countries = array_unique($countries);
+		sort($countries);
+		log::add("SmartMeterUSB","debug","XX " . print_r($countries,true));
+		return $countries;
+	}
+
+	public static function getProtocols() {
+		$protocolFileName =__DIR__ . '/../config/protocols.json';
+		$protocols = file_get_contents($protocolFileName);
+		if ($protocols === false) {
+			throw new Exception (sprintf(__("Erreur lors de la lecture du fichier %s",__FILE__),$protocolFileName));
+		}
+		$protocols = json_decode($protocols, true);
+		return $protocols;
+	}
+
+	public static function protocolById($id) {
+		$protocols = self::getProtocols();
+		foreach ($protocols as $protocol){
+			if ($protocol['id'] == $id) {
+				return $protocol;
+			}
+		}
+		return null;
 	}
 
 	public static function backupExclude() {
@@ -159,6 +210,20 @@ class SmartMeterUSB extends eqLogic {
 		if ($daemon_info['launchable'] != "ok") {
 			throw new Exception(__('Veuillez vérifier la configuration',__FILE__));
 		}
+
+		$byProtocolIds = array();
+		foreach ($converters as $converter) {
+			$protocolId = $converter->protocolToUse();
+			if (! isset($byProtocolIds[$protocolId])){
+				$byProtocolIds[$protocolId] = array();
+			}
+			$byProtocolIds[$protocolId][] = $converter;
+		}
+		log::add("SmartMeterUSB","debug",print_r($byProtocolIds,true));
+		
+
+
+
 		$daemonConfigFileName = jeedom::getTmpFolder(__CLASS__) . '/config.ini';
 		if ($fd = fopen($daemonConfigFileName, 'w')) {
 			foreach ($converters as $converter) {
@@ -426,3 +491,4 @@ class SmartMeterUSBCmd extends cmd {
 
 	/*     * **********************Getteur Setteur*************************** */
 }
+

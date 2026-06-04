@@ -1,7 +1,43 @@
 {
-  "lge360": "Landis+Gyr E360",
-  "lge450": "Landis+Gyr E450",
-  "lge570": "Landis+Gyr E570",
-  "iskraam550": "Iskraemeco AM550",
-  "kamstrup_han": "Kamstrup OMNIPOWER with HAN-NVE module"
+  "lge360": {
+    "name": "Landis+Gyr E360",
+    "iface": "P1",
+    "protocol" : {
+      "default" : "1"
+    }
+  },
+  "lge450": {
+    "name": "Landis+Gyr E450",
+    "iface": "M-Bus",
+    "protocol" : {
+      "default" : "1"
+    }
+  },
+  "lge570": {
+    "name": "Landis+Gyr E570",
+    "iface": "M-Bus",
+    "protocol" : {
+      "default" : "1"
+    }
+  },
+  "iskraam550": {
+    "name": "Iskraemeco AM550",
+    "iface": "P1",
+    "protocol" : {
+      "default" : "1",
+      "country" : {
+        "CH" : "2"
+      },
+      "supplier" : {
+        "RE" : "2"
+      }
+    }
+  },
+  "kamstrup_han": {
+    "name": "Kamstrup OMNIPOWER with HAN-NVE module",
+    "iface": "M-Bus",
+    "protocol" : {
+      "default" : "1"
+    }
+  }
 }

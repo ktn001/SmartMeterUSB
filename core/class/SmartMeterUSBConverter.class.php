@@ -22,6 +22,7 @@ class SmartMeterUSBConverter {
 	private $type = '';
 	private $port = '';
 	private $baurate = '2400';
+	private $protocol = '0';
 	private $key = '';
 	private $enable = 0;
 	private $_changed = false;
@@ -105,6 +106,25 @@ class SmartMeterUSBConverter {
 		return $this->_changed;
 	}
 
+	public function protocolToUse() {
+		if ($this->getProtocol() != 0) {
+			return $this->getProtocol();
+		}
+		$counterProtocols = SmartMeterUSB::getCounters()[$this->getType()]['protocol'];
+		$supplier = SmartMeterUSB::getSupplier();
+		if (isset($counterProtocols['supplier']) and isset($counterProtocols['supplier'][$supplier])) {
+			return $counterProtocols['supplier'][$supplier];
+		}
+		$country = SmartMeterUSB::getCountry();
+		if (isset($counterProtocols['country']) and isset($counterProtocols['country'][$country])) {
+			return $counterProtocols['country'][$country];
+		}
+		if (isset($counterProtocols['default'])) {
+			return $counterProtocols['default'];
+		}
+		return -1;
+	}
+
 	/* *********************************** */
 	/* ********* Getters setters ********* */
 	/* *********************************** */
@@ -155,6 +175,18 @@ class SmartMeterUSBConverter {
 	}
 	public function getKey() {
 		return $this->key;
+	}
+
+	/* protocol */
+	public function setProtocol($_protocol) {
+		if ($this->protocol !== $_protocol) {
+			$this->_changed = true;
+		}
+		$this->protocol = $_protocol;
+		return $this;
+	}
+	public function getProtocol() {
+		return $this->protocol;
 	}
 
 	/* baurate */

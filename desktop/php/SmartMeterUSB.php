@@ -134,8 +134,8 @@ $eqLogics = eqLogic::byType($plugin->getId());
 								<div class="col-sm-6">
 									<select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="counterType">
 									<?php
-										foreach (SmartMeterUSB::getCounters() as $type => $txt) {
-											echo '<option value="' . $type . '">' . $txt . '</option>';
+										foreach (SmartMeterUSB::getCounters() as $type => $def) {
+											echo '<option value="' . $type . '">' . $def['name'] . '</option>';
 										}
 									?>
 									</select>

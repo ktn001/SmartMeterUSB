@@ -1,0 +1,10 @@
+[
+	{
+		"label": "DLMS/COSEM",
+		"id": 1
+	},
+	{
+		"label": "DLMS/COSEM over DSRM",
+		"id": 2
+	}
+]
