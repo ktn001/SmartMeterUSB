@@ -1,0 +1,12 @@
+{
+	"E450" : {
+		"pidFile" : "SimulatorE450.pid",
+		"simulatorPort" : "ttyV_E450_simul",
+		"readerPort" : "ttyV_E450_reader"
+	},
+	"E451" : {
+		"pidFile" : "SimulatorE451.pid",
+		"simulatorPort" : "ttyV_E451_simul",
+		"readerPort" : "ttyV_E451_reader"
+	}
+}

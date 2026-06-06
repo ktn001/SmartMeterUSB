@@ -6,34 +6,37 @@ if (typeof SmartMeterUSBConfig === "undefined") {
   }
 
   SmartMeterUSBConfig.init = function () {
-    document
-      .getElementById("div_SmartMeterUSBConfig")
-      .addEventListener("click", function (event) {
-        let _target = null
+    ConfigContainer = document.getElementById("div_SmartMeterUSBConfig")
 
-        if ((_target = event.target.closest("#bt_addConverter"))) {
-          SmartMeterUSBConfig.addConverter()
-        }
+    if (showDev == 0){
+      ConfigContainer.querySelectorAll('.showDev').addClass('hidden')
+    }
 
-        if ((_target = event.target.closest(".bt_remove_converter"))) {
-          _target.closest(".converter").remove()
+    ConfigContainer.addEventListener("click", function (event) {
+      let _target = null
+
+      if ((_target = event.target.closest("#bt_addConverter"))) {
+        SmartMeterUSBConfig.addConverter()
+      }
+
+      if ((_target = event.target.closest(".bt_remove_converter"))) {
+        _target.closest(".converter").remove()
+      }
+    })
+
+    ConfigContainer.addEventListener('change', function (event) {
+      if ((_target = event.target.closest('.configKey[data-l1key=supplier]'))) {
+        if (_target.value == '') {
+          _target.value = 'other'
         }
-      })
-    document
-      .getElementById("div_SmartMeterUSBConfig")
-      .addEventListener('change', function (event) {
-        if ((_target = event.target.closest('.configKey[data-l1key=supplier'))) {
-          if (_target.value == '') {
-            _target.value = 'other'
-          }
-        }
-      })
+      }
+    })
 
     window["SmartMeterUSB_postSaveConfiguration"] =
       SmartMeterUSBConfig.saveConverters
   }
 
-  SmartMeterUSBConfig.addConverter = function (converter) {
+  SmartMeterUSBConfig.addConverter = function (converter=[]) {
     let adptr = ''
     adptr += '<div  style="background-color:var(--bg-modal-color);margin-top:5px; margin-bottom:20px; padding:10px">'
     adptr += '  <div>'
@@ -76,9 +79,6 @@ if (typeof SmartMeterUSBConfig === "undefined") {
     adptr += '    <div class="col-sm-9">'
     adptr += '      <select class="converterAttr" data-l1key="protocol">'
     adptr += '        <option value="0">{{auto}}'
-    protocols.forEach(function (protocol) {
-      adptr += '        <option value="' + protocol['id'] + '">' + protocol['label'] + '</option>'
-    })
     adptr += '      </select>'
     adptr += '    </div>'
     adptr += '  </div>'
@@ -109,13 +109,20 @@ if (typeof SmartMeterUSBConfig === "undefined") {
     newConverter.addClass("converter col-lg-4 col-md-6 col-sm-12")
     newConverter.innerHTML = adptr
     document.getElementById("convertersContainer").appendChild(newConverter)
-    newConverter.setJeeValues(converter, ".converterAttr")
+    if (showDev != 0) {
+      SmartMeterUSBSimulator.addReaderPortOptions(newConverter.querySelector('[data-l1key=port]'))
+      setTimeout(function() {
+        console.log(converter)
+        newConverter.setJeeValues(converter, ".converterAttr")
+      },200)
+    } else {
+       newConverter.setJeeValues(converter, ".converterAttr")
+    }
     jeedomUtils.initTooltips(document.getElementById("convertersContainer"))
   }
 
   SmartMeterUSBConfig.printConverters = function () {
     domUtils.ajax({
-      type: "POST",
       async: true,
       global: false,
       url: SmartMeterUSBConfig.ajaxUrl,

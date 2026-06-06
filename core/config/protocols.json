@@ -1,10 +1,12 @@
 [
 	{
+		"id": 1,
 		"label": "DLMS/COSEM",
-		"id": 1
+		"lib" : "datacollector"
 	},
 	{
+		"id": 2,
 		"label": "DLMS/COSEM over DSRM",
-		"id": 2
+		"lib" : "gurux"
 	}
 ]

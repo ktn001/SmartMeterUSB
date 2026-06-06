@@ -16,17 +16,17 @@
 * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
 */
 
-sendVarToJs('counters', SmartMeterUSB::getCounters());
-sendVarToJs('suppliers', SmartMeterUSB::getSuppliers());
-sendVarToJs('protocols', SmartMeterUSB::getProtocols());
-sendVarToJs('portsUSB', jeedom::getUsbMapping());
-
 require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
 include_file('core', 'authentification', 'php');
 if (!isConnect()) {
   include_file('desktop', '404', 'php');
   die();
 }
+sendVarToJs('counters', SmartMeterUSB::getCounters());
+sendVarToJs('suppliers', SmartMeterUSB::getSuppliers());
+sendVarToJs('protocols', SmartMeterUSB::getProtocols());
+sendVarToJs('portsUSB', jeedom::getUsbMapping());
+sendVarToJs('showDev', config::byKey("dev","SmartMeterUSB"));
 ?>
 <div id="div_SmartMeterUSBConfig">
 	<div class="col-md-6 col-sm-12">
@@ -40,7 +40,6 @@ if (!isConnect()) {
 					<option value="other">{{Autre}}</option>
 					<?php
 						foreach (SmartMeterUSB::getCountries() as $country){
-							log::add("SmartMeterUSB","debug","YY " . $country);
 							echo '<option value="' . $country . '">' . $country . '</option>';
 						}
 					?>
@@ -102,6 +101,22 @@ if (!isConnect()) {
 			-->
 		<form class="form-horizontal">
 	</div>
+		<div class="col-md-6 col-sm-12 form-horizontal showDev">
+			<legend><i class="fab fa-dev"></i> DEV</legend>
+			<div class="form-group">
+				<table id="simulatorsTable" class="table table-condensed">
+					<thead>
+						<th style="width:20%;">{{Simulateur}}</th>
+						<th style="width:10%;">{{Statut}}</th>
+						<th style="width:50%;">{{Message}}</th>
+						<th style="width:10%;">{{(Re)Démarrer}}</th>
+						<th style="width:10%;">{{Arrêter}}</th>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+		</div>
 	<div class="col-sm-12 form-horizontal">
 		<legend><i class="fab fa-usb"></i> {{Convertisseurs USB}}
 			<a class="btn btn-success btn-xs pull-right" id="bt_addConverter" style="position:relative;top:-5px">
@@ -111,4 +126,9 @@ if (!isConnect()) {
 		<div id='convertersContainer'></div>
 	</div>
 </div>
-<?php include_file('desktop', 'configuration', 'js', 'SmartMeterUSB'); ?>
+<?php
+	include_file('desktop', 'configuration', 'js', 'SmartMeterUSB');
+	if (config::byKey("dev","SmartMeterUSB") != 0){
+		include_file('desktop', 'simulator', 'js', 'SmartMeterUSB');
+	}
+?>

@@ -30,6 +30,7 @@ def options():
 
     if args.configfile:
         configFile = args.configfile
+        configFile = "/tmp/jeedom/SmartMeterUSB/datacollector.ini"
 
 
 def signal_handler(sig, frame):
