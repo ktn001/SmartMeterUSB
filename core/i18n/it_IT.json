@@ -3,7 +3,13 @@
         "401 - Accès non autorisé": "401 - Accesso non autorizzato",
         "Aucune méthode correspondante à": "Nessun metodo corrispondente a"
     },
+    "plugins\/SmartMeterUSB\/core\/ajax\/simulator.ajax.php": {
+        "401 - Accès non autorisé": "401 - Accesso non autorizzato",
+        "Aucune commande correspondante à": "Nessun comando corrispondente a",
+        "Aucune méthode correspondante à": "Nessun metodo corrispondente a"
+    },
     "plugins\/SmartMeterUSB\/core\/class\/SmartMeterUSB.class.php": {
+        "Convertisseur ": "Convertitore ",
         "Création de la commande '%s' pour le compteur '%s' (%s)": "Creazione del comando '%s' per il contatore '%s' (%s)",
         "Création du compteur %s (%s)": "Creazione del contatore %s (%s)",
         "Céation des commandes": "Creare controlli",
@@ -11,17 +17,29 @@
         "Erreur lors de la création du compteur N° %s (%s)": "Errore nella creazione del contatore n. %s (%s)",
         "Erreur lors de la création du fichier: %s": "Errore nella creazione del file: %s",
         "Erreur lors de la lecture du fichier %s": "Errore nella lettura del file %s",
-        "Impossible de lander le démon": "Impossibile far atterrare il demone",
+        "Impossible de lancer le démon": "Impossibile avviare il demone",
         "Le compteur %s est introuvable": "Il contatore %s non può essere trovato",
         "Le démon %s n'est pas démarré": "Il demone %s non è stato avviato",
         "Le message n'est pas pour le plugin SmatrMeterUSB": "Il messaggio non è per il plugin SmatrMeterUSB",
         "Le plugin %s n'est pas installé": "Il plugin %s non è installato",
         "Les commandes seront céées automatiquement": "I comandi verranno creati automaticamente",
         "OBISCode pour la mesure %s introuvable": "Codice OBIS per la misura %s non trovato",
+        "Protocol avec l'id %s introuvable": "Protocollo con ID %s non trovato",
+        "Préparation de la config pour le protocol %s (lib: %s)": "Preparazione della configurazione per il protocollo %s (lib: %s)",
         "Tri des commandes du compteur '%s' (%s)": "Ordinare i comandi del contatore '%s' (%s)",
         "Veuillez configurer et activer au moins un convertisseur USB": "Configurare e attivare almeno un convertitore USB",
         "Veuillez vérifier la configuration": "Controllare la configurazione",
         "compteur": "contatore"
+    },
+    "plugins\/SmartMeterUSB\/core\/class\/SmartMeterUSBSimulator.class.php": {
+        "Arrêt de socat pour %s": "Interruzione di Socat per %s",
+        "Arrêt du compteur virtuel pour %s": "Arresto del contatore virtuale per %s",
+        "Arrêt du simulateur %s": "Arresto del simulatore %s",
+        "Erreur configuration pour l'émulateur %s introuvable": "Errore di configurazione: emulatore %s non trovato",
+        "Erreur lors de la lecture du fichier %s": "Errore nella lettura del file %s",
+        "Lancemant de socat pour %s": "Lancio di socat per %s",
+        "Lancemant du compteur virtuel pour %s": "Lancio del contatore virtuale per %s",
+        "Lancement du simulateur %s": "Lancio del simulatore %s"
     },
     "plugins\/SmartMeterUSB\/core\/config\/cmds.json": {
         "Angle UI phase 1": "Angolo UI fase 1",
@@ -94,13 +112,19 @@
     },
     "plugins\/SmartMeterUSB\/desktop\/js\/configuration.js": {
         "Activer": "Attivare",
+        "Baudrate": "Velocità di trasmissione",
         "Clé": "Chiave",
         "Clé d\\'encryprion du compteur": "Chiave di crittografia del contatore",
         "Compteur connecté au convertisseur": "Contatore collegato al convertitore",
         "Port": "Porta",
+        "Protocol": "Protocollo",
         "Type": "Tipo",
         "Vitesse de transmission (optionel)": "Velocità di trasmissione (opzionale)",
+        "auto": "auto",
         "port USB": "porta USB"
+    },
+    "plugins\/SmartMeterUSB\/desktop\/js\/simulator.js": {
+        "simulateur": "simulatore"
     },
     "plugins\/SmartMeterUSB\/desktop\/modal\/modal.SmartMeterUSB.php": {
         "401 - Accès non autorisé": "401 - Accesso non autorizzato"
@@ -144,13 +168,21 @@
         "Visible": "Visibile"
     },
     "plugins\/SmartMeterUSB\/plugin_info\/configuration.php": {
+        "(Re)Démarrer": "(Ri)avvia",
         "Ajouter un convertisseur": "Aggiungere un convertitore",
+        "Arrêter": "Ferma",
+        "Autre": "Altri",
         "Compteurs": "Contatori",
         "Convertisseurs USB": "Convertitori USB",
         "Création auto des commandes": "Creazione automatica di comandi",
         "Création auto des compteurs": "Creazione automatica di contatori",
+        "Fournisseur": "Fornitore",
         "HC": "HC",
         "HP": "HP",
-        "Plages horaire": "Fusi orari"
+        "Message": "Message",
+        "Pays": "Pays",
+        "Plages horaire": "Fusi orari",
+        "Simulateur": "Simulatore",
+        "Statut": "Stato"
     }
 }
