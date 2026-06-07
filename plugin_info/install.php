@@ -21,6 +21,16 @@ function SmartMeterUSB_goto_1() {
 	config::save('supplier', 'other', 'SmartMeterUSB');
 	config::save('country', 'other', 'SmartMeterUSB');
 
+	$convertersConfigs = config::searchKey('converter::%', 'SmartMeterUSB');
+	foreach ($converterConfigs as $converterConfig) {
+		if (array_key_exists('baurate',$converterConfig)){
+			$converterConfig['baudrate'] = $converterConfig['baurate'];
+			unset ($converterConfig['baurate']);
+			config::save('converter::' . $converterConfig['id'],$converterConfig,"SmartMeterUSB");
+		}
+	}
+			
+	// Initialisation de "protocol" à la valeur pas défau
 	$converters = SmartMeterUSBConverter::all();
 	foreach ($converters as $converter) {
 		$converter->save();

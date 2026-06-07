@@ -21,7 +21,7 @@ class SmartMeterUSBConverter {
 	private $id = -1;
 	private $type = '';
 	private $port = '';
-	private $baurate = '2400';
+	private $baudrate = '2400';
 	private $protocol = '0';
 	private $key = '';
 	private $enable = 0;
@@ -189,16 +189,16 @@ class SmartMeterUSBConverter {
 		return $this->protocol;
 	}
 
-	/* baurate */
-	public function setBaurate($_baurate) {
-		if ($this->baurate !== $_baurate) {
+	/* baudrate */
+	public function setBaudrate($_baudrate) {
+		if ($this->baudrate !== $_baudrate) {
 			$this->_changed = true;
 		}
-		$this->baurate = $_baurate;
+		$this->baudrate = $_baudrate;
 		return $this;
 	}
-	public function getBaurate() {
-		return $this->baurate;
+	public function getBaudrate() {
+		return $this->baudrate;
 	}
 
 	/* enable */

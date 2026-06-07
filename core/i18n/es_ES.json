@@ -94,7 +94,6 @@
     },
     "plugins\/SmartMeterUSB\/desktop\/js\/configuration.js": {
         "Activer": "Activar",
-        "Baurate": "Baurate",
         "Clé": "Llave",
         "Clé d\\'encryprion du compteur": "Clave de cifrado del contador",
         "Compteur connecté au convertisseur": "Contador conectado al convertidor",

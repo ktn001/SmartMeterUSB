@@ -253,7 +253,7 @@ class SmartMeterUSB extends eqLogic {
 						fwrite($datacollectorCfgFile, "[reader" . $converter->getId() . "]\n");
 						fwrite($datacollectorCfgFile, "type = " . $converter->getType() . "\n");
 						fwrite($datacollectorCfgFile, "port = " . $converter->getport() . "\n");
-						fwrite($datacollectorCfgFile, "baurate = " . $converter->getBaurate() . "\n");
+						fwrite($datacollectorCfgFile, "baudrate = " . $converter->getBaudrate() . "\n");
 						fwrite($datacollectorCfgFile, "key = " . $converter->getKey() . "\n");
 						fwrite($datacollectorCfgFile, "\n");
 					}

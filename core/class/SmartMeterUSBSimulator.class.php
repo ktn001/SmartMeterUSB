@@ -28,6 +28,8 @@ class SmartMeterUSBSimulator {
 	private $pidFile = '';
 	private $simulatorPort = '';
 	private $readerPort = '';
+	private $baudrate = "";
+	private $counterScript = "";
 
 	/*     * ***********************Methode static*************************** */
 
@@ -89,29 +91,62 @@ class SmartMeterUSBSimulator {
 		$this->pidFile = jeedom::getTmpFolder('SmartMeterUSB') . "/" . $config['pidFile'];
 		$this->simulatorPort = jeedom::getTmpFolder('SmartMeterUSB') . "/" . $config['simulatorPort'];
 		$this->readerPort = jeedom::getTmpFolder('SmartMeterUSB') . "/" . $config['readerPort'];
+		$this->baudrate = $config['baudrate'];
+		$this->counterScript = __DIR__ . "/../../resources/bin/" . $config['counter'];
 	}
 
-	public function start() {
-		log::add("SmartMeterUSB","info",sprintf(__("Lancement du simulateur %s",__FILE__),$this->name));
-		$this->stop();
+	public function counterStart() {
+		log::add("SmartMeterUSB","debug",sprintf(__("Lancemant du compteur virtuel pour %s",__FILE__),$this->name));
+		log::add("SmartMeterUSB","debug","Script: " . $this->getCounterScript());
+		$cmd = SmartMeterUSB::PYTHON_PATH . " " . $this->getCounterScript();
+		$cmd .= " -p " . $this->getSimulatorPort();
+		$cmd .= " -b " . $this->getBaudrate();
+		$logFile = log::getPathToLog(__CLASS__ . "_" . $this->name . "_counter");
+		exec($cmd . ' >> ' . $logFile . ' 2>&1 & echo $!', $output);
+		$pid = $output[0];
+		$this->addPid("counter",$pid);
+	}
 
+	public function socatStart() {
 		log::add("SmartMeterUSB","debug",sprintf(__("Lancemant de socat pour %s",__FILE__),$this->name));
 		$cmd = "/usr/bin/socat -d -d ";
-		$cmd .= "PTY,link=" . $this->getSimulatorPort() . ",raw,echo=0,b115200,parenb,parodd,cs8 ";
-		$cmd .= "PTY,link=" . $this->getReaderPort() . ",raw,echo=0,b115200,parenb,parodd,cs8 ";
-		$logFile = log::getPathToLog(__CLASS__ . "_" . $this->name , "_socat");
+		$cmd .= "PTY,link=" . $this->getSimulatorPort() . ",raw,echo=0,b" . $this->baudrate . ",parenb,parodd,cs8 ";
+		$cmd .= "PTY,link=" . $this->getReaderPort() . ",raw,echo=0,b" . $this->baudrate . ",parenb,parodd,cs8 ";
+		$logFile = log::getPathToLog(__CLASS__ . "_" . $this->name . "_socat");
 		exec($cmd . ' >> ' . $logFile . ' 2>&1 & echo $!', $output);
 		$pid = $output[0];
 		$this->addPid("socat",$pid);
 	}
 
-	public function stop() {
-		log::add ("SmartMeterUSB","info",sprintf(__("Arrêt du simulateur %s",__FILE__),$this->name));
+	public function start() {
+		$this->stop();
+		log::add("SmartMeterUSB","info",sprintf(__("Lancement du simulateur %s",__FILE__),$this->name));
+		$this->socatStart();
+		$this->counterStart();
+	}
+
+	public function counterStop() {
+		log::add("SmartMeterUSB","debug",sprintf(__("Arrêt du compteur virtuel pour %s",__FILE__),$this->name));
+		$pid = $this->getPid('counter');
+		if ($pid){
+			system::kill($pid);
+		}
+		$this->removePid('counter');
+	}
+
+	public function socatStop() {
+		log::add("SmartMeterUSB","debug",sprintf(__("Arrêt de socat pour %s",__FILE__),$this->name));
 		$pid = $this->getPid('socat');
 		if ($pid){
 			system::kill($pid);
 		}
 		$this->removePid('socat');
+	}
+
+	public function stop() {
+		log::add ("SmartMeterUSB","info",sprintf(__("Arrêt du simulateur %s",__FILE__),$this->name));
+		$this->counterStop();
+		$this->socatStop();
 	}
 
 	public function socatState() {
@@ -125,11 +160,43 @@ class SmartMeterUSBSimulator {
 		return 1;
 	}
 
+	public function counterState() {
+		$pid = $this->getPid('counter');
+		if ($pid === false){
+			return 0;
+		}
+		if (! file_exists('/proc/' . $pid)){
+			return 0;
+		}
+		return 1;
+	}
+
 	public function state() {
-		$state = $this->socatState();
+		$socatState = $this->socatState();
+		$counterState = $this->counterState();
+		$msg = '';
+		$state = '';
+		if ($socatState == 1 and $counterState == 1) {
+			$state = 1;
+			$msg = "baudrate: " . $this->getbaudrate();
+		} else {
+			$state = 0;
+			if (! $socatState) {
+				if ($msg) {
+					$msg .= ", ";
+				}
+				$msg .= "socat NOK";
+			}
+			if (! $counterState) {
+				if ($msg) {
+					$msg .= ", ";
+				}
+				$msg .= "counter NOK";
+			}
+		}
 		$ret = array(
 			'state' => $state,
-			'msg' => ''
+			'msg' => $msg
 		);
 		return $ret;
 	}
@@ -198,5 +265,13 @@ class SmartMeterUSBSimulator {
 
 	function getReaderPort() {
 		return $this->readerPort;
+	}
+
+	function getBaudrate() {
+		return $this->baudrate;
+	}
+
+	function getCounterScript() {
+		return $this->counterScript;
 	}
 }
