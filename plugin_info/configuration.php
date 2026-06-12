@@ -106,11 +106,12 @@ sendVarToJs('showDev', config::byKey("dev","SmartMeterUSB"));
 			<div class="form-group">
 				<table id="simulatorsTable" class="table table-condensed">
 					<thead>
-						<th style="width:20%;">{{Simulateur}}</th>
-						<th style="width:10%;">{{Statut}}</th>
-						<th style="width:50%;">{{Message}}</th>
-						<th style="width:10%;">{{(Re)Démarrer}}</th>
-						<th style="width:10%;">{{Arrêter}}</th>
+						<th>{{Simulateur}}</th>
+						<th>{{Statut}}</th>
+						<th>{{Message}}</th>
+						<th>{{(Re)Démarrer}}</th>
+						<th>{{Arrêter}}</th>
+						<th>{{Dernier lancement}}</th>
 					</thead>
 					<tbody>
 					</tbody>

@@ -253,7 +253,7 @@ class SmartMeterUSB extends eqLogic {
 						fwrite($datacollectorCfgFile, "[reader" . $converter->getId() . "]\n");
 						fwrite($datacollectorCfgFile, "type = " . $converter->getType() . "\n");
 						fwrite($datacollectorCfgFile, "port = " . $converter->getport() . "\n");
-						fwrite($datacollectorCfgFile, "baudrate = " . $converter->getBaudrate() . "\n");
+						fwrite($datacollectorCfgFile, "baurate = " . $converter->getBaudrate() . "\n");
 						fwrite($datacollectorCfgFile, "key = " . $converter->getKey() . "\n");
 						fwrite($datacollectorCfgFile, "\n");
 					}
@@ -267,6 +267,7 @@ class SmartMeterUSB extends eqLogic {
 					fwrite($datacollectorCfgFile, "host = " . $mqttInfos['ip'] . "\n");
 					fwrite($datacollectorCfgFile, "port = " . $mqttInfos['port'] . "\n");
 					fwrite($datacollectorCfgFile, "tls = False\n");
+					fwrite($datacollectorCfgFile, "protocol = 3.1.1\n");
 					fwrite($datacollectorCfgFile, "ca_file_path =\n");
 					fwrite($datacollectorCfgFile, "check_hostname = False\n");
 					fwrite($datacollectorCfgFile, "username = " . $mqttInfos['user'] . "\n");

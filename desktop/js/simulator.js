@@ -56,6 +56,7 @@ if (typeof SmartMeterUSBSimulator === "undefined") {
             tr +=     '<i class="fas fa-stop"></i>'
             tr +=   '</a>'
             tr += '</td>'
+            tr += '<td class="simulatorLastLaunchTime"></td>'
             tr += '</tr>'
             let newRow = document.createElement("tr")
             newRow.innerHTML = tr
@@ -121,8 +122,12 @@ if (typeof SmartMeterUSBSimulator === "undefined") {
               .getElementById('simulatorsTable')
               .querySelector('tr[data-simulatorName="' + name + '"] .simulatorMessage')
               .innerHTML = info['msg']
+            document
+              .getElementById('simulatorsTable')
+              .querySelector('tr[data-simulatorName="' + name + '"] .simulatorLastLaunchTime')
+              .innerHTML = info['lastLaunchTime']
           })
-          setTimeout(SmartMeterUSBSimulator.simulatorsStates, 5000)
+          setTimeout(SmartMeterUSBSimulator.simulatorsStates, 3000)
         }
       })
     },

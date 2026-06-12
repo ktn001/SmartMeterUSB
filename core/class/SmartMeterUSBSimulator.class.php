@@ -101,6 +101,8 @@ class SmartMeterUSBSimulator {
 		$cmd = SmartMeterUSB::PYTHON_PATH . " " . $this->getCounterScript();
 		$cmd .= " -p " . $this->getSimulatorPort();
 		$cmd .= " -b " . $this->getBaudrate();
+		$cmd .= " -l debug";
+		log::add("SmartMeterUSB","debug",$cmd);
 		$logFile = log::getPathToLog(__CLASS__ . "_" . $this->name . "_counter");
 		exec($cmd . ' >> ' . $logFile . ' 2>&1 & echo $!', $output);
 		$pid = $output[0];
@@ -113,6 +115,7 @@ class SmartMeterUSBSimulator {
 		$cmd .= "PTY,link=" . $this->getSimulatorPort() . ",raw,echo=0,b" . $this->baudrate . ",parenb,parodd,cs8 ";
 		$cmd .= "PTY,link=" . $this->getReaderPort() . ",raw,echo=0,b" . $this->baudrate . ",parenb,parodd,cs8 ";
 		$logFile = log::getPathToLog(__CLASS__ . "_" . $this->name . "_socat");
+		log::add("SmartMeterUSB","debug",$cmd);
 		exec($cmd . ' >> ' . $logFile . ' 2>&1 & echo $!', $output);
 		$pid = $output[0];
 		$this->addPid("socat",$pid);
@@ -123,6 +126,7 @@ class SmartMeterUSBSimulator {
 		log::add("SmartMeterUSB","info",sprintf(__("Lancement du simulateur %s",__FILE__),$this->name));
 		$this->socatStart();
 		$this->counterStart();
+		config::save($this->getName() . '::lastLaunchTime', date('Y-m-d H:i:s'), 'SmartMEterUSB');
 	}
 
 	public function counterStop() {
@@ -196,7 +200,8 @@ class SmartMeterUSBSimulator {
 		}
 		$ret = array(
 			'state' => $state,
-			'msg' => $msg
+			'msg' => $msg,
+			'lastLaunchTime' => config::byKey($this->getName() . '::lastLaunchTime', 'SmartMeterUSB', __('Inconnue',__FILE__))
 		);
 		return $ret;
 	}

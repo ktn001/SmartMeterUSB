@@ -112,7 +112,6 @@ if (typeof SmartMeterUSBConfig === "undefined") {
     if (showDev != 0) {
       SmartMeterUSBSimulator.addReaderPortOptions(newConverter.querySelector('[data-l1key=port]'))
       setTimeout(function() {
-        console.log(converter)
         newConverter.setJeeValues(converter, ".converterAttr")
       },200)
     } else {
