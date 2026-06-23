@@ -2,4 +2,5 @@
 /resources/pyenv.lib
 /resources/dependance.lib
 /resources/config.ini
+__pycache__
 *.swp

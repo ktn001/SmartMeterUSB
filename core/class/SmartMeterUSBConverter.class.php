@@ -106,7 +106,7 @@ class SmartMeterUSBConverter {
 		return $this->_changed;
 	}
 
-	public function protocolToUse() {
+	public function EffectiveProtocol() {
 		if ($this->getProtocol() != 0) {
 			return $this->getProtocol();
 		}

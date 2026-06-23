@@ -23,6 +23,8 @@ class SmartMeterUSBSimulator {
 
 	/*     * *************************Attributs****************************** */
 
+	const PYTHON_PATH = __DIR__ . '/../../resources/venv/bin/python3';
+
 	private static $configFile = __DIR__ . "/../config/simulator.json";
 	private $name = '';
 	private $pidFile = '';
@@ -75,6 +77,19 @@ class SmartMeterUSBSimulator {
 		return $ret;
 	}
 
+	public static function startUsed() {
+		$simulators = self::getAll();
+		$converters = SmartMeterUSBConverter::all(true);
+		foreach ($simulators as $simulator) {
+			foreach ($converters as $converter) {
+				if ($converter->getPort() == $simulator->getReaderPort()){
+					$simulator->start();
+					break;
+				}
+			}
+		}
+	}
+
 	/*     * *********************Méthodes d'instance************************* */
 
 	public function __construct($name) {
@@ -92,16 +107,16 @@ class SmartMeterUSBSimulator {
 		$this->simulatorPort = jeedom::getTmpFolder('SmartMeterUSB') . "/" . $config['simulatorPort'];
 		$this->readerPort = jeedom::getTmpFolder('SmartMeterUSB') . "/" . $config['readerPort'];
 		$this->baudrate = $config['baudrate'];
-		$this->counterScript = __DIR__ . "/../../resources/bin/" . $config['counter'];
+		$this->counterScript = realpath(__DIR__ . "/../../resources/bin/" . $config['counter']);
 	}
 
 	public function counterStart() {
 		log::add("SmartMeterUSB","debug",sprintf(__("Lancemant du compteur virtuel pour %s",__FILE__),$this->name));
 		log::add("SmartMeterUSB","debug","Script: " . $this->getCounterScript());
-		$cmd = SmartMeterUSB::PYTHON_PATH . " " . $this->getCounterScript();
+		$cmd = self::PYTHON_PATH . " " . $this->getCounterScript();
 		$cmd .= " -p " . $this->getSimulatorPort();
 		$cmd .= " -b " . $this->getBaudrate();
-		$cmd .= " -l debug";
+		$cmd .= " -l " . log::convertLogLevel(log::getLogLevel(__CLASS__));
 		log::add("SmartMeterUSB","debug",$cmd);
 		$logFile = log::getPathToLog(__CLASS__ . "_" . $this->name . "_counter");
 		exec($cmd . ' >> ' . $logFile . ' 2>&1 & echo $!', $output);
