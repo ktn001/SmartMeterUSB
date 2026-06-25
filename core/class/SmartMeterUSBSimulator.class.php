@@ -116,7 +116,7 @@ class SmartMeterUSBSimulator {
 		$cmd = self::PYTHON_PATH . " " . $this->getCounterScript();
 		$cmd .= " -p " . $this->getSimulatorPort();
 		$cmd .= " -b " . $this->getBaudrate();
-		$cmd .= " -l " . log::convertLogLevel(log::getLogLevel(__CLASS__));
+		$cmd .= " -l " . log::convertLogLevel(log::getLogLevel('SmartMeterUSB'));
 		log::add("SmartMeterUSB","debug",$cmd);
 		$logFile = log::getPathToLog(__CLASS__ . "_" . $this->name . "_counter");
 		exec($cmd . ' >> ' . $logFile . ' 2>&1 & echo $!', $output);
@@ -141,7 +141,7 @@ class SmartMeterUSBSimulator {
 		log::add("SmartMeterUSB","info",sprintf(__("Lancement du simulateur %s",__FILE__),$this->name));
 		$this->socatStart();
 		$this->counterStart();
-		config::save($this->getName() . '::lastLaunchTime', date('Y-m-d H:i:s'), 'SmartMEterUSB');
+		config::save($this->getName() . '::lastLaunchTime', date('Y-m-d H:i:s'), 'SmartMeterUSB');
 	}
 
 	public function counterStop() {

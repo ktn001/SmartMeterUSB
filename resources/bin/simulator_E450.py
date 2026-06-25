@@ -9,7 +9,6 @@ import time
 import random
 import signal
 import serial
-import utils
 
 logLevel = "info"
 
@@ -88,7 +87,6 @@ def init_logging():
     format = '%(asctime)s [%(levelname)s] %(message)s'
     dateformat = '%Y-%m-%d %H:%M:%S'
     logging.basicConfig(level=_level, format=format, datefmt = dateformat)
-    logging.info("logLevel: %s", logLevel)
 
 def signal_handler(sig, frame):
     logging.debug ("Terminé")
@@ -183,7 +181,7 @@ def getCosems():
             cosem[1] = str(round(tension_2))
         elif cosem[0] == '1.0.72.7.0':
             cosem[1] = str(round(tension_3))
-        logging.info(cosem)
+        logging.debug(cosem)
     return cosems
 
 def getCrc(data):
