@@ -125,6 +125,10 @@ class SmartMeterUSB extends eqLogic {
 		$packages = join("||", $packages_installed);
 		exec("cat {$requirementsPath}", $packages_needed);
 		foreach ($packages_needed as $line) {
+			$line = str_contains($line, '#') ? explode('#', $line)[0] : $line;
+			if (empty(trim($line))) {
+				continue;
+			}
 			if (preg_match('/([^\s]+)[\s]*([>=~]=)[\s]*([\d+\.?]+)$/', $line, $need) === 1) {
 				if (preg_match('/' . $need[1] . '==([\d+\.?]+)/', $packages, $install) === 1) {
 					if ($need[2] == '==' && $need[3] != $install[1]) {
@@ -262,19 +266,19 @@ class SmartMeterUSB extends eqLogic {
 			fwrite($datacollectorCfgFile, "type = logger\n");
 			fwrite($datacollectorCfgFile, "name = DataLogger\n");
 			fwrite($datacollectorCfgFile, "\n");
-			fwrite($datacollectorCfgFile, "[sink1]\n");
-			fwrite($datacollectorCfgFile, "type = mqtt\n");
-			fwrite($datacollectorCfgFile, "host = " . $mqttInfos['ip'] . "\n");
-			fwrite($datacollectorCfgFile, "port = " . $mqttInfos['port'] . "\n");
-			fwrite($datacollectorCfgFile, "tls = False\n");
-			fwrite($datacollectorCfgFile, "protocol = 3.1.1\n");
-			fwrite($datacollectorCfgFile, "ca_file_path =\n");
-			fwrite($datacollectorCfgFile, "check_hostname = False\n");
-			fwrite($datacollectorCfgFile, "username = " . $mqttInfos['user'] . "\n");
-			fwrite($datacollectorCfgFile, "password = " . $mqttInfos['password'] . "\n");
-			fwrite($datacollectorCfgFile, "client_cert_path =\n");
-			fwrite($datacollectorCfgFile, "client_key_path =\n");
-			fwrite($datacollectorCfgFile, "\n");
+			# fwrite($datacollectorCfgFile, "[sink1]\n");
+			# fwrite($datacollectorCfgFile, "type = mqtt\n");
+			# fwrite($datacollectorCfgFile, "host = " . $mqttInfos['ip'] . "\n");
+			# fwrite($datacollectorCfgFile, "port = " . $mqttInfos['port'] . "\n");
+			# fwrite($datacollectorCfgFile, "tls = False\n");
+			# fwrite($datacollectorCfgFile, "protocol = 3.1.1\n");
+			# fwrite($datacollectorCfgFile, "ca_file_path =\n");
+			# fwrite($datacollectorCfgFile, "check_hostname = False\n");
+			# fwrite($datacollectorCfgFile, "username = " . $mqttInfos['user'] . "\n");
+			# fwrite($datacollectorCfgFile, "password = " . $mqttInfos['password'] . "\n");
+			# fwrite($datacollectorCfgFile, "client_cert_path =\n");
+			# fwrite($datacollectorCfgFile, "client_key_path =\n");
+			# fwrite($datacollectorCfgFile, "\n");
 
 			fwrite($datacollectorCfgFile, "[logging]\n");
 			fwrite($datacollectorCfgFile, "default = DEBUG\n");
@@ -296,6 +300,12 @@ class SmartMeterUSB extends eqLogic {
 				fwrite($daemonCfgFile, "ConfigFile = " . $datacollectorCfgFileName . "\n");
 				fwrite($daemonCfgFile, "\n");
 			}
+			fwrite($daemonCfgFile, "[mqtt]\n");
+			fwrite($daemonCfgFile, "username = " . $mqttInfos['user'] . "\n");
+			fwrite($daemonCfgFile, "password = " . $mqttInfos['password'] . "\n");
+			fwrite($daemonCfgFile, "host = " . $mqttInfos['ip'] . "\n");
+			fwrite($daemonCfgFile, "port = " . $mqttInfos['port'] . "\n");
+
 			fclose($daemonCfgFile);
 			chmod($daemonCfgFileName,0660);
 		}

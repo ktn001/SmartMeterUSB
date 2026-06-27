@@ -4,11 +4,15 @@ import sys
 import argparse
 import logging
 import asyncio
-from asyncio import CancelledError
+from queue import Queue
 import signal
 import smartmeter_datacollector.config
 import smartmeter_datacollector.factory
 from configparser import ConfigParser
+
+sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/../lib'))
+from queueToMqtt import QueueToMqtt
+from queueSink import QueueSink
 
 pid_file = None
 config_file = None
@@ -20,6 +24,7 @@ _smtr_collector = False
 _coroutines_to_startstop = False
 _coroutines_to_run = False
 
+jeeQueue = Queue()
 
 def options():
     global pid_file
@@ -98,6 +103,35 @@ def coroutinesToStartAndStop():
             coroutine['info']['desc'] = f'Task sink {type(sink)} pour smartmeter_datacollector'
             smtr_collector.register_sink(sink)
             _coroutines_to_startstop.append(coroutine)
+
+        # ---- la coroutine "sink" du plugin pour "smatmetercollector"
+        queueSink = QueueSink(jeeQueue)
+        coroutine = {}
+        coroutine['start'] = queueSink.start()
+        coroutine['stop'] = queueSink.stop()
+        coroutine['info'] = {}
+        coroutine['info']['type'] = 'smtr_sink'
+        coroutine['info']['sink'] = queueSink
+        coroutine['info']['desc'] = f'Task sink {type(sink)} pour smartmeter_datacollector'
+        smtr_collector.register_sink(queueSink)
+        _coroutines_to_startstop.append(coroutine)
+
+    # ---- les coroutines globales
+    if config.has_section('mqtt'):
+        username = config.get('mqtt','username')
+        password = config.get('mqtt','password')
+        host = config.get('mqtt','host')
+        port = config.get('mqtt','port')
+        queueToMqtt = QueueToMqtt(username, password, host, port, jeeQueue)
+
+        coroutine = {}
+        coroutine['start'] = queueToMqtt.start()
+        coroutine['stop'] = queueToMqtt.stop()
+        coroutine['info'] = {}
+        coroutine['info']['type'] = 'queue_to_mqtt'
+        coroutine['info']['sink'] = queueToMqtt
+        coroutine['info']['desc'] = f'Task queueToMqtt'
+        _coroutines_to_startstop.append(coroutine)
 
     logging.debug("coroutine_to_startstop: %s", _coroutines_to_startstop)
     return _coroutines_to_startstop

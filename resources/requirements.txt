@@ -1,3 +1,5 @@
-setuptools < 70.0.0
-paho-mqtt < 2.0.0
-smartmeter-datacollector>=1.2.1   
+#setuptools < 70.0.0
+#paho-mqtt < 2.0.0
+#smartmeter-datacollector>=1.2.1   
+smartmeter-datacollector
+
