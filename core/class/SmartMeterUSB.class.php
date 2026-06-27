@@ -201,7 +201,7 @@ class SmartMeterUSB extends eqLogic {
 		# --- Souscription à MQTT
 		self::$_MQTT2::addPluginTopic(__CLASS__, self::$_TOPIC_PREFIX);
 		log::add("SmartMeterUSB","debug", "Listening to topic: '" . self::$_TOPIC_PREFIX . "'");
-		
+
 		# --- Y-a-t'il au moins un converter
 		$converters = SmartMeterUSBConverter::all(true);
 		if (count($converters) == 0) {
@@ -214,11 +214,11 @@ class SmartMeterUSB extends eqLogic {
 			throw new Exception(__('Veuillez vérifier la configuration',__FILE__));
 		}
 
-		# --- Relance des simulateurs (uniquement en mode dev) 
+		# --- Relance des simulateurs (uniquement en mode dev)
 		if (config::byKey("dev","SmartMeterUSB") != 0) {
 			SmartMeterUSBSimulator::startUsed();
 		}
-		
+
 		# --- Suppression des anciens fichiers de config
 		$daemonCfgFileName = jeedom::getTmpFolder(__CLASS__) . '/daemon.ini';
 		$datacollectorCfgFileName = jeedom::getTmpFolder(__CLASS__) . '/datacollector.ini';
@@ -240,15 +240,32 @@ class SmartMeterUSB extends eqLogic {
 			$protocols[$protocol['id']] = $protocol;
 			$convertersByLib[$protocol['lib']] = array();
 		}
+		$nbCounter = 0;
 		foreach (SmartMeterUSBConverter::all(true) as $converter) {
+			$nbCounter++;
 			$protocolId = $converter->effectiveProtocol();
 			$lib = $protocols[$protocolId]['lib'];
 			$convertersByLib[$lib][] = $converter;
 		}
 
+		if ($nbCounter == 0) {
+			throw new Exception(__("Aucun convertisseur actif",__FILE__));
+		}
 		$mqttInfos = self::$_MQTT2::getFormatedInfos();
 
-		# --- Préparation du fichier de configuration pour "smartmeter_datacollector"
+		# ---- Ouverture du fichier de config global
+		if (! $daemonCfgFile = fopen($daemonCfgFileName, 'w')) {
+			throw new Exception(sprintf(__("Erreur lors de la création du fichier: %s",__FILE__), $daemonCfgFileName));
+		}
+
+		# ---- Configuration de la connection au broker MQTT
+		fwrite($daemonCfgFile, "[mqtt]\n");
+		fwrite($daemonCfgFile, "username = " . $mqttInfos['user'] . "\n");
+		fwrite($daemonCfgFile, "password = " . $mqttInfos['password'] . "\n");
+		fwrite($daemonCfgFile, "host = " . $mqttInfos['ip'] . "\n");
+		fwrite($daemonCfgFile, "port = " . $mqttInfos['port'] . "\n");
+
+		# --- Création du fichier de configuration pour "smartmeter_datacollector"
 		if (count($convertersByLib['datacollector']) > 0) {
 			if (! $datacollectorCfgFile = fopen($datacollectorCfgFileName, 'w')) {
 				throw new Exception(sprintf(__("Erreur lors de la création du fichier: %s",__FILE__), $datacollectorCfgFileName));
@@ -266,19 +283,6 @@ class SmartMeterUSB extends eqLogic {
 			fwrite($datacollectorCfgFile, "type = logger\n");
 			fwrite($datacollectorCfgFile, "name = DataLogger\n");
 			fwrite($datacollectorCfgFile, "\n");
-			# fwrite($datacollectorCfgFile, "[sink1]\n");
-			# fwrite($datacollectorCfgFile, "type = mqtt\n");
-			# fwrite($datacollectorCfgFile, "host = " . $mqttInfos['ip'] . "\n");
-			# fwrite($datacollectorCfgFile, "port = " . $mqttInfos['port'] . "\n");
-			# fwrite($datacollectorCfgFile, "tls = False\n");
-			# fwrite($datacollectorCfgFile, "protocol = 3.1.1\n");
-			# fwrite($datacollectorCfgFile, "ca_file_path =\n");
-			# fwrite($datacollectorCfgFile, "check_hostname = False\n");
-			# fwrite($datacollectorCfgFile, "username = " . $mqttInfos['user'] . "\n");
-			# fwrite($datacollectorCfgFile, "password = " . $mqttInfos['password'] . "\n");
-			# fwrite($datacollectorCfgFile, "client_cert_path =\n");
-			# fwrite($datacollectorCfgFile, "client_key_path =\n");
-			# fwrite($datacollectorCfgFile, "\n");
 
 			fwrite($datacollectorCfgFile, "[logging]\n");
 			fwrite($datacollectorCfgFile, "default = DEBUG\n");
@@ -288,50 +292,15 @@ class SmartMeterUSB extends eqLogic {
 
 			fclose($datacollectorCfgFile);
 			chmod($datacollectorCfgFileName,0660);
+
+			fwrite($daemonCfgFile, "[datacollector]\n");
+			fwrite($daemonCfgFile, "ConfigFile = " . $datacollectorCfgFileName . "\n");
+			fwrite($daemonCfgFile, "\n");
 		}
-			
-		# --- Préparation du fichier de configuration global
-		if ((count($convertersByLib['datacollector']) + count($convertersByLib['gurux'])) > 0) {
-			if (! $daemonCfgFile = fopen($daemonCfgFileName, 'w')) {
-				throw new Exception(sprintf(__("Erreur lors de la création du fichier: %s",__FILE__), $daemonCfgFileName));
-			}
-			if (count($convertersByLib['datacollector']) > 0) {
-				fwrite($daemonCfgFile, "[datacollector]\n");
-				fwrite($daemonCfgFile, "ConfigFile = " . $datacollectorCfgFileName . "\n");
-				fwrite($daemonCfgFile, "\n");
-			}
-			fwrite($daemonCfgFile, "[mqtt]\n");
-			fwrite($daemonCfgFile, "username = " . $mqttInfos['user'] . "\n");
-			fwrite($daemonCfgFile, "password = " . $mqttInfos['password'] . "\n");
-			fwrite($daemonCfgFile, "host = " . $mqttInfos['ip'] . "\n");
-			fwrite($daemonCfgFile, "port = " . $mqttInfos['port'] . "\n");
-
-			fclose($daemonCfgFile);
-			chmod($daemonCfgFileName,0660);
-		}
-
-		# foreach ($byProtocolIds as $protocolId => $converters) {
-		# 	log::add("SmartMeterUSB","info",sprintf(__("Préparation de la config pour le protocol %s (lib: %s)",__FILE__),
-		# 		$protocol['label'],$protocol['lib']));
-
-		# 	switch ($protocol['lib']) {
-
-		# 		case 'gurux':
-		# 			if (! $guruxCfgFile = fopen($guruxCfgFileName, 'w')) {
-		# 				throw new Exception(sprintf(__("Erreur lors de la création du fichier: %s",__FILE__), $guruxCfgFileName));
-		# 			}
-		# 			foreach ($converters as $converter) {
-		# 			}
-		# 			fclose($guruxCfgFile);
-		# 			chmod($guruxCfgFileName,0660);
-
-		# 			fwrite($daemonCfgFile, "[gurux]\n");
-		# 			fwrite($daemonCfgFile, "ConfigFile = " . $guruxCfgFileName . "\n");
-		# 			fwrite($daemonCfgFile, "\n");
-		# 		break;
-		# 	}
-		# }
-
+	
+		# --- Fermeture du fichier de configuration global
+		fclose($daemonCfgFile);
+		chmod($daemonCfgFileName,0660);
 
 		$path = realpath(__DIR__ . '/../../resources/bin');
 		$cmd = self::PYTHON_PATH . " {$path}/SmartMeterUSBd.py";

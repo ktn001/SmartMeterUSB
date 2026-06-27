@@ -6,7 +6,7 @@
 	},
 	{
 		"id": 2,
-		"label": "DLMS/COSEM over DSRM",
+		"label": "DSRM binaire",
 		"lib" : "gurux"
 	}
 ]
