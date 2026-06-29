@@ -97,6 +97,7 @@ class SmartMeterUSBConverter {
 		if ($this->getId() == -1) {
 			return;
 		}
+		log::add("SmartMeterUSB","warning",sprintf(__("Suppression du converter %s",__FILE__),$this->getId()));
 		$key = 'converter::' . $this->getId();
 		config::remove($key, 'SmartMeterUSB');
 		return;
@@ -106,7 +107,7 @@ class SmartMeterUSBConverter {
 		return $this->_changed;
 	}
 
-	public function EffectiveProtocol() {
+	public function effectiveProtocol() {
 		if ($this->getProtocol() != 0) {
 			return $this->getProtocol();
 		}
@@ -123,6 +124,28 @@ class SmartMeterUSBConverter {
 			return $counterProtocols['default'];
 		}
 		return -1;
+	}
+
+	public function effectiveBaudrate() {
+		if (is_numeric($this->getBaudrate())) {
+			return $this->getBaudrate();
+		}
+		if ($this->effectiveProtocol() == 1) {
+			return '';
+		}
+		$counterBaudrates = SmartMeterUSB::getCounters()[$this->getType()]['baudrate'];
+		$supplier = SmartMeterUSB::getSupplier();
+		if (isset($counterBaudrates['supplier']) and isset($counterBaudrates['supplier'][$supplier])) {
+			return $counterBaudrates['supplier'][$supplier];
+		}
+		$country = SmartMeterUSB::getCountry();
+		if (isset($counterBaudrates['country']) and isset($counterBaudrates['country'][$country])) {
+			return $counterBaudrates['country'][$country];
+		}
+		if (isset($counterBaudrates['default'])) {
+			return $counterBaudrates['default'];
+		}
+		return '';
 	}
 
 	/* *********************************** */

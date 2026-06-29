@@ -13,6 +13,7 @@ from configparser import ConfigParser
 sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/../lib'))
 from queueToMqtt import QueueToMqtt
 from queueSink import QueueSink
+from guruxMeter import GuruxMeter
 
 pid_file = None
 config_file = None
@@ -57,7 +58,7 @@ def initLogging():
         'none': logging.CRITICAL
     }
     level = levels.get(loglevel, logging.WARNING)
-    format = '%(asctime)-15s[%(levelname)s] : %(message)s'
+    format = '%(asctime)-15s[%(levelname)s] %(module)-17s: %(message)s'
     logging.basicConfig(level=level,format=format, datefmt="%Y-%m-%d %H:%M:%S")
 
 def signal_handler(sig, frame):
@@ -112,7 +113,7 @@ def coroutinesToStartAndStop():
         coroutine['info'] = {}
         coroutine['info']['type'] = 'smtr_sink'
         coroutine['info']['sink'] = queueSink
-        coroutine['info']['desc'] = f'Task sink {type(sink)} pour smartmeter_datacollector'
+        coroutine['info']['desc'] = f'Task sink {type(queueSink)} pour smartmeter_datacollector'
         smtr_collector.register_sink(queueSink)
         _coroutines_to_startstop.append(coroutine)
 
@@ -163,7 +164,7 @@ def coroutinesToRun():
             coroutine['info']['meter'] = meter
             coroutine['info']['desc'] = 'Task meter pour smartmeter_datacollector'
             _coroutines_to_run.append(coroutine)
-        
+
         coroutine = {}
         coroutine['run'] = smtr_collector.process_queue()
         coroutine['info'] = {}
@@ -171,6 +172,17 @@ def coroutinesToRun():
         coroutine['info']['collector'] = smtr_collector
         coroutine['info']['desc'] = 'smartmeter_datacollector collector'
         _coroutines_to_run.append(coroutine)
+
+    for section_name in filter(lambda section: section.startswith('gurux'), config.sections()):
+        grx_meter = GuruxMeter(jeeQueue, config[section_name]['port'],config[section_name]['baudrate'])
+        coroutine = {}
+        coroutine['run'] = grx_meter.start()
+        coroutine['info'] = {}
+        coroutine['info']['type'] = 'gurux_meter'
+        coroutine['info']['meter'] = grx_meter
+        coroutine['info']['desc'] = 'Task meter pour gurux_meter'
+        _coroutines_to_run.append(coroutine)
+
     logging.debug("coroutines_to_run: %s",_coroutines_to_run)
     return _coroutines_to_run
 

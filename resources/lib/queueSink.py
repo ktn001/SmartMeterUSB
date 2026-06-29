@@ -28,5 +28,4 @@ class QueueSink(DataSink):
                 'value'   : data_point.value,
                 'unit'   : data_point.type.unit,
             }
-            logging.info("SEND TO QUEUE %s", payload)
             self._queue.put(json.dumps(payload))

@@ -35,12 +35,21 @@ class SmartMeterUSB extends eqLogic {
 
 	/*     * ***********************Methode static*************************** */
 
+	# ---- Répertoires qui ne doivent pas être sauvegardés
+	public static function backupExclude() {
+		return [
+			'resources/venv'	# L'environnement virtuel Python qui est créé avec le dépendances
+		];
+	}
+
+	# ---- Pour la création automatique des compteurs
 	public static function nextName() {
 		$nextNameId = config::byKey('nextCounterNameId',__CLASS__,1);
 		config::save('nextCounterNameId', $nextNameId+1, __CLASS__);
 		return __('compteur',__FILE__) . "_" . $nextNameId;
 	}
 
+	# ---- Retourne les configurations à appliquer lors de la créaton automatique des commandes
 	public static function getCmdsConfig() {
 		$cmdFileName =__DIR__ . '/../config/cmds.json';
 		$cmds = file_get_contents($cmdFileName);
@@ -52,6 +61,7 @@ class SmartMeterUSB extends eqLogic {
 		return $cmds;
 	}
 
+	# ---- Retourne la liste des distributeurs d'électricité connus
 	public static function getSuppliers() {
 		$supplierFileName =__DIR__ . '/../config/suppliers.json';
 		$suppliers = file_get_contents($supplierFileName);
@@ -62,22 +72,9 @@ class SmartMeterUSB extends eqLogic {
 		return $suppliers;
 	}
 
+	# ---- Retourne le fournisseur d'électricité configuré dans le plugin
 	public static function getSupplier() {
 		return config::byKey("supplier",__CLASS__);
-	}
-
-	public static function getCounters() {
-		$counterFileName =__DIR__ . '/../config/counters.json';
-		$counters = file_get_contents($counterFileName);
-		if ($counters === false) {
-			throw new Exception (sprintf(__("Erreur lors de la lecture du fichier %s",__FILE__),$counterFileName));
-		}
-		$counters = json_decode($counters, true);
-		return $counters;
-	}
-
-	public static function getCountry() {
-		return config::byKey("country",__CLASS__);
 	}
 
 	public static function getCountries() {
@@ -92,6 +89,20 @@ class SmartMeterUSB extends eqLogic {
 		return $countries;
 	}
 
+	public static function getCountry() {
+		return config::byKey("country",__CLASS__);
+	}
+
+	public static function getCounters() {
+		$counterFileName =__DIR__ . '/../config/counters.json';
+		$counters = file_get_contents($counterFileName);
+		if ($counters === false) {
+			throw new Exception (sprintf(__("Erreur lors de la lecture du fichier %s",__FILE__),$counterFileName));
+		}
+		$counters = json_decode($counters, true);
+		return $counters;
+	}
+
 	public static function getProtocols() {
 		$protocolFileName =__DIR__ . '/../config/protocols.json';
 		$protocols = file_get_contents($protocolFileName);
@@ -100,12 +111,6 @@ class SmartMeterUSB extends eqLogic {
 		}
 		$protocols = json_decode($protocols, true);
 		return $protocols;
-	}
-
-	public static function backupExclude() {
-		return [
-			'resources/venv'
-		];
 	}
 
 	public static function getImageForCounterType($_counterType) {
@@ -247,6 +252,7 @@ class SmartMeterUSB extends eqLogic {
 			$lib = $protocols[$protocolId]['lib'];
 			$convertersByLib[$lib][] = $converter;
 		}
+		log::add(__CLASS__,"warning",print_r($convertersByLib,true));
 
 		if ($nbCounter == 0) {
 			throw new Exception(__("Aucun convertisseur actif",__FILE__));
@@ -273,31 +279,39 @@ class SmartMeterUSB extends eqLogic {
 			foreach ($convertersByLib['datacollector'] as $converter) {
 				fwrite($datacollectorCfgFile, "[reader" . $converter->getId() . "]\n");
 				fwrite($datacollectorCfgFile, "type = " . $converter->getType() . "\n");
-				fwrite($datacollectorCfgFile, "port = " . $converter->getport() . "\n");
+				fwrite($datacollectorCfgFile, "port = " . $converter->getPort() . "\n");
 				fwrite($datacollectorCfgFile, "baurate = " . $converter->getBaudrate() . "\n");
 				fwrite($datacollectorCfgFile, "key = " . $converter->getKey() . "\n");
 				fwrite($datacollectorCfgFile, "\n");
 			}
 
-			fwrite($datacollectorCfgFile, "[sink0]\n");
-			fwrite($datacollectorCfgFile, "type = logger\n");
-			fwrite($datacollectorCfgFile, "name = DataLogger\n");
-			fwrite($datacollectorCfgFile, "\n");
+			# fwrite($datacollectorCfgFile, "[sink0]\n");
+			# fwrite($datacollectorCfgFile, "type = logger\n");
+			# fwrite($datacollectorCfgFile, "name = DataLogger\n");
+			# fwrite($datacollectorCfgFile, "\n");
 
 			fwrite($datacollectorCfgFile, "[logging]\n");
 			fwrite($datacollectorCfgFile, "default = DEBUG\n");
 			fwrite($datacollectorCfgFile, "collector = DEBUG\n");
 			fwrite($datacollectorCfgFile, "smartmeter = DEBUG\n");
 			fwrite($datacollectorCfgFile, "sink = DEBUG\n");
+			fwrite($datacollectorCfgFile, "\n");
 
 			fclose($datacollectorCfgFile);
 			chmod($datacollectorCfgFileName,0660);
 
+			fwrite($daemonCfgFile, "\n");
 			fwrite($daemonCfgFile, "[datacollector]\n");
 			fwrite($daemonCfgFile, "ConfigFile = " . $datacollectorCfgFileName . "\n");
-			fwrite($daemonCfgFile, "\n");
 		}
-	
+
+		foreach ($convertersByLib['gurux'] as $converter) {
+			fwrite($daemonCfgFile,"\n");
+			fwrite($daemonCfgFile,"[gurux" . $converter->getId() . "]\n");
+			fwrite($daemonCfgFile,"port = " . $converter->getPort() . "\n");
+			fwrite($daemonCfgFile,"baudrate = " . $converter->effectiveBaudrate() . "\n");
+		}
+
 		# --- Fermeture du fichier de configuration global
 		fclose($daemonCfgFile);
 		chmod($daemonCfgFileName,0660);

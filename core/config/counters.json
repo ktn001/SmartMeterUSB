@@ -4,6 +4,9 @@
     "iface": "P1",
     "protocol" : {
       "default" : "1"
+    },
+    "baudrate" : {
+      "default" : "9600"
     }
   },
   "lge450": {
@@ -11,6 +14,9 @@
     "iface": "M-Bus",
     "protocol" : {
       "default" : "1"
+    },
+    "baudrate" : {
+      "default" : "2400"
     }
   },
   "lge570": {
@@ -18,6 +24,9 @@
     "iface": "M-Bus",
     "protocol" : {
       "default" : "1"
+    },
+    "baudrate" : {
+      "default" : "2400"
     }
   },
   "iskraam550": {
@@ -31,6 +40,9 @@
       "supplier" : {
         "RE" : "2"
       }
+    },
+    "baudrate" : {
+      "default" : "115200"
     }
   },
   "kamstrup_han": {
@@ -38,6 +50,9 @@
     "iface": "M-Bus",
     "protocol" : {
       "default" : "1"
+    },
+    "baudrate" : {
+      "default" : "115200"
     }
   }
 }
