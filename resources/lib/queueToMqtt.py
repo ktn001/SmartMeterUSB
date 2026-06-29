@@ -48,6 +48,7 @@ class QueueToMqtt():
                     if type_ == 'smtr':
                         data = {
                             'value': payload['value'],
+                            'obis': payload['obis'],
                             'timestamp': payload['timestamp']
                         }
                         data = json.dumps(data)
@@ -63,7 +64,7 @@ class QueueToMqtt():
 
     def _topic(self, payload, type_):
         if type_ == 'smtr':
-            return f"smartmeter/{payload['source']}/{payload['identifier']}"
+            return f"smartmeter/{payload['source']}/{payload['obis']}"
         elif type_ == 'gurux':
             return f"smartmeter/{payload['counterId']}"
         else:

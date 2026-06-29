@@ -20,12 +20,14 @@ class QueueSink(DataSink):
         timestamp = data_bundle.timestamp
         logging.info(data_bundle.__repr__())
         for data_point in data_bundle.data_points:
+            obis = data_point.obis
+            obisCode = f"{obis.a}.{obis.b}.{obis.c}.{obis.d}.{obis.e}.{obis.f}"
             payload = {
                 'source'     : source,
                 'timestamp'  : timestamp.timestamp(),
                 'identifier' : data_point.type.identifier,
-                'obis'   : str(data_point.obis),
-                'value'   : data_point.value,
-                'unit'   : data_point.type.unit,
+                'obis'       : obisCode,
+                'value'      : data_point.value,
+                'unit'       : data_point.type.unit,
             }
             self._queue.put(json.dumps(payload))
