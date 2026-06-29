@@ -21,7 +21,7 @@ class QueueSink(DataSink):
         logging.info(data_bundle.__repr__())
         for data_point in data_bundle.data_points:
             obis = data_point.obis
-            obisCode = f"{obis.a}.{obis.b}.{obis.c}.{obis.d}.{obis.e}.{obis.f}"
+            obisCode = f"{obis.a}.{obis.b}:{obis.c}.{obis.d}.{obis.e}.{obis.f}"
             payload = {
                 'source'     : source,
                 'timestamp'  : timestamp.timestamp(),

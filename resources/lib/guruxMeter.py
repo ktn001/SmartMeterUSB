@@ -59,7 +59,8 @@ class GuruxMeter():
                                     for item in decoded_value:
                                         if isinstance(item, list) and len(item) >= 2:
                                             # 1. Formatage du code OBIS
-                                            obis_str = ".".join(str(b) for b in item[0])
+                                            ob = item[0]
+                                            obis_str = f"{str(ob[0])}.{str(ob[1])}:{str(ob[2])}.{str(ob[3])}.{str(ob[4])}.{str(ob[5])}"
 
                                             # 2. Conversion valeur brute / texte
                                             raw_val = item[1]
@@ -90,15 +91,15 @@ class GuruxMeter():
                                             logging.debug ("%s  value: %s unit: %s",obis_str, final_value, unit_str)
                                     if (not self._counterId):
                                         for obis, value in meter_data.items():
-                                            if obis == '0.0.96.1.1.255':
+                                            if obis == '0.0:96.1.1.255':
                                                 self._counterId = value['value']
                                                 break
-                                            if obis == '0.0.96.1.1.255':
+                                            if obis == '0.0:96.1.1.255':
                                                 self.alt1 = value['value']
                                             if hasattr(self, 'alt1') and (time.time()-self.startTime) > 120:
                                                 self._counterId = self.alt1
                                                 break
-                                            if obis == '0.0.42.0.0.255':
+                                            if obis == '0.0:42.0.0.255':
                                                 self.alt2 = value['value']
                                             if hasattr(self, 'alt2') and (time.time()-self.startTime) > 180:
                                                 self._counterId = self.alt2

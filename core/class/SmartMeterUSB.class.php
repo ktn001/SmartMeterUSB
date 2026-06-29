@@ -77,6 +77,7 @@ class SmartMeterUSB extends eqLogic {
 		return config::byKey("supplier",__CLASS__);
 	}
 
+	# ---- Retourne la liste des pays
 	public static function getCountries() {
 		$countries = array();
 		foreach (self::getCounters() as $counter) {
@@ -89,10 +90,12 @@ class SmartMeterUSB extends eqLogic {
 		return $countries;
 	}
 
+	# ---- Retourne le pays configuré dans le plugin
 	public static function getCountry() {
 		return config::byKey("country",__CLASS__);
 	}
 
+	# ---- Retourne la configuration des compteurs connus du plugin
 	public static function getCounters() {
 		$counterFileName =__DIR__ . '/../config/counters.json';
 		$counters = file_get_contents($counterFileName);
@@ -355,20 +358,16 @@ class SmartMeterUSB extends eqLogic {
 	public static function handleMqttMessage($_message) {
 		log::add(__CLASS__, 'debug', 'handle Mqtt Message:' . json_encode($_message));
 
-		$mappingFileName = __DIR__ . '/../config/OBISCode_mapping.json';
-		$OBISCodes = file_get_contents($mappingFileName);
-		if ($OBISCodes === false) {
-			throw new Exception (sprintf(__("Erreur lors de la lecture du fichier %s",__FILE__),$mappingFileName));
-		}
-		$OBISCodes = json_decode($OBISCodes,true);
-
 		foreach (array_keys($_message) as $topicPrefix) {
 			if ($topicPrefix !== self::$_TOPIC_PREFIX) {
 				log::add(__CLASS__, 'warning', __("Le message n'est pas pour le plugin SmatrMeterUSB",__FILE__));
 				continue;
 			}
 			foreach ($_message[$topicPrefix] as $counterNr => $mesures) {
+				log::add(__CLASS__,"debug",sprintf(__("Traitement des données pour le compteur %s",__FILE__),$counterNr));
 				$counter = SmartMeterUSB::byLogicalId($counterNr, __CLASS__);
+
+				# ---- Création du compteur
 				if (!is_object($counter)) {
 					if (config::byKey('autoCreateCounter',__CLASS__)) {
 						$name = self::nextName();
@@ -388,18 +387,24 @@ class SmartMeterUSB extends eqLogic {
 						continue;
 					}
 				}
+				# ---- Pas de mise à jour des commandes pour les comprteurs désactivés
 				if (!$counter->getIsEnable()) {
 					continue;
 				}
-				foreach ($mesures as $mesure => $value) {
-					$logicalId = $mesure;
-					if (! preg_match('/^[0-9\.:]*$/', $mesure)) {
-						if (!isset ($OBISCodes[$mesure])) {
-							log::add(__CLASS__,"warning",sprintf(__("OBISCode pour la mesure %s introuvable",__FILE__),$mesure));
-							continue;
-						}
-						$logicalId = $OBISCodes[$mesure];
+
+				# ---- Traitement de chaque mesure
+				foreach ($mesures as $obisCode => $value) {
+					if (substr_compare($obisCode, '.255', -4) == 0) {
+						$obisCode = substr($obisCode, 0, -4);
 					}
+					if (! preg_match('/^\d{1,3}\.\d{1,3}:(\d{1,3}\.){2}\d{1,3}$/', $obisCode)) {
+						log::add(__CLASS__,"error",sprintf(__("%s n'est pas un code obis!",__FILE__),$obisCode));
+						continue;
+					}
+					if ( preg_match('/^0\.0\./', $obisCode )) {
+						continue;
+					}
+					$logicalId = $obisCode;
 					$cmd = $counter->createAndGetCmd($logicalId);
 					if (!is_object($cmd)) {
 						continue;
