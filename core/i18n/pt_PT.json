@@ -9,6 +9,8 @@
         "Aucune méthode correspondante à": "Nenhum método correspondente a"
     },
     "plugins\/SmartMeterUSB\/core\/class\/SmartMeterUSB.class.php": {
+        "%s n'est pas un code obis!": "%s não é um código OBIS!",
+        "Aucun convertisseur actif": "Sem conversores ativos",
         "Création de la commande '%s' pour le compteur '%s' (%s)": "Criação do comando \"%s\" para o contador \"%s\" (%s)",
         "Création du compteur %s (%s)": "Criação do contador %s (%s)",
         "Céation des commandes": "Criação de controlos",
@@ -21,12 +23,14 @@
         "Le message n'est pas pour le plugin SmatrMeterUSB": "A mensagem não se refere à ficha SmatrMeterUSB",
         "Le plugin %s n'est pas installé": "O plugin %s não está instalado",
         "Les commandes seront céées automatiquement": "Os comandos serão criados automaticamente",
-        "OBISCode pour la mesure %s introuvable": "OBISCode para a medição %s não encontrado",
-        "Préparation de la config pour le protocol %s (lib: %s)": "Preparação da configuração para o protocolo %s (lib: %s)",
+        "Traitement des données pour le compteur %s": "Processamento de dados para o contador %s",
         "Tri des commandes du compteur '%s' (%s)": "Ordenar os comandos do contador \"%s\" (%s)",
         "Veuillez configurer et activer au moins un convertisseur USB": "Configure e active pelo menos um conversor USB",
         "Veuillez vérifier la configuration": "Verificar a configuração",
         "compteur": "contador"
+    },
+    "plugins\/SmartMeterUSB\/core\/class\/SmartMeterUSBConverter.class.php": {
+        "Suppression du converter %s": "Eliminação do conversor %s"
     },
     "plugins\/SmartMeterUSB\/core\/class\/SmartMeterUSBSimulator.class.php": {
         "Arrêt de socat pour %s": "Paragem do socat para %s",
