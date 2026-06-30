@@ -421,20 +421,14 @@ class SmartMeterUSB extends eqLogic {
 						case '1.0:2.8.3':
 						case '1.0:2.8.4':
 							$oldValue = $cmd->execCmd();
-							if ($oldValue != $value['value']) {
+							if ($oldValue != $cmd->formatValue($value['value'])) {
 								$tarif = substr($logicalId,strrpos($logicalId,'.')+1);
+								$tarifCmd = $counter->createAndGetCmd('tarif');
+								if (is_object($tarifCmd)) {
+									$txt = config::byKey('tarif:' . $tarif . ':txt',__CLASS__,'');
+									$counter->checkAndUpdateCmd($tarifCmd,$txt);
+								}
 							}
-
-					}
-					if ($tarif != 0) {
-						$tarifCmd = $counter->createAndGetCmd('tarif');
-						if (is_object($tarifCmd)) {
-							$txt = config::byKey('tarif:' . $tarif . ':txt',__CLASS__,'');
-							if ($txt !== '') {
-								$tarif = $txt;
-							}
-							$counter->checkAndUpdateCmd($tarifCmd,$tarif);
-						}
 					}
 					$counter->checkAndUpdateCmd($cmd,$value['value']);
 				}
