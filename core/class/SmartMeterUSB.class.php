@@ -401,7 +401,7 @@ class SmartMeterUSB extends eqLogic {
 						log::add(__CLASS__,"error",sprintf(__("%s n'est pas un code obis!",__FILE__),$obisCode));
 						continue;
 					}
-					if ( preg_match('/^0\.0\./', $obisCode )) {
+					if ( preg_match('/^0\.0\:/', $obisCode )) {
 						continue;
 					}
 					$logicalId = $obisCode;
