@@ -420,8 +420,9 @@ class SmartMeterUSB extends eqLogic {
 						case '1.0:2.8.2':
 						case '1.0:2.8.3':
 						case '1.0:2.8.4':
-							$oldValue = $cmd->execCmd();
-							if ($oldValue != $cmd->formatValue($value['value'])) {
+							$oldValue = $cmd->getCache("lastValue");
+							if ($oldValue != $value['value']) {
+								$cmd->setCache("lastValue",$value['value']);
 								$tarif = substr($logicalId,strrpos($logicalId,'.')+1);
 								$tarifCmd = $counter->createAndGetCmd('tarif');
 								if (is_object($tarifCmd)) {
