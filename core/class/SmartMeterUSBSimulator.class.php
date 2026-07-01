@@ -159,6 +159,8 @@ class SmartMeterUSBSimulator {
 		if ($pid){
 			system::kill($pid);
 		}
+		unlink($this->getReaderPort());
+		unlink($this->getSimulatorPort());
 		$this->removePid('socat');
 	}
 

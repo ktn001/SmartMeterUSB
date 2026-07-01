@@ -229,6 +229,8 @@ if (config.has_section('datacollector')):
     else:
         smtr_config_file = config.get('datacollector','ConfigFile')
         smtr_config = smartmeter_datacollector.config.read_config_files(smtr_config_file)
+        os.unlink(config.get('datacollector','ConfigFile'))
+os.unlink(config_file)
 
 #signal.signal(signal.SIGTERM, signal_handler)
 
@@ -238,3 +240,5 @@ f.write(f"{pid}\n")
 f.close()
 
 asyncio.run(run())
+
+os.unlink(pid_file)
